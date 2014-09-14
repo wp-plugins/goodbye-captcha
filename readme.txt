@@ -1,0 +1,106 @@
+=== GoodBye Captcha ===
+Contributors: MihChe
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
+Tags:  antispam, captcha, spam, forms, comments, login, register, contact form, security, anti-spam, comment, form, spams, spambot, spambots
+Requires at least: 3.2
+Tested up to: 4.0
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+GoodBye Captcha is the best solution for protecting your site without annoying captcha images.
+
+== Description ==
+Have you ever been frustrated with so many forms that force you to read annoying captcha images? Captcha was design to reduce the number of spam contacts but the side effect is that it also reduces legitimate users number. Many users find the captcha a nuisance. The codes are usually hard to read, require correct spelling and if you make a mistake, you have to try and try again. Captcha error forces the user to re-enter all the information on the form every time a failed attempt happens. Captcha was shown to produce 160% more failed conversion (people who landed on the contact page, started filling out the form but abandoned it) than when no captcha was used.
+
+GoodBye Captcha is based on algorithms that identify spam robots without having any annoying and hard to read images. No additional visible input field will be added into your form.
+
+This plugin **does not use php Session**, so no conflict between GoodBye Captcha and any other plugins can occur. The plugin **does not require to install any additional php extensions**, you can run it 100% with your site configuration. GoodBye Captcha is compatible with any other WordPress plugin. If you prefer, you can use it with other captcha plugins for double spam protection. This plugin **does not perform requests to external APIs**.
+
+= Features avaibale in GoodBye Captcha Free version =
+*   Comments form integration
+*   Register form integration
+*   Login form integration
+*   Forgot password form integration
+
+= Features avaibale in GoodBye Captcha Pro version =
+*   JetPack contact form integration  - JetPack contact form captcha replacement
+*   JetPack comments form integration - JetPack comments form captcha replacement
+*   BuddyPress registration form integration - BuddyPress registration form captcha replacement
+*   BuddyPress login form integration - BuddyPress login form captcha replacement
+*   Contact Form 7 integration - Contact Form 7 captcha replacement
+*   Formidable Forms(Pro and Free) integration - Formidable Forms captcha replacement
+*	Find more information about [GoodBye Captcha Pro](http://www.goodbyecaptcha.com)
+
+= Key Features = 
+*   No more captcha images
+*   Eliminates automated form submissions from robots
+*   Eliminates automated comment spam from robots
+*   Eliminates automated robots sign-up trough registration form
+*   Eliminates automated robots login attempts
+*   No requests to external APIs
+*   Compatible with WordPress Multisite
+*   Compatible with cache plugins(WP Super Cache, W3 Total Cache and others)
+*   Invisible for end users (works in background)
+*   It does not affect pages loading time
+*   It does not use PHP Session
+*   This version is free for both Commercial and Personal use
+
+= Technical support =
+If you notice any problems by using this plugin, please notify us and we will investigate and fix the issues. Ideally your request should contain: URL of the website (if your site is public), Php version, WordPress version and all the steps in order to replicate the issue (if you are able to reproduce it somehow)
+
+= Donate =
+If you find this plugin useful, please consider making a small [donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U). Thank you
+
+== Installation ==
+= Option 1 =
+1. Download the zip file from WordPress plugin directory,
+2. Unzip and upload all the files to the /wp-content/plugins/goodbyecaptcha/ folder from your server,
+3. Activate the plugin from WordPress Dashboard
+
+= Option 2 =
+1. Download the zip file from WordPress plugin directory,
+2. Login into the administration panel,
+3. Go to Plugins --> Add New --> Upload,
+4. Click Choose File (Browse) and select the downloaded zip file,
+5. Activate GoodBye Captcha plugin
+
+= Option 3 =
+1. Login into your WordPress site,
+2. Choose Plugins --> Add New,
+3. Search for 'GoodBye Captcha',
+4. In the results page, click Install Now. (depending on your server, you might need to provide credentials for download),
+5. Activate GoodBye Captcha
+
+After installation, a GoodBye Captcha menu item will appear in the Settings section. Click on this in order to view plugin's administration page.
+
+== Frequently Asked Questions ==
+
+= Is GoodBye Captcha safe? =
+Yes. The algorithm behind the plugin was fully tested and there is no way a spider or robot can spam your sites.
+
+= What forms can be secured by using Goodbye Captcha WordPress plugin? =
+All standard WordPress forms(Login, Register, Comment and Forgot Password) can be secured by using GoodBye Captcha Free plugin.
+
+= What other popular plugins which are generating forms can be integrated with this plugin =
+Plugins like JetPack, BuddyPress, Contact Form 7, Formidable Forms can be integrated with GoodBye Captcha Pro plugin. You can find more information about this on [GoodBye Captcha Website](http://www.goodbyecaptcha.com).
+
+= Are there any php extensions that need to be activated so this plugin could work? =
+No. The plugin runs 100% without activating any additional php extensions.
+
+= Is there any possibility to have a conflict between this plugin and all the other installed plugins? =
+No. The plugin is written using WordPress coding stiles recommendations when it comes to naming classes, files and so on. This plugin does not use php Session, so no conflict can occur when it comes to saving objects.
+
+= Why captcha is not user friendly? =
+Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audio CAPTCHAs take much longer (around 20-30 seconds) to hear and solve.
+
+== Screenshots ==
+1. GoodBye Captcha settings are available trough Settings menu.
+2. In GoodBye Captcha settings page, activate the plugin for the preferred forms.
+
+== Upgrade Notice ==
+N/A
+
+== Changelog ==
+= 1.0.0: September 14, 2014 =
+*   First official release!
