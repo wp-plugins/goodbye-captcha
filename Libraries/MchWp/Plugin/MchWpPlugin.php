@@ -19,7 +19,6 @@
  */
 abstract class MchWpPlugin extends MchWpBase implements MchWpIPlugin
 {
-	
 	/**
 	 *
 	 * @var \MchWpModulesController  

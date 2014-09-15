@@ -33,11 +33,6 @@ abstract class MchWpBase implements MchWpIBase
 	
 	protected  $ArrPluginInfo          = null;
 	
-	
-	public abstract static function getInstance(array $arrPluginInfo);
-	
-	
-	
 	protected function __construct(array $arrPluginInfo)
 	{
 		$this->PLUGIN_SLUG       = isset($arrPluginInfo['PLUGIN_SLUG'])      ? $arrPluginInfo['PLUGIN_SLUG']      : null;
@@ -63,9 +58,8 @@ abstract class MchWpBase implements MchWpIBase
 	
 	public static function isAdminLoggedIn()
 	{
-		static $isLoggedIn = null;
-		
-		return (null !== $isLoggedIn) ? $isLoggedIn : $isLoggedIn = current_user_can( 'manage_options' );
+		static $isLoggedIn = null;		
+		return (null !== $isLoggedIn) ? $isLoggedIn : $isLoggedIn = self::isUserLoggedIn() && current_user_can( 'manage_options' );
 	}
 	
 	public static function isSuperAdminLoggedIn()
@@ -79,7 +73,7 @@ abstract class MchWpBase implements MchWpIBase
 	{
 		static $isUserInDashboard = null;
 		
-		return (null !== $isUserInDashboard) ? $isUserInDashboard : $isUserInDashboard = ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) );
+		return (null !== $isUserInDashboard) ? $isUserInDashboard : $isUserInDashboard = (is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) );
 	}
 	
 	public static function isAdminInDashboard()

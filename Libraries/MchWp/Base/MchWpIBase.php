@@ -51,4 +51,6 @@ if (!defined('PHP_VERSION_ID'))
 interface MchWpIBase
 {
 	CONST WP_VERSION_ID = WP_VERSION_ID;
+	
+	public static function getInstance(array $arrPluginInfo);
 }

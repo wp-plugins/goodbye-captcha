@@ -29,6 +29,15 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 	{
 		parent::__construct($arrPluginInfo);
 
+		add_action('wp_ajax_nopriv_' . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
+		add_action('wp_ajax_'        . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
+		
+	}
+
+	public function initPlugin()
+	{
+		parent::initPlugin();
+		
 		if($this->isUserLoggedIn())
 			return;
 		
@@ -104,17 +113,6 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			
 		}
 		
-		
-		
-		add_action('wp_ajax_nopriv_' . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
-		add_action('wp_ajax_'        . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
-		
-	}
-	
-
-	public function initPlugin()
-	{
-		parent::initPlugin();
 	}
 	
 	/**

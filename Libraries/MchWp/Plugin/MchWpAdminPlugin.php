@@ -31,10 +31,6 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 	{
 		parent::__construct($arrPluginInfo);
 
-		
-		if( !parent::isAdminInDashboard() )
-			return;
-			
 		add_action('admin_init', array($this, 'activateAdminModulesSettings'));
 
 		add_filter('plugin_action_links_' . plugin_basename($this->PLUGIN_MAIN_FILE) , array( $this, 'getPluginAdminActionLinks' ) );

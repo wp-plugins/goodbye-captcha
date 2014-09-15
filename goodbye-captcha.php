@@ -12,7 +12,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: GoodBye Captcha is the best solution for protecting your site without annoying captcha images.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -26,7 +26,7 @@ defined( 'WPINC' ) || exit;
 final class GoodByeCaptcha
 {
 	
-	CONST PLUGIN_VERSION    = '1.0.0';
+	CONST PLUGIN_VERSION    = '1.0.1';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';	
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -57,7 +57,6 @@ final class GoodByeCaptcha
 
 								);
 
-	
 	
 	private static $DIR_PATH      = null;
 	private static $isFreeVersion = true;

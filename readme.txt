@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  antispam, captcha, spam, forms, comments, login, register, contact form, security, anti-spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,8 +99,13 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 2. In GoodBye Captcha settings page, activate the plugin for the preferred forms.
 
 == Upgrade Notice ==
-N/A
-
+BuddyPress integration issue fixed
+Strict Standards warning message fixed
+ 
 == Changelog ==
+= 1.0.1: September 15, 2014 =
+*   Fixed the integration issue with BuddyPress! (Notice: bp_setup_current_user was called incorrectly)
+*   Fixed the Strict Standards: Static function should not be abstract warning message
+
 = 1.0.0: September 14, 2014 =
 *   First official release!

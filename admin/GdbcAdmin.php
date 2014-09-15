@@ -30,11 +30,6 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 	protected function __construct(array $arrPluginInfo)
 	{
 		
-		if( ! self::isAdminLoggedIn() )
-		{
-			return ;
-		}
-
 		parent::__construct($arrPluginInfo);
 		
 		add_action('admin_menu', array($this, 'addAdminMenu'));

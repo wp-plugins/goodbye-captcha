@@ -33,13 +33,10 @@ class MchWpSetting implements MchWpISetting
 		$this->SettingGroup  = $this->SettingKey . '-group';
 		$this->SettingKey   .= '-settings';
 		
-		
 		foreach ($arrDefaultOptions as $optionName => $arrOptionInfo)
 		{
 			$this->arrDefaultOptions[$optionName] = $arrOptionInfo['Value'];
 		}
-		
-		
 	}
 	
 	public function getDefaultOptions()
@@ -51,9 +48,13 @@ class MchWpSetting implements MchWpISetting
 	{
 		return (false !== ($arrSavedOptions = get_option($this->SettingKey))) ? $arrSavedOptions : array();		
 	}
+	
 	public function setSettingOption($optionName, $optionValue)
 	{
-		if( !array_key_exists($optionName, $this->arrDefaultOptions) )
+		if(!MchWpBase::isAdminLoggedIn())
+			return;
+		
+		if(!array_key_exists($optionName, $this->arrDefaultOptions))
 			return;
 		
 		$arrSavedOptions = $this->getAllSavedOptions();
@@ -89,5 +90,5 @@ class MchWpSetting implements MchWpISetting
 	{
 		return $this->arrSettingSections;
 	}
-	
+
 }
