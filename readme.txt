@@ -17,13 +17,13 @@ GoodBye Captcha is based on algorithms that identify spam robots without having 
 
 This plugin **does not use php Session**, so no conflict between GoodBye Captcha and any other plugins can occur. The plugin **does not require to install any additional php extensions**, you can run it 100% with your site configuration. GoodBye Captcha is compatible with any other WordPress plugin. If you prefer, you can use it with other captcha plugins for double spam protection. This plugin **does not perform requests to external APIs**.
 
-= Features avaibale in GoodBye Captcha Free version =
+= Features avaliable in GoodBye Captcha Free version =
 *   Comments form integration
 *   Register form integration
 *   Login form integration
 *   Forgot password form integration
 
-= Features avaibale in GoodBye Captcha Pro version =
+= Features avaliable in GoodBye Captcha Pro version =
 *   JetPack contact form integration  - JetPack contact form captcha replacement
 *   JetPack comments form integration - JetPack comments form captcha replacement
 *   BuddyPress registration form integration - BuddyPress registration form captcha replacement
@@ -97,6 +97,10 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 == Screenshots ==
 1. GoodBye Captcha settings are available trough Settings menu.
 2. In GoodBye Captcha settings page, activate the plugin for the preferred forms.
+3. GoodBye Captcha Pro - Default Page. Activate the plugin for the standard WordPress forms and activate your license in order to get the latest GoodBye Captcha PRO updates.
+4. GoodBye Captcha Pro - JetPack Page. Activate the plugin for JetPack Comments Form feature and/or for Contact Form feature.
+5. GoodBye Captcha Pro - BuddyPress Page. Activate the plugin for Buddy Press registration form or for Buddy Press Login form.
+6. GoodBye Captcha Pro - Popular Forms Page. Activate the plugin for Contact Form 7 and/or Formidable Forms.
 
 == Upgrade Notice ==
 BuddyPress integration issue fixed
