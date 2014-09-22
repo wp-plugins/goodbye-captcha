@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  antispam, captcha, spam, forms, comments, login, register, contact form, security, anti-spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,10 @@ BuddyPress integration issue fixed
 Strict Standards warning message fixed
  
 == Changelog ==
+= 1.0.2: September 22, 2014 =
+*   Improved/optimized random bytes generator code.
+*   Fixed PHP 5.2 warnings
+
 = 1.0.1: September 15, 2014 =
 *   Fixed the integration issue with BuddyPress! (Notice: bp_setup_current_user was called incorrectly)
 *   Fixed the Strict Standards: Static function should not be abstract warning message

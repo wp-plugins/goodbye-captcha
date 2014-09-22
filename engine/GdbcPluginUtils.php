@@ -24,6 +24,12 @@ final class GdbcPluginUtils
 	{
 		return class_exists('WPCF7_ContactForm', false);
 	}
+
+	public static function isFastSecureFormActivated()
+	{
+		return class_exists('FSCF_Util', false);
+	}
+	
 	
 	public static function isFormidableFormsActivated()
 	{

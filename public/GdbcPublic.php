@@ -29,17 +29,6 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 	{
 		parent::__construct($arrPluginInfo);
 
-		add_action('wp_ajax_nopriv_' . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
-		add_action('wp_ajax_'        . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
-		
-	}
-
-	public function initPlugin()
-	{
-		parent::initPlugin();
-		
-		if($this->isUserLoggedIn())
-			return;
 		
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_DEFAULT))
 		{
@@ -92,8 +81,30 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			unset($jetPackModuleInstance);
 		}
 
+		
 		/**
-		 * GoodBye Captcha Forms integration - Gravity Forms, Contact Form 7, Ninja Forms, Formidable Forms
+		 * GoodBye BuddyPress integration - comments and ontact form
+		 */ 
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_BUDDY_PRESS))
+		{
+			$buddyPressModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_BUDDY_PRESS, MchWpModule::MODULE_TYPE_PUBLIC);
+
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_BUDDY_PRESS, GdbcBuddyPressAdminModule::OPTION_REGISTRATION_FORM_ACTIVATED))
+			{
+				$buddyPressModuleInstance->activateRegistrationFormActions();
+			}
+			
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_BUDDY_PRESS, GdbcBuddyPressAdminModule::OPTION_LOGIN_FORM_ACTIVATED))
+			{
+				$buddyPressModuleInstance->activateLoginFormActions();
+			}
+			
+			unset($buddyPressModuleInstance);
+		}
+		
+		
+		/**
+		 * GoodBye Captcha Forms integration - Gravity Forms, Contact Form 7, Ninja Forms, Formidable Forms,  Fast Secure Contact Form
 		 */
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_POPULAR_FORMS))
 		{
@@ -110,9 +121,24 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			{
 				$popularFormsModuleInstance->activateFormidableFormsActions();
 			}
+
+			#Fast Secure Form
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_FAST_SECURE_FORM_ACTIVATED))
+			{
+				$popularFormsModuleInstance->activateFastSecureFormActions();
+			}
 			
+			unset($popularFormsModuleInstance);
 		}
 		
+		add_action('wp_ajax_nopriv_' . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
+		add_action('wp_ajax_'        . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
+		
+	}
+
+	public function initPlugin()
+	{
+		parent::initPlugin();
 	}
 	
 	/**
