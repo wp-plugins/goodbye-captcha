@@ -52,8 +52,17 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 			return;
 
 		
-		//wp_enqueue_script( $this->PLUGIN_SLUG . '-admin-script', plugins_url( 'admin/assets/js/admin.js', $this->PLUGIN_MAIN_FILE ), array( 'jquery' ), $this->PLUGIN_VERSION );
+//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-flot', plugins_url( '/admin/scripts/jquery-flot.js', $this->PLUGIN_MAIN_FILE ), array("jquery"), $this->PLUGIN_VERSION);
+//		wp_enqueue_script( $this->PLUGIN_SLUG . '-admin-script', plugins_url( '/admin/scripts/gdbc-admin.js', $this->PLUGIN_MAIN_FILE ), array(), $this->PLUGIN_VERSION);
+//		wp_enqueue_script( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/scripts/bootstrap.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jarvis', plugins_url( '/admin/scripts/jarvis.widget.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-ui', plugins_url( '/admin/scripts/jquery-ui-1.10.3.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-jvectormap', plugins_url( '/admin/scripts/jquery-jvectormap-1.2.2.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-jvectormap-world', plugins_url( '/admin/scripts/jquery-jvectormap-world-mill-en.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+//		wp_enqueue_style( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/styles/bootstrap.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+//		wp_enqueue_style( $this->PLUGIN_SLUG . '-admin-style', plugins_url( '/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);		
 
+		//wp_enqueue_script( $this->PLUGIN_SLUG . '-admin-script', plugins_url( 'admin/assets/js/admin.js', $this->PLUGIN_MAIN_FILE ), array( 'jquery' ), $this->PLUGIN_VERSION );
 		//wp_enqueue_style( $this->PLUGIN_SLUG  .'-admin-styles', plugins_url( 'admin/assets/css/admin.css', $this->PLUGIN_MAIN_FILE ), array(), $this->PLUGIN_VERSION );
 
 	}

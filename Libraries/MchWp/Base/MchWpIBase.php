@@ -19,7 +19,6 @@
  */
 
 
-
 defined('ABSPATH') || exit;
 
 if(!defined('WP_VERSION_ID'))

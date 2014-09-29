@@ -20,6 +20,16 @@
 
 final class GdbcPluginUtils
 {
+	public static function isNinjaFormsActivated()
+	{
+		return class_exists('Ninja_Forms', false);
+	}
+	
+	public static function isGravityFormsActivated()
+	{
+		return class_exists('GFForms', false);
+	}
+	
 	public static function isContactForm7Activated()
 	{
 		return class_exists('WPCF7_ContactForm', false);

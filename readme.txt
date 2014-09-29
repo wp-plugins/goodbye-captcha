@@ -1,10 +1,10 @@
 === GoodBye Captcha ===
 Contributors: MihChe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
-Tags:  antispam, captcha, spam, forms, comments, login, register, contact form, security, anti-spam, comment, form, spams, spambot, spambots
+Tags:  antispam, no captcha, captcha, spam, forms, comments, anti-spam, no-captcha, login, register, contact form, security, anti-spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,12 @@ This plugin **does not use php Session**, so no conflict between GoodBye Captcha
 *   BuddyPress registration form integration - BuddyPress registration form captcha replacement
 *   BuddyPress login form integration - BuddyPress login form captcha replacement
 *   Contact Form 7 integration - Contact Form 7 captcha replacement
+*   Gravity Forms integration - Gravity Forms captcha replacement
+*   Ninja Forms integration - Ninja Forms captcha replacement
 *   Formidable Forms(Pro and Free) integration - Formidable Forms captcha replacement
+*   Fast Secure Contact Form integration - Fast Secure Contact Form captcha replacement
+
+
 *	Find more information about [GoodBye Captcha Pro](http://www.goodbyecaptcha.com)
 
 = Key Features = 
@@ -83,7 +88,7 @@ Yes. The algorithm behind the plugin was fully tested and there is no way a spid
 All standard WordPress forms(Login, Register, Comment and Forgot Password) can be secured by using GoodBye Captcha Free plugin.
 
 = What other popular plugins which are generating forms can be integrated with this plugin =
-Plugins like JetPack, BuddyPress, Contact Form 7, Formidable Forms can be integrated with GoodBye Captcha Pro plugin. You can find more information about this on [GoodBye Captcha Website](http://www.goodbyecaptcha.com).
+Plugins like JetPack, BuddyPress, Contact Form 7, Formidable Forms, Gravity Forms, Ninja Forms and Fast Secure Contact Form can be integrated with GoodBye Captcha Pro plugin. You can find more information about this on [GoodBye Captcha Website](http://www.goodbyecaptcha.com).
 
 = Are there any php extensions that need to be activated so this plugin could work? =
 No. The plugin runs 100% without activating any additional php extensions.
@@ -107,6 +112,12 @@ BuddyPress integration issue fixed
 Strict Standards warning message fixed
  
 == Changelog ==
+= 1.0.3: September 28, 2014 =
+*   JavaScript browser detection improvements
+*   Updated readme.txt notes and FAQs
+*	Improve multisite module integration 
+*   Secret key size less than 56 bytes in windows - bug fixed.
+
 = 1.0.2: September 22, 2014 =
 *   Improved/optimized random bytes generator code.
 *   Fixed PHP 5.2 warnings

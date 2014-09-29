@@ -20,7 +20,6 @@
 
 abstract class MchWpPublicModule extends MchWpModule
 {
-	
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);

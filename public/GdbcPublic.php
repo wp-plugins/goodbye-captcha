@@ -104,7 +104,12 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		
 		
 		/**
-		 * GoodBye Captcha Forms integration - Gravity Forms, Contact Form 7, Ninja Forms, Formidable Forms,  Fast Secure Contact Form
+		 * GoodBye Captcha - Popular Forms integration
+		 *	Gravity Forms, 
+		 *	Contact Form 7, 
+		 *	Ninja Forms, 
+		 *	Formidable Forms,  
+		 *	Fast Secure Contact Form
 		 */
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_POPULAR_FORMS))
 		{
@@ -126,6 +131,18 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_FAST_SECURE_FORM_ACTIVATED))
 			{
 				$popularFormsModuleInstance->activateFastSecureFormActions();
+			}
+			
+			#Gravity Forms
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_GRAVITY_FORMS_ACTIVATED))
+			{
+				$popularFormsModuleInstance->activateGravityFormsActions();
+			}
+			
+			#Ninja Forms
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_NINJA_FORMS_ACTIVATED))
+			{
+				$popularFormsModuleInstance->activateNinjaFormsActions();
 			}
 			
 			unset($popularFormsModuleInstance);

@@ -24,6 +24,7 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_JETPACK        = 'GdbcJetPackModule';
 	CONST MODULE_BUDDY_PRESS    = 'GdbcBuddyPressModule';
 	CONST MODULE_POPULAR_FORMS  = 'GdbcPopularFormsModule'; //Gravity Forms, CForm7, Ninja Forms, Formidable Forms
+	CONST MODULE_REPORTS		= 'GdbcReportsModule';
 	
 	private static $arrModules = array(
 
@@ -47,6 +48,10 @@ final class GdbcModulesController extends MchWpModulesController
 			'GdbcPopularFormsPublicModule' => '/modules/popular-forms/GdbcPopularFormsPublicModule.php',
 		),
 		
+		self::MODULE_REPORTS =>array(
+			'GdbcReportsAdminModule'  => '/modules/reports/GdbcReportsAdminModule.php',
+			'GdbcPopularFormsPublicModule' => '/modules/reports/GdbcReportsPublicModule.php',
+		),
 	);
 	
 	protected function __construct(array $arrPluginInfo)

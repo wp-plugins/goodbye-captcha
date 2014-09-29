@@ -30,7 +30,6 @@ abstract class MchWpBase implements MchWpIBase
 	protected  $PLUGIN_DIRECTORY_PATH = null;
 	protected  $PLUGIN_DIRECTORY_NAME = null;
 
-	
 	protected  $ArrPluginInfo          = null;
 	
 	protected function __construct(array $arrPluginInfo)

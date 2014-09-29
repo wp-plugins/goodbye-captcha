@@ -150,5 +150,4 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		$instanceKey         = implode('', $arrPluginInfo);
 		return isset($arrInstances[$instanceKey]) ? $arrInstances[$instanceKey] : $arrInstances[$instanceKey] = new self($arrPluginInfo);
 	}
-
 }

@@ -36,7 +36,7 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 		add_filter('plugin_action_links_' . plugin_basename($this->PLUGIN_MAIN_FILE) , array( $this, 'getPluginAdminActionLinks' ) );
 
 		add_action('admin_enqueue_scripts', array( $this, 'enqueueAdminScriptsAndStyles' ));
-		add_action('admin_enqueue_scripts', array( $this, 'enqueueAdminScriptsAndStyles' ));
+		//add_action('admin_enqueue_scripts', array( $this, 'enqueueAdminScriptsAndStyles' ));
 		
 		add_action('wpmu_new_blog', array( $this, 'activateForNewSite' ));
 		
@@ -54,7 +54,7 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 	public function renderPluginAdminPage()
 	{
 
-		$code  = '<div class="wrap">' . $this->getAdminSettingsTabsCode();
+		$code  = '<div class="wrap container-fluid">' . $this->getAdminSettingsTabsCode();
 		
 		$code .= '<form method="post" action="options.php">';
 
@@ -67,7 +67,10 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 
 			settings_fields($moduleSetting->SettingGroup);
 			do_settings_sections($moduleSetting->SettingGroup);
-			submit_button();
+			
+			$moduleOptions = $moduleSetting->getDefaultOptions();
+			if (!empty($moduleOptions))
+				submit_button();
 			
 		}
 
