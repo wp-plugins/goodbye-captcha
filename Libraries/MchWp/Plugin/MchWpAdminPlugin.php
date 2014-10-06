@@ -111,7 +111,7 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 		
 	}
 	
-	private function getAdminSettingsCurrentTab()
+	protected function getAdminSettingsCurrentTab()
 	{
 		$arrModules = $this->ModulesController->getRegisteredModules();
 		return !empty($_GET['tab']) && isset($arrModules[$_GET['tab']]) ? $_GET['tab'] : key($arrModules);

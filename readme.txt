@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  antispam, no captcha, captcha, spam, forms, comments, anti-spam, no-captcha, login, register, contact form, security, anti-spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,9 @@ BuddyPress integration issue fixed
 Strict Standards warning message fixed
  
 == Changelog ==
+= 1.0.4: October 6, 2014 =
+*   Added minimum time for any form submission
+
 = 1.0.3: September 28, 2014 =
 *   JavaScript browser detection improvements
 *   Updated readme.txt notes and FAQs

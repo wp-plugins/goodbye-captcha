@@ -105,7 +105,17 @@ final class GdbcPluginUtils
 
 		return $arrJetPackOptions;
 	}
-	
-	
-	
+
+	public static function getMySQLDateTime($time = "now", DateTimeZone $timezone = NULL)
+	{
+		$dateTime = (null === $timezone) ? new DateTime($time) : new DateTime($time, $timezone);
+		return $dateTime->format('Y-m-d H:i:s');
+	}
+
+	public static function getMySQLDate($time = "now", DateTimeZone $timezone = NULL)
+	{
+		$dateTime = (null === $timezone) ? new DateTime($time) : new DateTime($time, $timezone);
+		return $dateTime->format('Y-m-d');
+	}
+
 }

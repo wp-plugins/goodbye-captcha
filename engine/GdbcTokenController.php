@@ -86,7 +86,12 @@ final class GdbcTokenController
 		{
 			return false;
 		}
-		
+
+		if($timeSinceGenerated < 4)
+		{
+			return false;
+		}
+
 		if(count(array_diff($arrDecryptedToken, $arrTokenData)) !== 0)
 		{
 			return false;

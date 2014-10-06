@@ -12,7 +12,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: GoodBye Captcha is the best solution for protecting your site without annoying captcha images.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -26,7 +26,7 @@ defined( 'WPINC' ) || exit;
 final class GoodByeCaptcha
 {
 	
-	CONST PLUGIN_VERSION    = '1.0.3';
+	CONST PLUGIN_VERSION    = '1.0.4';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';	
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -81,7 +81,7 @@ final class GoodByeCaptcha
 	public static function classAutoLoad($className)
 	{
 		if( !isset(self::$arrClassMap[$className]) )
-			return;
+			return null;
 		
 		(null === self::$DIR_PATH) ? self::$DIR_PATH = dirname( __FILE__ ) : null;
 		
@@ -106,7 +106,7 @@ final class GoodByeCaptcha
 		spl_autoload_register('self::classAutoLoad');
 		
 		if ( ! MchWp::isUserInDashboad() )
-			return;
+			return null;
 		
 		return GdbcAdmin::activatePlugin(self::$arrPluginInfo, $isForNetwork);
 
@@ -117,7 +117,7 @@ final class GoodByeCaptcha
 		spl_autoload_register('self::classAutoLoad');
 
 		if ( ! MchWp::isUserInDashboad() )
-			return;
+			return null;
 		
 		return GdbcAdmin::deactivatePlugin(self::$arrPluginInfo, $isForNetwork);
 

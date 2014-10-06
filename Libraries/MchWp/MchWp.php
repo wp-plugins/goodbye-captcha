@@ -26,7 +26,7 @@ final class MchWp
 	public static function loadLibrary($className)
 	{
 		static $arrClassMap = array(
-			
+
 			'MchWpIBase'              => '/Base/MchWpIBase.php',
 			'MchWpBase'               => '/Base/MchWpBase.php',
 
@@ -34,25 +34,30 @@ final class MchWp
 			'MchWpModule'             => '/Module/MchWpModule.php',
 			'MchWpAdminModule'        => '/Module/MchWpAdminModule.php',
 			'MchWpPublicModule'       => '/Module/MchWpPublicModule.php',
-			
+
 			'MchWpISetting'           => '/Setting/MchWpISetting.php',
 			'MchWpSetting'            => '/Setting/MchWpSetting.php',
 			'MchWpSettingSection'     => '/Setting/MchWpSettingSection.php',
 			'MchWpSettingField'       => '/Setting/MchWpSettingField.php',
 
-			
+
 			'MchWpIPlugin'            => '/Plugin/MchWpIPlugin.php',
 			'MchWpPlugin'             => '/Plugin/MchWpPlugin.php',
 			'MchWpAdminPlugin'        => '/Plugin/MchWpAdminPlugin.php',
 			'MchWpPublicPlugin'       => '/Plugin/MchWpPublicPlugin.php',
-			
+
 			'MchWpIController'        => '/Controller/MchWpIController.php',
 			'MchWpModulesController'  => '/Controller/MchWpModulesController.php',
 			'MchWpSettingsController' => '/Controller/MchWpSettingsController.php',
-			
+
 			'MchWpUtil'               => '/Util/MchWpUtil.php',
 			'MchWpUtilHtml'           => '/Util/MchWpUtilHtml.php',
-			
+
+			'MchWpIEntity'            => '/Entity/MchWpIEntity.php',
+			'MchWpEntity'             => '/Entity/MchWpEntity.php',
+
+			'MchWpDbManager'          => '/Db/MchWpDbManager.php',
+			'MchWpIDb'                => '/Db/MchWpIDb.php'
 		);
 		
 		return isset($arrClassMap[$className]) ? file_exists($filePath = dirname(__FILE__) . $arrClassMap[$className]) 

@@ -42,7 +42,6 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 		);
 	}
 	
-	
 	public function enqueueAdminScriptsAndStyles()
 	{
 		if(null === $this->AdminSettingsPageHook)
@@ -50,21 +49,25 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 		
 		if( self::WP_VERSION_ID >= 30100 && ($this->AdminSettingsPageHook !== get_current_screen()->id) )
 			return;
-
 		
-//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-flot', plugins_url( '/admin/scripts/jquery-flot.js', $this->PLUGIN_MAIN_FILE ), array("jquery"), $this->PLUGIN_VERSION);
-//		wp_enqueue_script( $this->PLUGIN_SLUG . '-admin-script', plugins_url( '/admin/scripts/gdbc-admin.js', $this->PLUGIN_MAIN_FILE ), array(), $this->PLUGIN_VERSION);
-//		wp_enqueue_script( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/scripts/bootstrap.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jarvis', plugins_url( '/admin/scripts/jarvis.widget.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-ui', plugins_url( '/admin/scripts/jquery-ui-1.10.3.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-jvectormap', plugins_url( '/admin/scripts/jquery-jvectormap-1.2.2.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-//		wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-jvectormap-world', plugins_url( '/admin/scripts/jquery-jvectormap-world-mill-en.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-//		wp_enqueue_style( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/styles/bootstrap.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-//		wp_enqueue_style( $this->PLUGIN_SLUG . '-admin-style', plugins_url( '/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);		
-
+		$selectedTab = $this->getAdminSettingsCurrentTab();
+		if ($selectedTab === GdbcModulesController::MODULE_REPORTS)
+		{
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-flot', plugins_url( '/admin/scripts/jquery-flot.js', $this->PLUGIN_MAIN_FILE ), array("jquery"), $this->PLUGIN_VERSION);
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-admin-script', plugins_url( '/admin/scripts/gdbc-admin.js', $this->PLUGIN_MAIN_FILE ), array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/scripts/bootstrap.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-gdbc-dashboard', plugins_url( '/admin/scripts/gdbc-dashboard.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-ui', plugins_url( '/admin/scripts/jquery-ui-1.10.3.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-easy-pie-chart', plugins_url( '/admin/scripts/easy-pie-chart.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-jvectormap', plugins_url( '/admin/scripts/jquery-jvectormap-1.2.2.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-jvectormap-world', plugins_url( '/admin/scripts/jquery-jvectormap-world-mill-en.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-dataTables', plugins_url( '/admin/scripts/jquery.dataTables.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+			
+			wp_enqueue_style( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/styles/bootstrap.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
+			wp_enqueue_style( $this->PLUGIN_SLUG . '-admin-style', plugins_url( '/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);		
+		}
 		//wp_enqueue_script( $this->PLUGIN_SLUG . '-admin-script', plugins_url( 'admin/assets/js/admin.js', $this->PLUGIN_MAIN_FILE ), array( 'jquery' ), $this->PLUGIN_VERSION );
 		//wp_enqueue_style( $this->PLUGIN_SLUG  .'-admin-styles', plugins_url( 'admin/assets/css/admin.css', $this->PLUGIN_MAIN_FILE ), array(), $this->PLUGIN_VERSION );
-
 	}
 	
 }
