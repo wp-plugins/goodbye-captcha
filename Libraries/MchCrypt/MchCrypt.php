@@ -50,7 +50,7 @@ if( ! function_exists( 'mchCryptAutoLoader' ) )
 
 final class MchCrypt
 {
-	CONST DERIVED_KEY_ITERATIONS = 1000;
+	CONST DERIVED_KEY_ITERATIONS = 1500;
 	
 	public static function getRandomIntegerInRange($min = 1, $max = PHP_INT_MAX, $forceSecureRandomBytes = false)
 	{
@@ -97,9 +97,7 @@ final class MchCrypt
 		{
 			$last = $xorsum = hash_hmac('sha256', $salt . pack("N", $i), $secretKey, true);
 			for ($j = 1; $j < self::DERIVED_KEY_ITERATIONS ; ++$j) 
-			{
 				$xorsum ^= ($last = hash_hmac('sha256', $last, $secretKey, true));
-			}
 
 			$hash .= $xorsum;
 		}
