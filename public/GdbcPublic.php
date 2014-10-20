@@ -33,8 +33,7 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_DEFAULT))
 		{
 			/**
-			*
-			* @var \GdbcDefaultPublicModule 
+			* @var \GdbcDefaultPublicModule
 			*/
 			$defaultModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_DEFAULT, MchWpModule::MODULE_TYPE_PUBLIC);
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_COMMENTS_FORM_ACTIVATED))
@@ -62,7 +61,7 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		}
 		
 		/**
-		 * GoodBye Captcha JetPack integration - comments and ontact form
+		 * GoodBye Captcha JetPack integration - comments and contact form
 		 */ 
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_JETPACK))
 		{
@@ -83,7 +82,7 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 
 		
 		/**
-		 * GoodBye BuddyPress integration - comments and ontact form
+		 * GoodBye BuddyPress integration - comments and contact form
 		 */ 
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_BUDDY_PRESS))
 		{

@@ -28,7 +28,7 @@ final class MchWpSettingsList implements Countable, Iterator
 	
 	/**
 	 *
-	 * @var type inteher
+	 * @var type integer
 	 */
 	private $position   = 0;
 	
