@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  antispam, no captcha, captcha, spam, forms, comments, anti-spam, no-captcha, login, register, contact form, security, zero spam, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,10 @@ Strict Standards warning message fixed
  
 == Changelog ==
 
+= 1.0.7: October 28, 2014 =
+*   Increased PBKDF2 number of iterations for key derivation 
+*   Added timing attack prevention
+ 
 = 1.0.6: October 20, 2014 =
 *   code review
 
