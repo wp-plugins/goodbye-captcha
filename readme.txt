@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  antispam, no captcha, captcha, spam, forms, comments, anti-spam, no-captcha, login, register, contact form, security, zero spam, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,10 @@ BuddyPress integration issue fixed
 Strict Standards warning message fixed
  
 == Changelog ==
+
+= 1.0.8: November 10, 2014 =
+*   Improved token generator speed 
+*   Added pkcs7 padding
 
 = 1.0.7: October 28, 2014 =
 *   Increased PBKDF2 number of iterations for key derivation 
