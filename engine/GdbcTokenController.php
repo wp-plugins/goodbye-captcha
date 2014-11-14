@@ -63,10 +63,6 @@ final class GdbcTokenController
 		{
 			return false;
 		}
-//		if(isset($_COOKIE[GoodByeCaptcha::PLUGIN_SHORT_CODE . "-$browserInfoInput"]))
-//		{
-//			GdbcPluginUtils::deleteCookie(GoodByeCaptcha::PLUGIN_SHORT_CODE . "-$browserInfoInput");
-//		}
 		
 		$receivedBrowserInfoInput = MchWpUtil::replaceNonAlphaNumericCharacters($receivedBrowserInfoInput, '');
 		

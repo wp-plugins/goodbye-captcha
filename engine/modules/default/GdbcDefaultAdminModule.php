@@ -256,7 +256,7 @@ final class GdbcDefaultAdminModule extends MchWpAdminModule
 		);
 
 		$response = wp_remote_get(add_query_arg($api_params, GoodByeCaptcha::PLUGIN_SITE_URL ), 
-								   array( 'timeout' => 15, 'sslverify' => false ));
+						array( 'timeout' => 15, 'sslverify' => false ));
 
 		
 		if (is_wp_error($response) || (null === ($licenseData = json_decode(wp_remote_retrieve_body($response)))))

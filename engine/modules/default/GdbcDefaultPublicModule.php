@@ -28,7 +28,7 @@ final class GdbcDefaultPublicModule extends MchWpPublicModule
 	public function activateCommentsActions()
 	{
 		add_action('comment_form_after_fields',    array($this, 'renderHiddenFieldIntoForm'), 1);
-		//add_action('comment_form_logged_in_after', array($this,'renderHiddenFieldIntoForm'), 1);
+		add_action('comment_form_logged_in_after', array($this,'renderHiddenFieldIntoForm'), 1);
 		add_filter('preprocess_comment', array($this, 'validateCommentsFormEncryptedToken'));
 	}
 	
@@ -63,9 +63,7 @@ final class GdbcDefaultPublicModule extends MchWpPublicModule
 	public function validateLostPasswordFormEncryptedToken()
 	{
 		if(GdbcRequest::isValid())
-		{
 			return;
-		}
 
 		wp_redirect(wp_get_referer());
 		
@@ -78,7 +76,7 @@ final class GdbcDefaultPublicModule extends MchWpPublicModule
 		if(GdbcRequest::isValid())
 			return $results;
 		
-		$results['errors']->add('gdbc-invalid-token', __( '<strong>ERROR</strong>: Invalid token received !', $this->PLUGIN_SLUG ));
+		$results['errors']->add('gdbc-invalid-token', __( '<strong>ERROR</strong>', $this->PLUGIN_SLUG ));
 		
 		return $results;
 	}
@@ -88,7 +86,7 @@ final class GdbcDefaultPublicModule extends MchWpPublicModule
 		if(GdbcRequest::isValid())
 			return $errors;
 		
-		$errors->add('gdbc-invalid-token', __( '<strong>ERROR</strong>: Invalid token received', $this->PLUGIN_SLUG ));
+		$errors->add('gdbc-invalid-token', __( '<strong>ERROR</strong>', $this->PLUGIN_SLUG ));
 		
 		return $errors;
 	}

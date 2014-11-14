@@ -66,8 +66,7 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 			wp_enqueue_style( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/styles/bootstrap.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
 			wp_enqueue_style( $this->PLUGIN_SLUG . '-admin-style', plugins_url( '/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);		
 		}
-		//wp_enqueue_script( $this->PLUGIN_SLUG . '-admin-script', plugins_url( 'admin/assets/js/admin.js', $this->PLUGIN_MAIN_FILE ), array( 'jquery' ), $this->PLUGIN_VERSION );
-		//wp_enqueue_style( $this->PLUGIN_SLUG  .'-admin-styles', plugins_url( 'admin/assets/css/admin.css', $this->PLUGIN_MAIN_FILE ), array(), $this->PLUGIN_VERSION );
+		
 	}
 	
 }

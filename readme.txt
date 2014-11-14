@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  antispam, no captcha, captcha, spam, forms, comments, anti-spam, no-captcha, login, register, contact form, security, zero spam, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,11 @@ BuddyPress integration issue fixed
 Strict Standards warning message fixed
  
 == Changelog ==
+
+= 1.0.9: November 15, 2014 =
+*   Fixed Bug - token was not generated for comments form if the user was logged in
+*   Added timestamp for generated token
+
 
 = 1.0.8: November 10, 2014 =
 *   Improved token generator speed 
