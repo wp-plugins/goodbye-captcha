@@ -1,9 +1,9 @@
 body{
-	background-color: #f1f1f1
+    background-color: #f1f1f1 !important;
 }
 
-#adminmenu, #adminmenu .wp-submenu, #adminmenuback, #adminmenuwrap{
-	height: 100%
+#adminmenuwrap{
+    height: 100%
 }
 
 #chart-container{ height: 235px; width: 100% }
@@ -20,10 +20,9 @@ body{
 	position: relative; 
 }
 
-#wid-id-0 header, #wid-id-1 header, #wid-id-2 header {
+.gdbcwidget header {
     border-radius: 0;
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.05) inset;
-    line-height: normal;
 	background: none repeat scroll 0 0 #fafafa;
     border: 1px solid #c2c2c2;
     color: #333;
@@ -41,7 +40,6 @@ body{
 
 .gdbcwidget header h2 {     
 	float: left;
-    margin-left: 10px;
 	display: inline-block;
     font-size: 14px;
     font-weight: 400;
@@ -133,7 +131,7 @@ body{
     padding-left: 0;
 }
 
-.gdbcwidget header .nav-tabs > li.active > a, .gdbcswidget header .nav-tabs > li.active > a:focus, .gdbcwidget header .nav-tabs > li.active > a:hover {
+.gdbcwidget header .nav-tabs > li.active > a, .gdbcwidget header .nav-tabs > li.active > a:focus, .gdbcwidget header .nav-tabs > li.active > a:hover {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
@@ -153,6 +151,12 @@ body{
     border: medium none;
     border-radius: 0;
     padding: 7px 15px 6px;
+}
+
+.module-pagingation
+{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important
 }
 
 .nav-tabs > li.active > a {
@@ -192,10 +196,13 @@ body{
     position: relative;
 }
 
-.vector-map {
+.vector-map, #gdbc-stats{
     height: 300px;
-    padding: 10px;
     width: 100%;
+}
+
+.vector-map{
+    padding: 10px;
 }
 
  .progress {
@@ -209,8 +216,8 @@ body{
 	display: inline-block; 
 	text-align: center; 
 	position: relative; 
-	width: 60px; 
-	height: 60px; 
+	width: 60px;
+	height: 60px;
 	line-height: 60px
 }
 
@@ -238,9 +245,8 @@ body{
 	margin-right: 5px 
 }
 
-.countriesTable td:not(:nth-child(2)), .countriesTable th:not(:nth-child(2))
-{
-	text-align: right
+.countriesTable tbody tr, #gdbc-top-ip-attempts table tbody tr{
+    height: 40px;
 }
 
 .bg-color-dark-blue{
@@ -268,4 +274,277 @@ body{
 	display: inline-block;
 	width: 200px;
 	float:right;
+}
+
+/* Map with location of all the attempts */
+.jvectormap-zoomin,.jvectormap-zoomout
+{
+    position:absolute;
+    padding:4px;
+    width:22px;
+    height:22px;
+    cursor:pointer;
+    line-height:10px;
+    text-align:center;
+    font-size:14px;
+    border-radius:2px;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    box-shadow:inset 0 -2px 0 rgba(0,0,0,.05);
+    -moz-box-shadow:inset 0 -2px 0 rgba(0,0,0,.05);
+    -webkit-box-shadow:inset 0 -2px 0 rgba(0,0,0,.05);
+    background-color:#fff;
+    border:1px solid #bfbfbf
+}
+
+.jvectormap-zoomin:hover,.jvectormap-zoomout:hover
+{
+    background:#eee;border-color:#d9d9d9
+}
+
+.jvectormap-zoomin
+{
+    top:0
+}
+
+.jvectormap-zoomout
+{
+    top:24px
+}
+
+.jvectormap-label
+{
+    position:absolute;
+    display:none;
+    border:solid 1px #CDCDCD;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    background:#292929;
+    color:#fff;
+    font-family:sans-serif,Verdana;
+    font-size:smaller;
+    padding:3px
+}
+
+.bg-color-greenLight {
+    background-color: #71843f !important;
+}
+
+.bg-color-blueLight {
+    background-color: #92a2a8 !important;
+}
+
+.bg-color-red{
+    background-color: #a90329 !important;
+}
+
+.icon-success{
+    color: #5cb85c
+}
+
+.icon-danger{
+    color: #d9534f
+}
+
+.icon-primary{
+    color: #428bca
+}
+
+a.badge:hover{
+    background-color: #92a2a8 !important;
+}
+
+a.easy-tool-tip:hover span:hover {
+    background-color: #92a2a8 !important;
+    cursor: hand;
+}
+
+.pie-chart-widgets span.label {
+    min-width: 30px;
+    display: block;
+    text-align: center;
+}
+
+.dropdown-menu-xs {
+    min-width: 37px;
+}
+
+/*modules page*/
+.toolbar {
+    display: block;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-image: none;
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: auto auto;
+    border-bottom-color: #ccc;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    min-height: 42px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 8px;
+    background-color: #fff;
+    color: #666;
+    outline-color: -moz-use-text-color;
+    outline-style: none;
+    outline-width: 0;
+    position: relative;
+}
+
+#modules-chart .inline-group:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+
+#modules-chart *, #modules-chart *:after, #modules-chart *:before {
+    box-sizing: content-box;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
+#modules-chart .inline-group .checkbox, #modules-chart .inline-group .radio {
+    float: left;
+    margin-right: 30px;
+    width: 130px
+}
+
+#modules-chart .checkbox, #modules-chart .radio {
+    color: #404040;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 25px;
+    margin-bottom: 4px;
+    padding-left: 25px;
+}
+
+#modules-chart .checkbox input, #modules-chart .radio input {
+    left: -9999px;
+    position: absolute;
+}
+
+#modules-chart input[type="checkbox"], .checkbox-inline input[type="checkbox"], .radio input[type="radio"], .radio-inline input[type="radio"] {
+    margin-left: -20px;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    line-height: normal;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-top: 4px;
+    box-sizing: border-box;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
+#modules-chart .checkbox input:checked + i:after, #modules-chart .radio input:checked + i:after {
+    opacity: 1;
+}
+
+#modules-chart .checkbox input:checked + i:after {
+    -moz-font-feature-settings: normal;
+    -moz-font-language-override: normal;
+    -x-system-font: none;
+    content: "";
+    font-family: "Glyphicons Halflings";
+    font-size: 16px;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    height: 15px;
+    left: 1px;
+    line-height: 19px;
+    text-align: center;
+    top: -1px;
+    width: 15px;
+    color: #3276b1;
+    margin-right: 10px;
+}
+
+#modules-chart .checkbox input + i:after {
+    -moz-font-feature-settings: normal;
+    -moz-font-language-override: normal;
+    -x-system-font: none;
+    content: "";
+    font-family: "Glyphicons Halflings";
+    font-size: 16px;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    height: 15px;
+    left: 1px;
+    line-height: 19px;
+    text-align: center;
+    top: -1px;
+    width: 15px;
+    color: #3276b1;
+    margin-right: 10px;
+}
+
+#modules-chart  .checkbox input:checked:hover + i:after{
+    content: "";
+}
+
+#modules-chart .checkbox input:checked + i, #modules-chart .radio input:checked + i, #modules-chart .toggle input:checked + i {
+    border-bottom-color: #3276b1;
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-left-color-value: #3276b1;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+    border-right-color-value: #3276b1;
+    border-top-color: #3276b1
+}
+
+#flot-container {
+    height: 235px;
+    width: 100%;
+}
+
+#flotTip{
+    padding:3px 5px;
+    background-color:#fff;
+    z-index:9999;
+    color:#333;
+    -webkit-box-shadow:0 1px 8px rgba(0,0,0,.1);
+    -moz-box-shadow:0 1px 8px rgba(0,0,0,.1);
+    box-shadow:0 1px 8px rgba(0,0,0,.1);
+    font-size:14px;
+    border:1px solid #C1C1C1;
+    -moz-border-radius:4px;
+    -khtml-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px
+}
+
+#flotTip span{
+    color:#38812D;
+    font-weight:700
+}
+
+.module-pagination ul{
+    margin-top: 0;
+    margin-bottom: 0
 }

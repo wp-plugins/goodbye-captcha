@@ -12,7 +12,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: GoodBye Captcha is the best solution for protecting your site without annoying captcha images.
- * Version: 1.0.9
+ * Version: 1.1.0
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -21,12 +21,13 @@
  */
 
 
-defined( 'WPINC' ) || exit;
+defined( 'ABSPATH' ) || exit;
 
-final class GoodByeCaptcha
+
+class GoodByeCaptcha
 {
 	
-	CONST PLUGIN_VERSION    = '1.0.9';
+	CONST PLUGIN_VERSION    = '1.1.0';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';	
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -43,49 +44,61 @@ final class GoodByeCaptcha
 	
 	private static $arrClassMap = array(
 		
-									'GdbcModulesController'   =>  '/engine/GdbcModulesController.php',
-									'GdbcBasePublicPlugin'    =>  '/engine/GdbcBasePublicPlugin.php',
-									'GdbcBaseAdminPlugin'     =>  '/engine/GdbcBaseAdminPlugin.php',
-									'GdbcTokenController'     =>  '/engine/GdbcTokenController.php',
-									'GdbcPluginUpdater'       =>  '/engine/GdbcPluginUpdater.php',
-									'GdbcPluginUtils'         =>  '/engine/GdbcPluginUtils.php',
-									'GdbcRequest'			  =>  '/engine/GdbcRequest.php',
-									'GdbcPublic'              =>  '/public/GdbcPublic.php',
-									'GdbcAdmin'               =>  '/admin/GdbcAdmin.php',
-									'MchCrypt'				  =>  '/Libraries/MchCrypt/MchCrypt.php',
-									'MchWp'				      =>  '/Libraries/MchWp/MchWp.php',
-									'MchHttpUtil'			  =>  '/Libraries/MchHttp/MchHttpUtil.php',	
+									'GdbcModulesController'   => '/engine/GdbcModulesController.php',
+									'GdbcBasePublicPlugin'    => '/engine/GdbcBasePublicPlugin.php',
+									'GdbcBaseAdminPlugin'     => '/engine/GdbcBaseAdminPlugin.php',
+									'GdbcTokenController'     => '/engine/GdbcTokenController.php',
+									'GdbcPluginUpdater'       => '/engine/GdbcPluginUpdater.php',
+									'GdbcPluginUtils'         => '/engine/GdbcPluginUtils.php',
+									'GdbcRequest'			  => '/engine/GdbcRequest.php',
+									'GdbcPublic'              => '/public/GdbcPublic.php',
+									'GdbcAdmin'               => '/admin/GdbcAdmin.php',
+									'MchCrypt'				  => '/Libraries/MchCrypt/MchCrypt.php',
+									'MchWp'				      => '/Libraries/MchWp/MchWp.php',
+									'MchHttpUtil'			  => '/Libraries/MchHttp/MchHttpUtil.php',
+									'MchHttpRequest'          => '/Libraries/MchHttp/MchHttpRequest.php',
+									'GdbcAttemptEntity'       => '/engine/dbaccess/entities/GdbcAttemptEntity.php',
+									'GdbcAttemptsManager'     => '/engine/dbaccess/GdbcAttemptsManager.php',
+									'GdbcCountryDataSource'   => '/engine/dbaccess/GdbcCountryDataSource.php',
+									'GdbcReasonDataSource'    => '/engine/dbaccess/GdbcReasonDataSource.php',
+									'GdbcBaseAdminModule'     => '/engine/modules/GdbcBaseAdminModule.php',
+									'GdbcBasePublicModule'    => '/engine/modules/GdbcBasePublicModule.php',
 								);
 
 	
-	private static $DIR_PATH      = null;
 	private static $isFreeVersion = true;
 	
-	private function __construct()
+	protected function __construct()
 	{
 		spl_autoload_register('self::classAutoLoad');
 
-		self::$DIR_PATH = dirname( __FILE__ );
-		
-		$pluginInstance = MchWp::isUserInDashboad() ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
-		
-		self::$isFreeVersion = (1 === count($pluginInstance->getRegisteredModules()));
+		(MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
 
+		self::$isFreeVersion = ( count(self::getModulesControllerInstance()->getRegisteredModules()) === count(self::getModulesControllerInstance()->getFreeModuleNames()));
+
+		GdbcPluginUpdater::updateToCurrentVersion();
 	}
-	
+
 	public static function isFreeVersion()
 	{
 		return self::$isFreeVersion;
 	}
-	
+
+	/**
+	 *
+	 * @return \GdbcModulesController
+	 */
+	public static function getModulesControllerInstance()
+	{
+		return GdbcModulesController::getInstance(self::$arrPluginInfo);
+	}
+
 	public static function classAutoLoad($className)
 	{
 		if( !isset(self::$arrClassMap[$className]) )
 			return null;
 		
-		(null === self::$DIR_PATH) ? self::$DIR_PATH = dirname( __FILE__ ) : null;
-		
-		$filePath = self::$DIR_PATH . DIRECTORY_SEPARATOR . trim(self::$arrClassMap[$className], '/\\');
+		$filePath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . trim(self::$arrClassMap[$className], '/\\');
 		
 		return file_exists($filePath) ? include_once $filePath : null;
 	}
@@ -107,7 +120,7 @@ final class GoodByeCaptcha
 		
 		if ( ! MchWp::isUserInDashboad() )
 			return null;
-		
+
 		return GdbcAdmin::activatePlugin(self::$arrPluginInfo, $isForNetwork);
 
 	}
@@ -130,9 +143,12 @@ final class GoodByeCaptcha
  * Registered hooks that are fired when the plugin is activated or deactivated.
  * When the plugin is deleted, the uninstall.php file is loaded.
  */
+if(ABSPATH !== '')
+{
+	register_activation_hook(__FILE__, array('GoodByeCaptcha', 'activate'));
 
-register_activation_hook  ( __FILE__, array( 'GoodByeCaptcha', 'activate' ));
-register_deactivation_hook( __FILE__, array( 'GoodByeCaptcha', 'deactivate'));
+	register_deactivation_hook(__FILE__, array('GoodByeCaptcha', 'deactivate'));
 
-add_action('plugins_loaded', array( 'GoodByeCaptcha', 'getInstance' ));
+	add_action('plugins_loaded', array('GoodByeCaptcha', 'getInstance'));
 
+}

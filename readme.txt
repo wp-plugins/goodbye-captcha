@@ -4,26 +4,35 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  antispam, no captcha, captcha, spam, forms, comments, anti-spam, no-captcha, login, register, contact form, security, zero spam, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0
-Stable tag: 1.0.9
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 GoodBye Captcha is the best solution for protecting your site without annoying captcha images.
 
 == Description ==
-Have you ever been frustrated with so many forms that force you to read annoying captcha images? Captcha was design to reduce the number of spam contacts but the side effect is that it also reduces legitimate users number. Many users find the captcha a nuisance. The codes are usually hard to read, require correct spelling and if you make a mistake, you have to try and try again. Captcha error forces the user to re-enter all the information on the form every time a failed attempt happens. Captcha was shown to produce 160% more failed conversion (people who landed on the contact page, started filling out the form but abandoned it) than when no captcha was used.
+Have you ever been frustrated with so many forms that force you to read annoying captcha images? Captcha was design to reduce the number of spam contacts but the side effect is that it also reduces legitimate users number. Many users find the captcha a nuisance. The codes are usually hard to read, require correct spelling and if you make a mistake, you have to try and try again. Captcha error forces the user to re-enter all the information on the form every time a failed spam attempt happens. Captcha was shown to produce 160% more failed conversion (people who landed on the contact page, started filling out the form but abandoned it) than when no captcha was used.
 
 GoodBye Captcha is based on algorithms that identify spam robots without having any annoying and hard to read images. No additional visible input field will be added into your form.
 
 This plugin **does not use php Session**, so no conflict between GoodBye Captcha and any other plugins can occur. The plugin **does not require to install any additional php extensions**, you can run it 100% with your site configuration. GoodBye Captcha is compatible with any other WordPress plugin. If you prefer, you can use it with other captcha plugins for double spam protection. This plugin **does not perform requests to external APIs**.
 
-= Features avaliable in GoodBye Captcha Free version =
+= Features available in GoodBye Captcha Free version =
 *   Comments form integration
 *   Register form integration
 *   Login form integration
 *   Forgot password form integration
+*   Block Ip address feature (IPV4 and IPV6)
+*   Reports and statistics with blocked attempts
+*   Total attempts per days and modules charts
+*   Monthly attempts percentage comparison
+*   Latest spam attempts table per day and module
+*   Geographic map chart with blocked attempts
+*   Top of attempts organized by countries
+*   Spam attempts statistics per modules
 
-= Features avaliable in GoodBye Captcha Pro version =
+
+= Features available in GoodBye Captcha Pro version =
 *   JetPack contact form integration  - JetPack contact form captcha replacement
 *   JetPack comments form integration - JetPack comments form captcha replacement
 *   BuddyPress registration form integration - BuddyPress registration form captcha replacement
@@ -40,7 +49,7 @@ This plugin **does not use php Session**, so no conflict between GoodBye Captcha
 = Key Features = 
 *   No more captcha images
 *   Eliminates automated form submissions from robots
-*   Eliminates automated comment spam from robots
+*   Eliminates automated comment spams from robots
 *   Eliminates automated robots sign-up trough registration form
 *   Eliminates automated robots login attempts
 *   No requests to external APIs
@@ -50,6 +59,8 @@ This plugin **does not use php Session**, so no conflict between GoodBye Captcha
 *   It does not affect pages loading time
 *   It does not use PHP Session
 *   This version is free for both Commercial and Personal use
+*   Block IP feature for both IPV6 and IPV4 addresses
+*   Statistics, reports and charts with all blocked spam attempts
 
 = Technical support =
 If you notice any problems by using this plugin, please notify us and we will investigate and fix the issues. Ideally your request should contain: URL of the website (if your site is public), Php version, WordPress version and all the steps in order to replicate the issue (if you are able to reproduce it somehow)
@@ -96,27 +107,46 @@ No. The plugin runs 100% without activating any additional php extensions.
 = Is there any possibility to have a conflict between this plugin and all the other installed plugins? =
 No. The plugin is written using WordPress coding stiles recommendations when it comes to naming classes, files and so on. This plugin does not use php Session, so no conflict can occur when it comes to saving objects.
 
+= Does GoodBye Captcha help me to block ip of the spammers? =
+Yes. Starting with GoodBye Captcha version 1.1.0, this feature is available.
+
+= Does GoodBye Captcha recognize IPV6 addresses and is it possible to block them? =
+Yes. Starting with GoodBye Captcha version 1.1.0, IPV6 is recognized and the administrator can block it with a single click.
+
 = Why captcha is not user friendly? =
 Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audio CAPTCHAs take much longer (around 20-30 seconds) to hear and solve.
 
+
 == Screenshots ==
 1. GoodBye Captcha settings are available trough Settings menu.
-2. In GoodBye Captcha settings page, activate the plugin for the preferred forms.
-3. GoodBye Captcha Pro - Default Page. Activate the plugin for the standard WordPress forms and activate your license in order to get the latest GoodBye Captcha PRO updates.
-4. GoodBye Captcha Pro - JetPack Page. Activate the plugin for JetPack Comments Form feature and/or for Contact Form feature.
-5. GoodBye Captcha Pro - BuddyPress Page. Activate the plugin for Buddy Press registration form or for Buddy Press Login form.
-6. GoodBye Captcha Pro - Popular Forms Page. Activate the plugin for Contact Form 7 and/or Formidable Forms.
+2. In GoodBye Captcha settings page, activate the plugin.
+3. GoodBye Captcha Popular Forms - Activate the plugin for Contact Form 7, Gravity Forms, Ninja Forms, Formidable Forms, Fast Secure Forms.
+4. GoodBye Captcha - WordPress Forms. Activate the plugin for the standard WordPress forms.
+5. GoodBye Captcha Pro - JetPack Page. Activate the plugin for JetPack Comments Form feature and/or for Contact Form feature.
+6. GoodBye Captcha Pro - BuddyPress Page. Activate the plugin for Buddy Press registration form or for Buddy Press Login form.
+7. Total Attempts per Day Chart, Monthly Spam Attempts Percentage Comparison, Latest Blocked Attempts Table.
+8. Geographical Locations of The Attempts, Top of Attempts per Country, Statistics of Attempts per Modules.
+9. Total Attempts per Module/Day Charts, Modules Latest Attempts.
 
 == Upgrade Notice ==
-BuddyPress integration issue fixed
-Strict Standards warning message fixed
+*   Statistics, reports and charts with all blocked spam attempts
+*   Added block IP feature (IPV4 and IPV6)
  
 == Changelog ==
+
+= 1.1.0: November 17, 2014 =
+*   Block Ip address feature (IPV4 and IPV6)
+*   Reports and statistics with blocked spam attempts
+*   Total spam attempts per days and modules charts
+*   Monthly spam attempts percentage comparison
+*   Latest spam attempts table per day and module
+*   Geographic map chart of the blocked spam attempts
+*   Top of attempts organized by countries
+*   Spam attempts statistics per modules
 
 = 1.0.9: November 15, 2014 =
 *   Fixed Bug - token was not generated for comments form if the user was logged in
 *   Added timestamp for generated token
-
 
 = 1.0.8: November 10, 2014 =
 *   Improved token generator speed 

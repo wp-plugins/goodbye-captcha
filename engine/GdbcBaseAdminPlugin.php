@@ -20,9 +20,13 @@
 
 abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 {
+	const ADMIN_NONCE_VALUE = 'gdbc-reports-nonce';
+
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);
+
+		//GdbcPluginUpdater::updateToCurrentVersion();
 	}
 	
 	/**
@@ -49,24 +53,43 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 		
 		if( self::WP_VERSION_ID >= 30100 && ($this->AdminSettingsPageHook !== get_current_screen()->id) )
 			return;
-		
+
 		$selectedTab = $this->getAdminSettingsCurrentTab();
-		if ($selectedTab === GdbcModulesController::MODULE_REPORTS)
-		{
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-flot', plugins_url( '/admin/scripts/jquery-flot.js', $this->PLUGIN_MAIN_FILE ), array("jquery"), $this->PLUGIN_VERSION);
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-admin-script', plugins_url( '/admin/scripts/gdbc-admin.js', $this->PLUGIN_MAIN_FILE ), array(), $this->PLUGIN_VERSION);
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/scripts/bootstrap.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-gdbc-dashboard', plugins_url( '/admin/scripts/gdbc-dashboard.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-ui', plugins_url( '/admin/scripts/jquery-ui-1.10.3.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-easy-pie-chart', plugins_url( '/admin/scripts/easy-pie-chart.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-jvectormap', plugins_url( '/admin/scripts/jquery-jvectormap-1.2.2.min.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-jvectormap-world', plugins_url( '/admin/scripts/jquery-jvectormap-world-mill-en.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-			wp_enqueue_script( $this->PLUGIN_SLUG . '-jquery-dataTables', plugins_url( '/admin/scripts/jquery.dataTables.js', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-			
-			wp_enqueue_style( $this->PLUGIN_SLUG . '-bootstrap', plugins_url( '/admin/styles/bootstrap.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);
-			wp_enqueue_style( $this->PLUGIN_SLUG . '-admin-style', plugins_url( '/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE ),  array(), $this->PLUGIN_VERSION);		
+
+		if ($selectedTab === GdbcModulesController::MODULE_REPORTS) {
+
+			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-flot', plugins_url('/admin/scripts/jquery-flot.js', $this->PLUGIN_MAIN_FILE), array('jquery'), $this->PLUGIN_VERSION);
+			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-flot-tooltip', plugins_url('/admin/scripts/jquery-flot-tooltip.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script($this->PLUGIN_SLUG . '-raphael', plugins_url('/admin/scripts/raphael.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script($this->PLUGIN_SLUG . '-morris', plugins_url('/admin/scripts/morris.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script($this->PLUGIN_SLUG . '-admin-script', plugins_url('/admin/scripts/gdbc-admin.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+
+			wp_localize_script($this->PLUGIN_SLUG . '-admin-script', 'GdbcAdmin', array(
+				'ajaxUrl' => admin_url('admin-ajax.php'),
+				'shortCode' => $this->PLUGIN_SHORT_CODE,
+				'reportsNonce' => wp_create_nonce(self::ADMIN_NONCE_VALUE),
+				'slug' => $this->PLUGIN_SLUG
+			));
+
+			wp_enqueue_script($this->PLUGIN_SLUG . '-bootstrap', plugins_url('/admin/scripts/bootstrap.min.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+			//wp_enqueue_script($this->PLUGIN_SLUG . '-easy-pie-chart', plugins_url('/admin/scripts/easy-pie-chart.js', $this->PLUGIN_MAIN_FILE), array('jquery-ui-core'), $this->PLUGIN_VERSION);
+			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-jvectormap', plugins_url('/admin/scripts/jquery-jvectormap-1.2.2.min.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-jvectormap-world', plugins_url('/admin/scripts/jquery-jvectormap-world-mill-en.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+
+			wp_enqueue_style($this->PLUGIN_SLUG . '-bootstrap', plugins_url('/admin/styles/bootstrap.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+			wp_enqueue_style($this->PLUGIN_SLUG . '-morris', plugins_url('/admin/styles/morris.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+			wp_enqueue_style($this->PLUGIN_SLUG . '-admin-style', plugins_url('/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 		}
-		
+
 	}
-	
+
+	public function initPlugin()
+	{
+		parent::initPlugin();
+	}
+
+	public function adminInitPlugin()
+	{
+		parent::adminInitPlugin();
+	}
 }

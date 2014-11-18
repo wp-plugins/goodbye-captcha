@@ -22,6 +22,28 @@ final class GdbcRequest
 {
 	public static function isValid(array $arrParameters = null)
 	{
-		return GdbcTokenController::getInstance()->isReceivedTokenValid();
+		$isTokenValid = GdbcTokenController::getInstance()->isReceivedTokenValid();
+
+		if(true === $isTokenValid)
+			return true;
+
+		if($isTokenValid === GdbcReasonDataSource::CLIENT_IP_BLOCKED)
+			return false;
+
+		(null === ($attemptEntity = GdbcAttemptsManager ::getSoftDeletedAttempt())) ? $attemptEntity = new GdbcAttemptEntity() : null;
+
+		$attemptEntity->ClientIp    = MchHttpRequest::getClientIp(array());
+		$attemptEntity->CreatedDate = current_time('mysql');
+		$attemptEntity->CountryId   = GdbcCountryDataSource::getCountryIdByCode(MchHttpUtil::getCountryCodeByIp($attemptEntity->ClientIp));
+		$attemptEntity->IsDeleted   = 0;
+		$attemptEntity->IsIpBlocked = 0;
+		$attemptEntity->ReasonId    = $isTokenValid;
+		$attemptEntity->ModuleId    = isset($arrParameters['module'])  ? GoodByeCaptcha::getModulesControllerInstance()->getModuleIdByName($arrParameters['module']) : null;
+		$attemptEntity->SectionId   = isset($arrParameters['section']) && null !==  $attemptEntity->ModuleId ? GoodByeCaptcha::getModulesControllerInstance()->getAdminModuleInstance($arrParameters['module'])->getSettingOptionIdByOptionName($arrParameters['section']) : null;
+
+
+		empty($attemptEntity->Id) ? GdbcAttemptsManager::createAttempt($attemptEntity) : GdbcAttemptsManager::saveAttempt($attemptEntity);
+
+		return false;
 	}
 }

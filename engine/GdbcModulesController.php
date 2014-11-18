@@ -20,78 +20,235 @@
 
 final class GdbcModulesController extends MchWpModulesController
 {
-	CONST MODULE_DEFAULT        = 'GdbcDefaultModule'; 
-	CONST MODULE_JETPACK        = 'GdbcJetPackModule';
-	CONST MODULE_BUDDY_PRESS    = 'GdbcBuddyPressModule';
-	CONST MODULE_POPULAR_FORMS  = 'GdbcPopularFormsModule'; //Gravity Forms, CForm7, Ninja Forms, Formidable Forms
-	CONST MODULE_REPORTS		= 'GdbcReportsModule';
-	
+	CONST MODULE_SETTINGS         = 'Settings';
+	CONST MODULE_WORDPRESS        = 'Wordpress';
+	CONST MODULE_JETPACK          = 'JetPack';
+	CONST MODULE_BUDDY_PRESS      = 'BuddyPress';
+	CONST MODULE_POPULAR_FORMS    = 'PopularForms';
+	CONST MODULE_REPORTS		  = 'Reports';
+	CONST MODULE_NINJA_FORMS      = 'NinjaForms';
+	CONST MODULE_CONTACT_FORM_7   = 'ContactForm7';
+	CONST MODULE_GRAVITY_FORMS    = 'GravityForms';
+	CONST MODULE_FAST_SECURE_FORM = 'FastSecureForm';
+	CONST MODULE_FORMIDABLE_FORMS = 'FormidableForms';
+
 	private static $arrModules = array(
 
-		self::MODULE_DEFAULT =>array(
-			'GdbcDefaultAdminModule'  => '/modules/default/GdbcDefaultAdminModule.php',
-			'GdbcDefaultPublicModule' => '/modules/default/GdbcDefaultPublicModule.php',
+		self::MODULE_SETTINGS => array(
+			'info'    => array(
+				'ModuleId'   => 0,
+				'IsFree' => true,
+			),
+			'classes' => array(
+				'GdbcSettingsAdminModule'  => '/modules/settings/GdbcSettingsAdminModule.php',
+				'GdbcSettingsPublicModule' => '/modules/settings/GdbcSettingsPublicModule.php',
+			)
 		),
-		
-		self::MODULE_JETPACK =>array(
-			'GdbcJetPackAdminModule'  => '/modules/jetpack/GdbcJetPackAdminModule.php',
-			'GdbcJetPackPublicModule' => '/modules/jetpack/GdbcJetPackPublicModule.php',
+
+		self::MODULE_POPULAR_FORMS => array(
+			'info'    => array(
+				'ModuleId' => 0,
+				'IsFree' => true,
+			),
+			'classes' => array(
+				'GdbcPopularFormsAdminModule'  => '/modules/popular-forms/GdbcPopularFormsAdminModule.php',
+				'GdbcPopularFormsPublicModule' => '/modules/popular-forms/GdbcPopularFormsPublicModule.php',
+			)
 		),
-		
+
+
+		self::MODULE_WORDPRESS => array(
+			'info'    => array(
+				'ModuleId' => 1,
+				'IsFree' => true,
+			),
+			'classes' => array(
+				'GdbcWordpressAdminModule'  => '/modules/wordpress/GdbcWordpressAdminModule.php',
+				'GdbcWordpressPublicModule' => '/modules/wordpress/GdbcWordpressPublicModule.php',
+			)
+		),
+
+		self::MODULE_JETPACK => array(
+			'info'    => array(
+				'ModuleId' => 2,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcJetPackAdminModule'  => '/modules/jetpack/GdbcJetPackAdminModule.php',
+				'GdbcJetPackPublicModule' => '/modules/jetpack/GdbcJetPackPublicModule.php',
+			)
+		),
+
 		self::MODULE_BUDDY_PRESS => array(
-			'GdbcBuddyPressAdminModule'  => '/modules/buddy-press/GdbcBuddyPressAdminModule.php',
-			'GdbcBuddyPressPublicModule' => '/modules/buddy-press/GdbcBuddyPressPublicModule.php',
+			'info'    => array(
+				'ModuleId' => 3,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcBuddyPressAdminModule'  => '/modules/buddy-press/GdbcBuddyPressAdminModule.php',
+				'GdbcBuddyPressPublicModule' => '/modules/buddy-press/GdbcBuddyPressPublicModule.php',
+			)
 		),
-		
-		self::MODULE_POPULAR_FORMS =>array(
-			'GdbcPopularFormsAdminModule'  => '/modules/popular-forms/GdbcPopularFormsAdminModule.php',
-			'GdbcPopularFormsPublicModule' => '/modules/popular-forms/GdbcPopularFormsPublicModule.php',
+
+		self::MODULE_NINJA_FORMS => array(
+			'info'    => array(
+				'ModuleId' => 4,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcNinjaFormsAdminModule'  => '/modules/ninja-forms/GdbcNinjaFormsAdminModule.php',
+				'GdbcNinjaFormsPublicModule' => '/modules/ninja-forms/GdbcNinjaFormsPublicModule.php',
+			)
 		),
-		
-		self::MODULE_REPORTS =>array(
-			'GdbcReportsAdminModule'  => '/modules/reports/GdbcReportsAdminModule.php',
-			'GdbcPopularFormsPublicModule' => '/modules/reports/GdbcReportsPublicModule.php',
+
+		self::MODULE_CONTACT_FORM_7 => array(
+			'info'    => array(
+				'ModuleId' => 5,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcContactForm7AdminModule'  => '/modules/contact-form-7/GdbcContactForm7AdminModule.php',
+				'GdbcContactForm7PublicModule' => '/modules/contact-form-7/GdbcContactForm7PublicModule.php',
+			)
 		),
+
+		self::MODULE_GRAVITY_FORMS => array(
+			'info'    => array(
+				'ModuleId' => 6,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcGravityFormsAdminModule'  => '/modules/gravity-forms/GdbcGravityFormsAdminModule.php',
+				'GdbcGravityFormsPublicModule' => '/modules/gravity-forms/GdbcGravityFormsPublicModule.php',
+			)
+		),
+
+		self::MODULE_FAST_SECURE_FORM => array(
+			'info'    => array(
+				'ModuleId' => 7,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcFastSecureFormAdminModule'  => '/modules/fast-secure-form/GdbcFastSecureFormAdminModule.php',
+				'GdbcFastSecureFormPublicModule' => '/modules/fast-secure-form/GdbcFastSecureFormPublicModule.php',
+			)
+		),
+
+		self::MODULE_FORMIDABLE_FORMS => array(
+			'info'    => array(
+				'ModuleId' => 8,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcFormidableFormsAdminModule'  => '/modules/formidable-forms/GdbcFormidableFormsAdminModule.php',
+				'GdbcFormidableFormsPublicModule' => '/modules/formidable-forms/GdbcFormidableFormsPublicModule.php',
+			)
+		),
+
+		self::MODULE_REPORTS => array(
+			'info'    => array(
+				'ModuleId' => 0,
+				'IsFree' => true,
+			),
+			'classes' => array(
+				'GdbcReportsAdminModule'       => '/modules/reports/GdbcReportsAdminModule.php',
+				'GdbcReportsPublicModule'      => '/modules/reports/GdbcReportsPublicModule.php',
+			)
+		),
+
 	);
-	
+
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);
-		
 	}
-	
-	
-	public function getRegisteredModules()
+
+	public function getModuleIdByName($moduleName)
 	{
-		static $isFilePathNormalized = false;
-		
-		if($isFilePathNormalized)
-			return self::$arrModules;
-		
-		foreach (self::$arrModules as $moduleName => &$arrModuleClassesInfo)
+		return isset(self::$arrModules[$moduleName]['info']['ModuleId']) ? self::$arrModules[$moduleName]['info']['ModuleId'] : null;
+	}
+
+	public function isFreeModule($moduleIdORmoduleName)
+	{
+		$moduleName = ((false === filter_var($moduleIdORmoduleName, FILTER_VALIDATE_INT)) ? $moduleIdORmoduleName : $this->getModuleNameById($moduleIdORmoduleName));
+
+		if(!isset(self::$arrModules[$moduleName]['info']['IsFree']))
+			return false;
+
+		#Returns TRUE for true, "1", "true", "on" and "yes"
+		return (false === filter_var(self::$arrModules[$moduleName]['info']['IsFree'], FILTER_VALIDATE_BOOLEAN)) ? false : true;
+	}
+
+	public function getFreeModuleNames()
+	{
+		$arrFreeModules = array();
+		foreach(self::$arrModules as $moduleName => $arrModuleSettings)
 		{
-			if(empty($arrModuleClassesInfo))
-				continue;
-			
-			foreach ($arrModuleClassesInfo as $className => &$filePath)
-			{
-				$dirPath = MchWpUtil::stripLeftSlashes(dirname($filePath));
-				$filePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . $dirPath . DIRECTORY_SEPARATOR . basename($filePath);
-				
-				if(file_exists($filePath))
-					continue;
-				
-				unset(self::$arrModules[$moduleName]);
-			}
+			$this->isFreeModule($moduleName) ? $arrFreeModules[] = $moduleName : null;
 		}
 
-		$isFilePathNormalized = true;
-		
-		return self::$arrModules;
+		return $arrFreeModules;
+	}
+
+	public function getModuleNameById($moduleId)
+	{
+		$moduleId = (int)$moduleId;
+		foreach(self::$arrModules as $moduleKey => $moduleValue)
+		{
+			if (isset($moduleValue['info']['ModuleId']) && $moduleValue['info']['ModuleId'] === $moduleId)
+				return $moduleKey;
+		}
+		return null;
+	}
+
+	public function getRegisteredModules()
+	{
+		static $arrRegisteredModules = array();
+
+		if(!empty($arrRegisteredModules))
+			return $arrRegisteredModules;
+
+		$proBundleClassReflector = class_exists("GoodByeCaptchaPro", false) ? new ReflectionClass("GoodByeCaptchaPro") : null;
+		foreach(self::$arrModules as $moduleName => $arrModule)
+		{
+			$arrRegisteredModules[$moduleName] = array();
+
+			foreach ($arrModule['classes'] as $className => $filePath)
+			{
+				!empty($filePath) ? $filePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . ($dirPath = MchWpUtil::stripLeftSlashes(dirname($filePath))) . DIRECTORY_SEPARATOR . basename($filePath) : null;
+
+				if(file_exists($filePath))
+				{
+					$arrRegisteredModules[$moduleName][$className] = $filePath;
+					continue;
+				}
+
+				if(null !== $proBundleClassReflector)
+				{
+					$newFilePath    = dirname($proBundleClassReflector->getFileName()) . '/engine/' . $dirPath . DIRECTORY_SEPARATOR . basename($filePath);
+					file_exists($newFilePath)  ? $arrRegisteredModules[$moduleName][$className] = $newFilePath : null;
+
+					continue;
+				}
+
+				if(!class_exists("GoodByeCaptcha{$moduleName}", false))
+					continue;
+
+				$classReflector = new ReflectionClass("GoodByeCaptcha{$moduleName}");
+				$newFilePath    = dirname($classReflector->getFileName()) . '/engine/' . $dirPath . DIRECTORY_SEPARATOR . basename($filePath);
+
+				file_exists($newFilePath)  ? $arrRegisteredModules[$moduleName][$className] = $newFilePath : null;
+			}
+
+			if(empty($arrRegisteredModules[$moduleName]))
+				unset($arrRegisteredModules[$moduleName]);
+		}
+
+		return $arrRegisteredModules;
 	}
 
 	/**
-	 * 
+	 *
 	 * @staticvar null $instance
 	 * @return \GdbcModulesController
 	 */

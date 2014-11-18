@@ -32,12 +32,9 @@ final class GdbcTokenController
 	private function __construct()
 	{
 		$this->ModulesController = GdbcModulesController::getInstance(GoodByeCaptcha::getPluginInfo());
-		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_DEFAULT))
-		{
-			$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_TOKEN_SECRET_KEY);
-			$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_HIDDEN_INPUT_NAME);
-		}
-		
+		$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
+		$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME);
+
 	}
 	
 	public function isReceivedTokenValid()
@@ -45,14 +42,18 @@ final class GdbcTokenController
 
 		$receivedToken = isset($_POST[$this->HiddenInputName]) ? $_POST[$this->HiddenInputName] : (null !== $this->getHiddenFieldCookie() ? $this->getHiddenFieldCookie() : null);
 		if(null === $receivedToken)
-			return false;
-		
+			return GdbcReasonDataSource::TOKEN_MISSING;
+
+		if(GdbcAttemptsManager::isClientIpBlocked(MchHttpRequest::getClientIp(array())))
+			return GdbcReasonDataSource::CLIENT_IP_BLOCKED;
+
 		$this->deleteHiddenFieldCookie();
+
 		$arrDecryptedToken = json_decode(MchCrypt::decryptToken($this->TokenSecretKey, $receivedToken), true);
 		
 		if( !isset($arrDecryptedToken[0]) || false === ($tokenIndex = strpos($arrDecryptedToken[0], self::TOKEN_SEPARATOR)) )
 		{
-			return false;
+			return GdbcReasonDataSource::TOKEN_INVALID;
 		}
 
 		$browserInfoInput = substr($arrDecryptedToken[0], 0, $tokenIndex);
@@ -61,15 +62,14 @@ final class GdbcTokenController
 
 		if( null === $receivedBrowserInfoInput )
 		{
-			return false;
+			return GdbcReasonDataSource::BROWSER_INFO_MISSING;
 		}
-		
+
 		$receivedBrowserInfoInput = MchWpUtil::replaceNonAlphaNumericCharacters($receivedBrowserInfoInput, '');
-		
-		
+
 		if($arrDecryptedToken[0] !== $browserInfoInput . self::TOKEN_SEPARATOR . $receivedBrowserInfoInput)
 		{
-			return false;
+			return GdbcReasonDataSource::BROWSER_INFO_INVALID;
 		}
 		
 		array_shift($arrDecryptedToken);
@@ -80,17 +80,22 @@ final class GdbcTokenController
 
 		if($timeSinceGenerated > self::TOKEN_LIVETIME)
 		{
-			return false;
+			return GdbcReasonDataSource::TOKEN_EXPIRED;
 		}
 
 		if($timeSinceGenerated < 4)
 		{
-			return false;
+			return GdbcReasonDataSource::TOKEN_SUBMITTED_EARLY;
 		}
 
 		if(count(array_diff($arrDecryptedToken, $arrTokenData)) !== 0)
 		{
-			return false;
+			return GdbcReasonDataSource::TOKEN_INVALID;
+		}
+
+		if(GdbcAttemptsManager::isClientIpBlocked(MchHttpRequest::getClientIp(array())))
+		{
+			return GdbcReasonDataSource::CLIENT_IP_BLOCKED;
 		}
 
 		return true;
@@ -102,13 +107,23 @@ final class GdbcTokenController
 	{
 		if( ! $this->isAjaxRequestForTokenValid() )
 			return json_encode (array());
-		
+
 		if(!isset($_POST['browserInfo']) || null === ($arrBrowserInfo = json_decode(stripcslashes($_POST['browserInfo']), true)))
 			return json_encode (array());
-		
+
+
+		foreach ($arrBrowserInfo as $prop => $propValue)
+		{
+			if(!is_array($propValue) && false === strpos($prop, ' '))
+				continue;
+
+			unset($arrBrowserInfo[$prop]);
+		}
+
+
 		if( ($arrBrowserInfoLength = count($arrBrowserInfo)) < 3)
 			return json_encode (array());
-		
+
 		$arrKeysToSave = array_flip((array)array_rand($arrBrowserInfo, MchCrypt::getRandomIntegerInRange(3, $arrBrowserInfoLength - 1)));
 
 		foreach ($arrKeysToSave as $key => &$val)
@@ -119,7 +134,7 @@ final class GdbcTokenController
 		$arrTokenData = $this->getTokenData();
 		$browserField = MchWpUtil::replaceNonAlphaCharacters(MchCrypt::getRandomString(25), '-');
 		array_unshift($arrTokenData, $browserField . self::TOKEN_SEPARATOR . MchWpUtil::replaceNonAlphaNumericCharacters(implode('', array_values($arrKeysToSave)), ''));
-		
+
 		$arrResponse = array(
 			'token'       => MchCrypt::encryptToken($this->TokenSecretKey, json_encode($arrTokenData)),
 			$browserField => implode(self::TOKEN_SEPARATOR, array_keys($arrKeysToSave))
@@ -154,25 +169,32 @@ final class GdbcTokenController
 		
 		return $arrData;
 	}
-	
-	
+
+
 	private function isAjaxRequestForTokenValid()
 	{
-		
-		if( !isset($_POST[$this->HiddenInputName]) || !$this->isAjaxNonceValid($this->HiddenInputName) )
-			return false;
-		
-		
-		if( !isset($_SERVER['HTTP_X_REQUESTED_WITH'] ) || $_SERVER['HTTP_X_REQUESTED_WITH'] !== 'XMLHttpRequest' )
-			return false; 
-	
 
-		if( !isset($_SERVER['HTTP_ACCEPT']) || false === strpos($_SERVER['HTTP_ACCEPT'], 'json') )
+		if(!isset($_POST[$this->HiddenInputName]))
+			return false;
+
+		if(!$this->isAjaxNonceValid($this->HiddenInputName))
+			return false;
+
+		if(!isset($_SERVER['HTTP_X_REQUESTED_WITH'] ))
+			return false;
+
+		if($_SERVER['HTTP_X_REQUESTED_WITH'] !== 'XMLHttpRequest')
+			return false;
+
+		if(!isset($_SERVER['HTTP_ACCEPT']))
+			return false;
+
+		if(false === strpos($_SERVER['HTTP_ACCEPT'], 'json'))
 			return false;
 
 		return true;
 	}
-	
+
 	
 	public function setHiddenFieldNonceCookie()
 	{
@@ -182,12 +204,7 @@ final class GdbcTokenController
 	{
 		return GdbcPluginUtils::getCookie(GoodByeCaptcha::PLUGIN_SLUG . '-' . $this->HiddenInputName, $this->getAjaxNonce(), 86400);
 	}
-	
-//	public function deleteHiddenFieldNonceCookie()
-//	{
-//		return GdbcPluginUtils::deleteCookie(GoodByeCaptcha::PLUGIN_SHORT_CODE . $this->HiddenInputName);
-//	}
-	
+
 	private function getHiddenFieldCookie()
 	{
 		return GdbcPluginUtils::getCookie($this->HiddenInputName);
@@ -250,8 +267,8 @@ final class GdbcTokenController
 	{
 		return wp_create_nonce($this->getComplexNonceAction(false));
 	}
-	
-	
+
+
 	private function isNonceValid($strNonce)
 	{
 		return (bool)wp_verify_nonce($strNonce, $this->getComplexNonceAction(false));

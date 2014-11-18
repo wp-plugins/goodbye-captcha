@@ -45,6 +45,7 @@ final class MchWp
 			'MchWpPlugin'             => '/Plugin/MchWpPlugin.php',
 			'MchWpAdminPlugin'        => '/Plugin/MchWpAdminPlugin.php',
 			'MchWpPublicPlugin'       => '/Plugin/MchWpPublicPlugin.php',
+			'MchWpPluginUpdater'      => '/Plugin/MchWpPluginUpdater.php',
 
 			'MchWpIController'        => '/Controller/MchWpIController.php',
 			'MchWpModulesController'  => '/Controller/MchWpModulesController.php',
@@ -66,13 +67,17 @@ final class MchWp
 											   : null;
 	}
 	
-	
+
+	public static function getVersionIdFromString($strVersion)
+	{
+		return MchWpBase::getPluginVersionIdFromString($strVersion);
+	}
+
 	public static function isUserLoggedIn()
 	{
 		return MchWpBase::isUserLoggedIn();
 	}
-	
-	
+
 	public static function isAdminLoggedIn()
 	{
 		return MchWpBase::isAdminLoggedIn();
@@ -87,7 +92,11 @@ final class MchWp
 	{
 		return MchWpBase::isAdminInDashboard();
 	}
-	
+
+	public static function isAjaxRequest()
+	{
+		return MchWpBase::isAjaxRequest();
+	}
 
 	private function __clone()
 	{}

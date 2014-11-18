@@ -32,8 +32,7 @@ final class MchWpUtil
 		$strText = str_replace(' ', $token, $strText); 
 		$strText = preg_replace('/[^A-Za-z\-]/', $token, $strText);
 		$strText = preg_replace('/-+/', $token, trim($strText, '-'));
-		
-		
+
 		return $strText;
 	}
 	
@@ -42,8 +41,7 @@ final class MchWpUtil
 		$strText = str_replace(' ', $token, $strText); 
 		$strText = preg_replace('/[^A-Za-z0-9\-]/', $token, $strText); 
 		$strText = preg_replace('/-+/', $token, trim($strText, '-'));
-		
-		
+
 		return $strText;
 	}
 	

@@ -29,30 +29,30 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 	{
 		parent::__construct($arrPluginInfo);
 
-		
-		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_DEFAULT))
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_WORDPRESS))
 		{
 			/**
-			* @var \GdbcDefaultPublicModule
+			*
+			* @var \GdbcDefaultPublicModule 
 			*/
-			$defaultModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_DEFAULT, MchWpModule::MODULE_TYPE_PUBLIC);
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_COMMENTS_FORM_ACTIVATED))
+			$defaultModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_WORDPRESS, MchWpModule::MODULE_TYPE_PUBLIC);
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::COMMENTS_FORM))
 			{
 				$defaultModuleInstance->activateCommentsActions();
 			}
 
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_LOGIN_FORM_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::LOGIN_FORM))
 			{
 				add_action('login_enqueue_scripts', array($this,'enqueuePublicScriptsAndStyles') );
 				$defaultModuleInstance->activateLoginActions();
 			}
 			
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_REGISTRATION_FORM_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::REGISTRATION_FORM))
 			{
 				$defaultModuleInstance->activateRegisterActions();
 			}
 			
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_LOST_PASSWORD_FORM_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::LOST_PASSWORD_FORM))
 			{
 				$defaultModuleInstance->activateLostPasswordActions();			
 			}
@@ -61,18 +61,18 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		}
 		
 		/**
-		 * GoodBye Captcha JetPack integration - comments and contact form
+		 * GoodBye Captcha JetPack integration - comments and ontact form
 		 */ 
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_JETPACK))
 		{
 			$jetPackModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_JETPACK, MchWpModule::MODULE_TYPE_PUBLIC);
 
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::OPTION_COMMENTS_FORM_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::COMMENTS_FORM))
 			{
 				$jetPackModuleInstance->activateCommentsFormActions();
 			}
 			
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::OPTION_CONTACT_FORM_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::CONTACT_FORM))
 			{
 				$jetPackModuleInstance->activateContactFormActions();
 			}
@@ -88,16 +88,16 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		{
 			$buddyPressModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_BUDDY_PRESS, MchWpModule::MODULE_TYPE_PUBLIC);
 
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_BUDDY_PRESS, GdbcBuddyPressAdminModule::OPTION_REGISTRATION_FORM_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_BUDDY_PRESS, GdbcBuddyPressAdminModule::OPTION_REGISTRATION_FORM))
 			{
 				$buddyPressModuleInstance->activateRegistrationFormActions();
 			}
-			
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_BUDDY_PRESS, GdbcBuddyPressAdminModule::OPTION_LOGIN_FORM_ACTIVATED))
+
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_BUDDY_PRESS, GdbcBuddyPressAdminModule::OPTION_LOGIN_FORM))
 			{
 				$buddyPressModuleInstance->activateLoginFormActions();
 			}
-			
+
 			unset($buddyPressModuleInstance);
 		}
 		
@@ -114,41 +114,54 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		{
 			$popularFormsModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_POPULAR_FORMS, MchWpModule::MODULE_TYPE_PUBLIC);
 			
-			#Contact Form 7
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_CONTACT_FORM_7_ACTIVATED))
-			{
-				$popularFormsModuleInstance->activateContactForm7Actions();
-			}
 
 			#Formidable Forms - Free and Pro
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_FORMIDABLE_FORMS_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::FORMIDABLE_FORMS))
 			{
-				$popularFormsModuleInstance->activateFormidableFormsActions();
+				if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_FORMIDABLE_FORMS))
+				{
+					$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_FORMIDABLE_FORMS)->activateFormidableFormsActions();
+				}
 			}
 
 			#Fast Secure Form
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_FAST_SECURE_FORM_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::FAST_SECURE_FORM))
 			{
-				$popularFormsModuleInstance->activateFastSecureFormActions();
+				if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_FAST_SECURE_FORM))
+				{
+					$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_FAST_SECURE_FORM)->activateFastSecureFormActions();
+				}
 			}
 			
 			#Gravity Forms
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_GRAVITY_FORMS_ACTIVATED))
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::GRAVITY_FORMS))
 			{
-				$popularFormsModuleInstance->activateGravityFormsActions();
+				if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_GRAVITY_FORMS))
+				{
+					$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_GRAVITY_FORMS)->activateGravityFormsActions();
+				}
 			}
-			
-			#Ninja Forms
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::OPTION_NINJA_FORMS_ACTIVATED))
+
+			#Contact Form 7
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::CONTACT_FORM_7))
 			{
-				$popularFormsModuleInstance->activateNinjaFormsActions();
+				if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_CONTACT_FORM_7))
+				{
+					$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_CONTACT_FORM_7)->activateContactForm7Actions();
+				}
+			}
+
+			#Ninja Forms
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::NINJA_FORMS))
+			{
+				if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_NINJA_FORMS))
+				{
+					$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_NINJA_FORMS)->activateNinjaFormsActions();
+				}
 			}
 			
 			unset($popularFormsModuleInstance);
 		}
-		
-		add_action('wp_ajax_nopriv_' . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
-		add_action('wp_ajax_'        . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
 		
 	}
 

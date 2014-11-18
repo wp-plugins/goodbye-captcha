@@ -20,18 +20,18 @@
 
 class MchWpSettingField 
 {
-
-	public $Name      = null;
-	public $Value     = null;
-	
+	public $Id          = null;
+	public $Name        = null;
+	public $Value       = null;
+	public $DisplayName = null;
 	
 	public $HTMLLabelText = null;
 	public $HTMLInputType = null;
 	
-	public function __construct($optionName, $optionValue)
+	public function __construct($fieldName, $fieldValue)
 	{
-		$this->Name  = $optionName;
-		$this->Value = $optionValue;
+		$this->Name  = $fieldName;
+		$this->Value = $fieldValue;
 	}
 	
 }

@@ -49,7 +49,7 @@ abstract class MchWpModulesController extends MchWpBase implements MchWpIControl
 		$module = $this->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN);
 		return (null === $module) ? null : $module->getModuleSetting()->getSettingOption($optionName);
 	}
-	
+
 	/**
 	 * 
 	 * @param string $moduleName
@@ -89,8 +89,8 @@ abstract class MchWpModulesController extends MchWpBase implements MchWpIControl
 	/**
 	 * 
 	 * @staticvar array $arrInstances
-	 * @param type $moduleName
-	 * @param type $forceNwInstance
+	 * @param string $moduleName
+	 * @param int $moduleType
 	 * @return \MchWpModule | null
 	 */
 	public function getModuleInstance($moduleName, $moduleType)
@@ -101,8 +101,7 @@ abstract class MchWpModulesController extends MchWpBase implements MchWpIControl
 		{
 			return $arrInstances[$moduleName][$moduleType];		
 		}
-		
-		
+
 		foreach ($this->getRegisteredModules() as $module => $arrClassesInfo)
 		{
 			if($moduleName !== $module)
@@ -136,7 +135,33 @@ abstract class MchWpModulesController extends MchWpBase implements MchWpIControl
 		return isset($arrInstances[$moduleName][$moduleType]) ? $arrInstances[$moduleName][$moduleType] : null;
 		
 	}
-	
+
+	/**
+	 * @param string $moduleName Module name
+	 *
+	 * @return \MchWpAdminModule|null
+	 */
+	public function getAdminModuleInstance($moduleName)
+	{
+		return $this->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN);
+	}
+
+	/**
+	 * @param string $moduleName Module name
+	 *
+	 * @return \MchWpPublicModule|null
+	 */
+	public function getPublicModuleInstance($moduleName)
+	{
+		return $this->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_PUBLIC);
+	}
+
+
+	/**
+	 * @param $moduleName Module name
+	 *
+	 * @return bool
+	 */
 	public function isModuleRegistered($moduleName)
 	{
 		return null === $this->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_PUBLIC) ? false : true;

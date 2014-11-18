@@ -20,14 +20,11 @@
 
 if (!defined('PHP_VERSION_ID')) 
 {
-	$arrVersionParts = explode('.', PHP_VERSION);
+    $version = explode('.', PHP_VERSION);
 
-	!isset($arrVersionParts[1]) ? $arrVersionParts[1] = 0 : null;
-	!isset($arrVersionParts[2]) ? $arrVersionParts[2] = 0 : null;
+    define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
 	
-    define('PHP_VERSION_ID', $arrVersionParts[0] * 10000 + $arrVersionParts[1] * 100 + $arrVersionParts[2]);
-	
-	unset($arrVersionParts);
+	unset($version);
 }
 
 
@@ -53,7 +50,7 @@ if( ! function_exists( 'mchCryptAutoLoader' ) )
 
 final class MchCrypt
 {
-	CONST DERIVED_KEY_ITERATIONS = 3500;
+	CONST DERIVED_KEY_ITERATIONS = 1000;
 	
 	public static function getRandomIntegerInRange($min = 1, $max = PHP_INT_MAX, $forceSecureRandomBytes = false)
 	{
@@ -99,14 +96,33 @@ final class MchCrypt
 		for($i = 1; $i <= $blockCount; ++$i)
 		{
 			$last = $xorsum = hash_hmac('sha256', $salt . pack("N", $i), $secretKey, true);
-			for ($j = 1; $j < (self::DERIVED_KEY_ITERATIONS / 3) ; ++$j) 
+			for ($j = 1; $j < self::DERIVED_KEY_ITERATIONS ; ++$j) 
+			{
 				$xorsum ^= ($last = hash_hmac('sha256', $last, $secretKey, true));
+			}
 
 			$hash .= $xorsum;
 		}
 		
 		return substr($hash, 0, $length);
 	}
+	
+    private static function compareDerivedKeys($firstDerivedKey, $secondDerivedKey)
+    {
+        $firstDerivedKey        = (string) $firstDerivedKey;
+        $secondDerivedKey       = (string) $secondDerivedKey;
+        $firstDerivedKeyLength  = strlen($firstDerivedKey);
+        $secondDerivedKeyLength = strlen($secondDerivedKey);
+		
+        $result = 0;
+        for ($i = 0, $length = min($firstDerivedKeyLength, $secondDerivedKeyLength); $i < $length; ++$i) 
+		{
+            $result |= ord($firstDerivedKey[$i]) ^ ord($secondDerivedKey[$i]);
+        }
+		
+       return  (0 === ($result |= $firstDerivedKeyLength ^ $secondDerivedKeyLength));
+
+    }
 	
 	public static function encryptToken($secretKey, $strTextToEncrypt, $cipherId = MchCrypt_Core_Crypter::CIPHER_BLOWFISH, $encryptionModeId = MchCrypt_Core_Crypter::MODE_CBC)
 	{
@@ -259,24 +275,6 @@ final class MchCrypt
 		return null !== $isLoaded ? $isLoaded : $isLoaded = extension_loaded('lzf');
 		
 	}
-	
-    private static function compareDerivedKeys($firstDerivedKey, $secondDerivedKey)
-    {
-        $firstDerivedKey        = (string) $firstDerivedKey;
-        $secondDerivedKey       = (string) $secondDerivedKey;
-        $firstDerivedKeyLength  = strlen($firstDerivedKey);
-        $secondDerivedKeyLength = strlen($secondDerivedKey);
-		
-        $result = 0;
-        for ($i = 0, $length = min($firstDerivedKeyLength, $secondDerivedKeyLength); $i < $length; ++$i) 
-		{
-            $result |= ord($firstDerivedKey[$i]) ^ ord($secondDerivedKey[$i]);
-        }
-		
-       return  (0 === ($result |= $firstDerivedKeyLength ^ $secondDerivedKeyLength));
-
-    }
-	
 	
 	private function __construct() 
 	{}

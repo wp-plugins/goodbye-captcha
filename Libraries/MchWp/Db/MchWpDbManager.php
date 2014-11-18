@@ -35,7 +35,7 @@ class MchWpDbManager implements MchWpIDb
 	{
 		global $wpdb;
 
-		if($wpdb->get_var($wpdb->prepare("show tables like %s", $tableName)) == $tableName)
+		if($wpdb->get_var($wpdb->prepare("show tables like %s", $tableName)) === $tableName)
 			return false;
 
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -50,8 +50,7 @@ class MchWpDbManager implements MchWpIDb
 			return null;
 
 		global $wpdb;
-		return false !== ($queryResult = $wpdb->query($sqlQuery)) ? $queryResult : null;
-
+		return false !== ($queryResult = $wpdb->get_results($sqlQuery)) ? $queryResult : null;
 	}
 
 	/**

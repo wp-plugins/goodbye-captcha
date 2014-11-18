@@ -30,13 +30,9 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);
-		
-		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_DEFAULT))
-		{
-			$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_TOKEN_SECRET_KEY);
-			$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_DEFAULT, GdbcDefaultAdminModule::OPTION_HIDDEN_INPUT_NAME);
-		}
 
+		$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
+		$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME);
 	}
 
 	/**

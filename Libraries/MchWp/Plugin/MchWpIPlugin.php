@@ -22,5 +22,4 @@
 interface MchWpIPlugin extends MchWpIBase
 {
 	public function getModulesControllerInstance(array $arrPluginInfo);
-	
 }

@@ -26,37 +26,26 @@
 
 final class GdbcAdmin extends GdbcBaseAdminPlugin
 {
-
 	protected function __construct(array $arrPluginInfo)
 	{
-		
 		parent::__construct($arrPluginInfo);
-		
-		add_action('admin_menu', array($this, 'addAdminMenu'));
-		add_action('admin_init', array($this, 'checkForUpdate'));
-		
-	}
-	
-	public function checkForUpdate()
-	{
-		if(GoodByeCaptcha::isFreeVersion())
-			return;
-	
-		$defaultModuleInstance = GdbcModulesController::getInstance($this->ArrPluginInfo)->getModuleInstance(GdbcModulesController::MODULE_DEFAULT, MchWpModule::MODULE_TYPE_ADMIN);
 
-		if(!$defaultModuleInstance->getModuleSetting()->getSettingOption(GdbcDefaultAdminModule::OPTION_LICENSE_ACTIVATED))
-			return;
-		
-		new GdbcPluginUpdater(GoodByeCaptcha::PLUGIN_SITE_URL, 
-								$this->PLUGIN_MAIN_FILE, array( 
-									'version' 	=> $this->PLUGIN_VERSION,
-									'license' 	=> $defaultModuleInstance->getModuleSetting()->getSettingOption(GdbcDefaultAdminModule::OPTION_LICENSE_KEY),
-									'item_name' => 'GoodBye Captcha Pro',
-									'author' 	=> 'Mihai Chelaru'
-									)
-								);
+		add_action('admin_menu', array($this, 'addAdminMenu'));
+		//add_action('admin_init', array($this, 'checkForUpdate'));
+
+		add_action('wp_ajax_nopriv_' . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
+		add_action('wp_ajax_'        . 'retrieveToken', array( GdbcTokenController::getInstance(), 'retrieveEncryptedToken' ) );
+
+		add_action('wp_ajax_'        . 'retrieveInitialDashboardData', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'retrieveInitialDashboardData'));
+		add_action('wp_ajax_'        . 'getDisplayableAttemptsArray', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'getDisplayableAttemptsArray'));
+		add_action('wp_ajax_'        . 'getModuleData', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'getModuleData'));
+		add_action('wp_ajax_'        . 'getModuleStatsPercentage', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'getModuleStatsPercentage'));
+		add_action('wp_ajax_'        . 'getTotalAttemptsPerModule', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'getTotalAttemptsPerModule'));
+		add_action('wp_ajax_'        . 'manageIp', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'manageIp'));
+		add_action('wp_ajax_'        . 'retrieveLatestAttemptsTable', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'retrieveLatestAttemptsTable'));
 	}
 	
+
 	public function addAdminMenu() 
 	{
 		$this->AdminSettingsPageHook = add_options_page( __('GoodByeCaptha Settings', $this->PLUGIN_SLUG), 
@@ -95,15 +84,9 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 	
 	private static function singleSiteActivate(array $arrPluginInfo)
 	{
-		/**
-		*
-		* @var \GdbcDefaultPublicModule 
-		*/
-		$defaultModuleInstance = GdbcModulesController::getInstance($arrPluginInfo)->getModuleInstance(GdbcModulesController::MODULE_DEFAULT, MchWpModule::MODULE_TYPE_ADMIN);
-		$defaultModuleInstance->getModuleSetting()->setSettingOption(GdbcDefaultAdminModule::OPTION_HIDDEN_INPUT_NAME, MchWpUtil::replaceNonAlphaCharacters(MchCrypt::getRandomString(20), '-'));
-		$defaultModuleInstance->getModuleSetting()->setSettingOption(GdbcDefaultAdminModule::OPTION_TOKEN_SECRET_KEY, MchCrypt::getRandomString(MchCrypt::getCipherKeySize()));
-			
-		
+		GdbcPluginUpdater::updateToCurrentVersion();
+		$settingsModuleInstance = GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS);
+		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, MchWpBase::getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION));
 	}
 	
 	public static function deactivatePlugin(array $arrPluginInfo, $isForNetwork) 
@@ -142,8 +125,12 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 	{
 		parent::initPlugin();
 	}
-	
-	
+
+	public function adminInitPlugin()
+	{
+		parent::adminInitPlugin();
+	}
+
 	public static function getInstance(array $arrPluginInfo)
 	{
 		static $arrInstances = array();

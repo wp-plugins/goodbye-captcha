@@ -52,7 +52,7 @@ abstract class MchWpAdminModule extends MchWpModule
 
 		parent::__construct($arrPluginInfo);
 	}	
-	
+
 	public function activateAdminSetting()
 	{
 		$moduleSetting = $this->getModuleSetting();
@@ -60,9 +60,22 @@ abstract class MchWpAdminModule extends MchWpModule
 		$this->registerSetting($moduleSetting);
 		
 		add_filter('pre_update_option_' . $moduleSetting->SettingKey, array($this, 'filterOptionsBeforeSave'), 10, 2);	
-		
+
 	}
-	
+
+	public function setSettingOption($settingOptionName, $settingOptionValue)
+	{
+		foreach($this->filterOptionsBeforeSave(array($settingOptionName => $settingOptionValue), $this->getModuleSetting()->getAllSavedOptions()) as $optionName => $optionValue)
+		{
+			$this->getModuleSetting()->setSettingOption($optionName, $optionValue);
+		}
+	}
+
+	public function getSettingOption($settingOptionName)
+	{
+		return $this->getModuleSetting()->getSettingOption($settingOptionName);
+	}
+
 	public function filterOptionsBeforeSave($arrNewSettings, $arrOldSettings)
 	{
 		

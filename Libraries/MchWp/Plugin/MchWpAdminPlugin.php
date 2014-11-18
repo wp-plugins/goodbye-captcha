@@ -31,7 +31,8 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 	{
 		parent::__construct($arrPluginInfo);
 
-		add_action('admin_init', array($this, 'activateAdminModulesSettings'));
+//		add_action('admin_init', array($this, 'activateAdminModulesSettings'));
+		add_action('admin_init', array($this, 'adminInitPlugin'));
 
 		add_filter('plugin_action_links_' . plugin_basename($this->PLUGIN_MAIN_FILE) , array( $this, 'getPluginAdminActionLinks' ) );
 
@@ -42,14 +43,22 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 		
 	}
 	
-	
-	public function activateAdminModulesSettings()
+	public function adminInitPlugin()
 	{
 		foreach (array_keys($this->ModulesController->getRegisteredModules()) as $moduleName)
 		{
 			$this->ModulesController->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN)->activateAdminSetting();
 		}
+
 	}
+
+//	public function activateAdminModulesSettings()
+//	{
+//		foreach (array_keys($this->ModulesController->getRegisteredModules()) as $moduleName)
+//		{
+//			$this->ModulesController->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN)->activateAdminSetting();
+//		}
+//	}
 
 	public function renderPluginAdminPage()
 	{
@@ -96,14 +105,21 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 		
 		foreach (array_keys($this->ModulesController->getRegisteredModules()) as $moduleName)
 		{
-			
+//			$moduleSettingDefaultOptions = $this->ModulesController->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN)->getModuleSetting()->getDefaultOptions();
+//			if(empty($moduleSettingDefaultOptions))
+//				continue;
+
+			$tabCaption = $this->ModulesController->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN)->getModuleSettingTabCaption();
+			if(empty($tabCaption))
+				continue;
+
 			$htmlCode .= '<a class="nav-tab ' . (($moduleName === $activeSettingsTab) ? 'nav-tab-active' : '') . '" href="?page=' . $this->PLUGIN_SLUG . '&tab=' . $moduleName . '">';
 			
-			if( null === ($tabCaption = $this->ModulesController->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN)->getModuleSettingTabCaption()))
-			{
-				$tabCaption = $moduleName;
-			}
-			
+//			if( null === ($tabCaption = $this->ModulesController->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN)->getModuleSettingTabCaption()))
+//			{
+//				$tabCaption = $moduleName;
+//			}
+
 			$htmlCode .= $tabCaption . '</a>';
 		}
 		

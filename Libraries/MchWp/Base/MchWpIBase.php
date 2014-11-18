@@ -30,7 +30,7 @@ if(!defined('WP_VERSION_ID'))
 	!isset($arrVersionParts[2]) ? $arrVersionParts[2] = 0 : null;
 	
 	define('WP_VERSION_ID', $arrVersionParts[0] * 10000 + $arrVersionParts[1] * 100 + $arrVersionParts[2]);
-	
+
 	unset($arrVersionParts);
 }
 

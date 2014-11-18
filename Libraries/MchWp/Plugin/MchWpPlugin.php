@@ -51,9 +51,9 @@ abstract class MchWpPlugin extends MchWpBase implements MchWpIPlugin
 		{	
 			$locale = apply_filters('plugin_locale', get_locale(), $this->PLUGIN_SLUG);
 
-			load_textdomain($this->PLUGIN_SLUG, trailingslashit( WP_LANG_DIR ) . $this->PLUGIN_SLUG . '/' . $this->PLUGIN_SLUG . '-' . $locale . '.mo' );
+			load_textdomain($this->PLUGIN_SLUG, trailingslashit( WP_LANG_DIR ) . $this->PLUGIN_SLUG . DIRECTORY_SEPARATOR . $this->PLUGIN_SLUG . '-' . $locale . '.mo' );
 
-			load_plugin_textdomain($this->PLUGIN_SLUG, false, $this->PLUGIN_DIRECTORY_NAME . '/' . $this->PLUGIN_DOMAIN_PATH . '/' ); 
+			load_plugin_textdomain($this->PLUGIN_SLUG, false, $this->PLUGIN_DIRECTORY_NAME . DIRECTORY_SEPARATOR . $this->PLUGIN_DOMAIN_PATH . DIRECTORY_SEPARATOR );
 		}
 	}	
 	

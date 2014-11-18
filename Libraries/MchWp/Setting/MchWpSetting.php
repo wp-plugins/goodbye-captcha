@@ -37,6 +37,7 @@ class MchWpSetting implements MchWpISetting
 		{
 			$this->arrDefaultOptions[$optionName] = $arrOptionInfo['Value'];
 		}
+
 	}
 	
 	public function getDefaultOptions()
@@ -53,29 +54,35 @@ class MchWpSetting implements MchWpISetting
 	{
 		if(!MchWpBase::isAdminLoggedIn())
 			return;
-		
+
 		if(!array_key_exists($optionName, $this->arrDefaultOptions))
 			return;
-		
+
 		$arrSavedOptions = $this->getAllSavedOptions();
+
 		$arrSavedOptions[$optionName] = $optionValue;
-		
+
 		update_option($this->SettingKey, $arrSavedOptions);
 	}
 	
 	public function getSettingOption($optionName)
 	{
 		$arrSavedOptions = $this->getAllSavedOptions();
-		
-		if(isset($arrSavedOptions[$optionName]))
-			return $arrSavedOptions[$optionName];
-		
-		if(array_key_exists($optionName, $this->arrDefaultOptions))
-			return $this->arrDefaultOptions[$optionName];
-		
-		return null;
+		return isset($arrSavedOptions[$optionName]) ? $arrSavedOptions[$optionName] : null;
 	}
-	
+
+	public function deleteSettingOption($optionName)
+	{
+		$arrSavedOptions = $this->getAllSavedOptions();
+		unset($arrSavedOptions[$optionName]);
+		update_option($this->SettingKey, $arrSavedOptions);
+	}
+
+	public function deleteAllSettingOptions()
+	{
+		delete_option($this->SettingKey);
+	}
+
 	/**
 	 * 
 	 * @param MchWpSettingSection $settingSection
