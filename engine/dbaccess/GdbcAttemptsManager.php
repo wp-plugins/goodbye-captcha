@@ -112,17 +112,19 @@ final class GdbcAttemptsManager
 		if ($pageNumber < 1)
 			$pageNumber = 1;
 
-		$orderByQry = '';
-		if (null != $orderBy)
-			$orderByQry = 'ORDER BY ' . $orderBy;
+//		$orderByQry = '';
+//		if (null != $orderBy)
+//			$orderByQry = 'ORDER BY ' . $orderBy;
+
+		$orderByQry = 'ORDER BY CreatedDate';
 
 		global $wpdb;
 		$attemptEntity = new GdbcAttemptEntity();
 		$itemsQuery = '';
 		if ($shouldAddSections)
-			$itemsQuery = $wpdb->prepare('SELECT IsIpBlocked, SectionId, CreatedDate, CountryId, ClientIp  FROM ' . $attemptEntity->getTableName() . ' WHERE IsDeleted = 0 AND ModuleId = %d ' . $orderByQry .  '  LIMIT %d, %d', $moduleId, ($pageNumber-1) * $recordsPerPage, $recordsPerPage);
+			$itemsQuery = $wpdb->prepare('SELECT IsIpBlocked, SectionId, CreatedDate, CountryId, ClientIp  FROM ' . $attemptEntity->getTableName() . ' WHERE IsDeleted = 0 AND ModuleId = %d ' . $orderByQry .  ' DESC LIMIT %d, %d', $moduleId, ($pageNumber-1) * $recordsPerPage, $recordsPerPage);
 		else
-			$itemsQuery = $wpdb->prepare('SELECT IsIpBlocked, CreatedDate, CountryId, ClientIp FROM ' . $attemptEntity->getTableName() . ' WHERE IsDeleted = 0 AND ModuleId = %d ' . $orderByQry .  '  LIMIT %d, %d', $moduleId, ($pageNumber-1) * $recordsPerPage, $recordsPerPage);
+			$itemsQuery = $wpdb->prepare('SELECT IsIpBlocked, CreatedDate, CountryId, ClientIp FROM ' . $attemptEntity->getTableName() . ' WHERE IsDeleted = 0 AND ModuleId = %d ' . $orderByQry .  '  DESC LIMIT %d, %d', $moduleId, ($pageNumber-1) * $recordsPerPage, $recordsPerPage);
 		return MchWpDbManager::executePreparedQuery($itemsQuery);
 	}
 
@@ -223,7 +225,7 @@ final class GdbcAttemptsManager
 
 	public static function manageIp($ip, $shouldBlock)
 	{
-		if(!MchHttpUtil::isPublicIpAddress($ip))
+		if(!MchHttpUtil::isPublicIpAddress($ip) || $ip === MchHttpUtil::getServerIPAddress())
 			return false;
 
 		global $wpdb;

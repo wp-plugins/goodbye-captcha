@@ -21,13 +21,15 @@
 abstract class MchWpPublicPlugin extends MchWpPlugin
 {
 	public abstract function enqueuePublicScriptsAndStyles();
+	public abstract function addAfterSetupThemeActions();
 
 	protected function __construct(array $arrPluginInfo) 
 	{
 		parent::__construct($arrPluginInfo);
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueuePublicScriptsAndStyles' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueuePublicScriptsAndStyles' ) );
-			
+		//add_action( 'wp_enqueue_scripts', array( $this, 'enqueuePublicScriptsAndStyles' ) );
+
+		add_action('after_setup_theme', array( $this, 'addAfterSetupThemeActions' ));
 	}		
 }

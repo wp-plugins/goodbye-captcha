@@ -1,6 +1,5 @@
 <?php
-
-/* 
+/*
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -17,21 +16,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-class MchWpSettingField 
+abstract class MchWpTask implements MchWpITask
 {
-	public $Id          = null;
-	public $Name        = null;
-	public $Value       = null;
-	public $Description = null;
-	
-	public $HTMLLabelText = null;
-	public $HTMLInputType = null;
+	private $isRecurringTask = false;
+	private $runningInterval = null;
 
-	public function __construct($fieldName, $fieldValue)
+	public function __construct($runningInterval, $isRecurring)
 	{
-		$this->Name  = $fieldName;
-		$this->Value = $fieldValue;
+		$this->runningInterval = (int)floor(abs($runningInterval));
+		$this->isRecurringTask = (bool)$isRecurring;
 	}
-	
+
+	public function isRecurringTask()
+	{
+		return $this->isRecurringTask;
+	}
+
+	public function getRunningInterval()
+	{
+		return $this->runningInterval;
+	}
+
+	public function getTaskCronActionHookName()
+	{
+		return get_class($this) . '-' . $this->runningInterval . '-' . $this->isRecurringTask;
+	}
 }

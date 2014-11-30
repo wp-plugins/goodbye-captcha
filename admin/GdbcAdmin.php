@@ -87,6 +87,8 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		GdbcPluginUpdater::updateToCurrentVersion();
 		$settingsModuleInstance = GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS);
 		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, MchWpBase::getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION));
+
+		GdbcTaskScheduler::scheduleGdbcTasks();
 	}
 	
 	public static function deactivatePlugin(array $arrPluginInfo, $isForNetwork) 
@@ -106,7 +108,9 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 	}
 
 	private static function singleSiteDeactivate($arrPluginInfo)
-	{}
+	{
+		GdbcTaskScheduler::unscheduleGdbcTasks();
+	}
 
 	public function activateForNewSite($blogId)
 	{

@@ -21,17 +21,18 @@
 final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 {
 
-	CONST LOGIN_FORM             = 'IsLoginFormActivated';
-	CONST COMMENTS_FORM          = 'IsCommentsFormActivated';
-	CONST LOST_PASSWORD_FORM     = 'IsLostPasswordFormActivated';
-	CONST REGISTRATION_FORM      = 'IsUserRegistrationFormActivated';
-
+	CONST LOGIN_FORM                       = 'IsLoginFormActivated';
+	CONST COMMENTS_FORM                    = 'IsCommentsFormActivated';
+	CONST LOST_PASSWORD_FORM               = 'IsLostPasswordFormActivated';
+	CONST REGISTRATION_FORM                = 'IsUserRegistrationFormActivated';
+    CONST COMMENTS_FORM_WEBSITE_FIELD      = 'IsCommentsFormWebsiteFieldHidden';
+	CONST COMMENTS_FORM_NOTES_FIELDS       = 'CommentsFormNotesHidden'; // hides allowed tags and text like "Your email address will not be published"
+	CONST STORE_SPAM_ATTEMPTS              = 'IsKeepSpamAttemptsActivated';
 
 	private $arrDefaultSettingOptions = array(
 
 			self::COMMENTS_FORM  => array(
 				'Id'         => 1,
-				//'Name'       => "Comments",
 				'Value'      => NULL,
 				'LabelText' => 'Comments',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
@@ -39,7 +40,6 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 		
 			self::LOGIN_FORM=> array(
 				'Id'         => 2,
-				//'Name'       => "Login",
 				'Value'      => NULL,
 				'LabelText' => 'Login',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
@@ -47,7 +47,6 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 		
 			self::LOST_PASSWORD_FORM  => array(
 				'Id'         => 3,
-				//'Name'       => "Lost Password",
 				'Value'      => NULL,
 				'LabelText' => 'Lost Password',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
@@ -55,11 +54,28 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 		
 			self::REGISTRATION_FORM=> array(
 				'Id'         => 4,
-				//'Name'       => "Registration",
 				'Value'      => NULL,
 				'LabelText' => 'Registration',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 			),
+
+            self::COMMENTS_FORM_WEBSITE_FIELD=> array(
+                'Id'          => 5,
+                'Value'       => NULL,
+                'LabelText'   => 'Hide Comments Website Field',
+	            'Description' => 'Hides Comments Form Website Url',
+                'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
+            ),
+
+
+            self::COMMENTS_FORM_NOTES_FIELDS=> array(
+	            'Id'         => 6,
+	            'Value'      => NULL,
+	            'LabelText'   => 'Hide Comments Form Notes Fields',
+	            'Description' => 'Hides form allowed tags and text like "Your email address will not be published"',
+	            'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
+            ),
+
 	);
 	
 	/**
@@ -100,7 +116,7 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 			
 			$settingField->HTMLLabelText = $fieldInfo['LabelText'];
 			$settingField->HTMLInputType = $fieldInfo['InputType'];
-
+			$settingField->Description   = !empty($fieldInfo['Description']) ? $fieldInfo['Description'] : null;
 			$settingSection->addSettingField($settingField);
 		}
 
@@ -137,8 +153,7 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 		
 		/* @var $settingField \MchWpSettingField */
 		$settingField = $arrSettingField[0];
-		
-			
+
 		$arrAttributes = array(
 								'type' => $settingField->HTMLInputType,
 								'name' => $this->moduleSetting->SettingKey . '[' . $settingField->Name . ']',
@@ -157,7 +172,10 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 
 				
 				echo MchWpUtilHtml::createInputElement($arrAttributes);
-				
+				if(!empty($settingField->Description))
+				{
+					echo '<p class = "description">' . $settingField->Description . '</p>';
+				}
 				break;
 
 			case MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT :

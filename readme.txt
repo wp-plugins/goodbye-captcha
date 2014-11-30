@@ -1,27 +1,33 @@
 === GoodBye Captcha ===
 Contributors: MihChe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
-Tags:  antispam, no captcha, captcha, spam, forms, comments, anti-spam, no-captcha, login, register, contact form, security, zero spam, no spam, comment, form, spams, spambot, spambots
+Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
-Tested up to: 4.0
-Stable tag: 1.1.0
+Tested up to: 4.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-GoodBye Captcha is the best solution for protecting your site without annoying captcha images.
+An extremely powerful anti-spam plugin that blocks Spam-bots without annoying captcha images.
 
 == Description ==
-Have you ever been frustrated with so many forms that force you to read annoying captcha images? Captcha was design to reduce the number of spam contacts but the side effect is that it also reduces legitimate users number. Many users find the captcha a nuisance. The codes are usually hard to read, require correct spelling and if you make a mistake, you have to try and try again. Captcha error forces the user to re-enter all the information on the form every time a failed spam attempt happens. Captcha was shown to produce 160% more failed conversion (people who landed on the contact page, started filling out the form but abandoned it) than when no captcha was used.
+**Goodbye Captcha anti-spam and security plugin is based on algorithms that identify spam bots without any annoying and hard to read captcha images.**
+This plugin will eliminate spam by completely blocking Spam-bots. Unlike other anti-spam plugins which simply sort spam comments from "good" comments (leaving you with all the spam in your comments folder), we stop the bots from leaving the spam in the first place.
+The plugin uses a proprietary algorithm to identify the spam-bots and physically blocks them from your site.
 
-GoodBye Captcha is based on algorithms that identify spam robots without having any annoying and hard to read images. No additional visible input field will be added into your form.
+In addition, we give you the option to add extra layers of security to your Wordpress site by incorporating our Bot blocking technology into your login page, your registration page, and new password request page.  With the click of a button, you can choose which options you want to enable.
 
-This plugin **does not use php Session**, so no conflict between GoodBye Captcha and any other plugins can occur. The plugin **does not require to install any additional php extensions**, you can run it 100% with your site configuration. GoodBye Captcha is compatible with any other WordPress plugin. If you prefer, you can use it with other captcha plugins for double spam protection. This plugin **does not perform requests to external APIs**.
+To further eliminate spam from both bots and humans, this plugin gives you the option to disable the "website field" from your comments box. Users also have the option to disable the "allowed tags" box that appears below posts and above the comments box.
+All with the click of a button!
 
 = Features available in GoodBye Captcha Free version =
 *   Comments form integration
 *   Register form integration
 *   Login form integration
 *   Forgot password form integration
+*   Disable comments form Website URL field
+*   Disable comments form Allowed Tags field
+*   Disable the "Your email address will not be published" text
 *   Block Ip address feature (IPV4 and IPV6)
 *   Reports and statistics with blocked attempts
 *   Total attempts per days and modules charts
@@ -129,10 +135,18 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 9. Total Attempts per Module/Day Charts, Modules Latest Attempts.
 
 == Upgrade Notice ==
-*   Statistics, reports and charts with all blocked spam attempts
-*   Added block IP feature (IPV4 and IPV6)
+= 1.1.1 =
+Fixed Bug - Token generated twice for IE11 browser. Now the admin cannot block private ip addresses or server ip address.
+New features: Disable comments form Website URL field, Allowed Tags field and the "Your email address will not be published" text
+
  
 == Changelog ==
+
+= 1.1.1: November 29, 2014 =
+*   Fixed Bug - Token generated twice for IE11 browser
+*   Now the admin cannot block private ip addresses or server ip address
+*   New Feature - Remove comments form Website URL field
+*   New Feature - Remove comments form Allowed Tags field and the "Your email address will not be published" text
 
 = 1.1.0: November 17, 2014 =
 *   Block Ip address feature (IPV4 and IPV6)

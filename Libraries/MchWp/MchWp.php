@@ -58,7 +58,13 @@ final class MchWp
 			'MchWpEntity'             => '/Entity/MchWpEntity.php',
 
 			'MchWpDbManager'          => '/Db/MchWpDbManager.php',
-			'MchWpIDb'                => '/Db/MchWpIDb.php'
+			'MchWpIDb'                => '/Db/MchWpIDb.php',
+
+
+			'MchWpTaskScheduler'      => '/TaskScheduler/MchWpTaskScheduler.php',
+			'MchWpITask'              => '/TaskScheduler/MchWpITask.php',
+			'MchWpTask'               => '/TaskScheduler/MchWpTask.php',
+
 		);
 		
 		return isset($arrClassMap[$className]) ? file_exists($filePath = dirname(__FILE__) . $arrClassMap[$className]) 

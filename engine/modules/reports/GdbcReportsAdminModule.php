@@ -195,7 +195,10 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 		$wpSectionOptionsInfo = array();
 		foreach($adminModuleInstance->getModuleSetting()->getDefaultOptions() as $optionName => $optionValue)
 		{
-			$wpSectionOptionsInfo[$optionName]['id']           = $adminModuleInstance->getSettingOptionIdByOptionName($optionName);
+			$optionId = $adminModuleInstance->getSettingOptionIdByOptionName($optionName);
+			if ($optionId > 4)
+				continue;
+			$wpSectionOptionsInfo[$optionName]['id']           = $optionId;
 			$wpSectionOptionsInfo[$optionName]['display-text'] = $adminModuleInstance->getSettingOptionDisplayTextByOptionId($wpSectionOptionsInfo[$optionName]['id']);
 		}
 

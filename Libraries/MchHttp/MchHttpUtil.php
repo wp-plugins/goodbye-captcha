@@ -56,10 +56,6 @@ final class MchHttpUtil
 	private static function ipv4ToBinary($ipAddress)
 	{
 		return  pack('N',ip2long($ipAddress));
-
-//		$ipAddress = explode(':', $ipAddress);
-//		return pack('N',ip2long($ipAddress[count($ipAddress)-1]));
-
 	}
 
 	private static function binaryToIpV4($binaryString)
@@ -168,14 +164,10 @@ final class MchHttpUtil
 		return null;
 	}
 
-	public static function getServerInternalIP()
+	public static function getServerIPAddress()
 	{
-		return PHP_VERSION_ID < 50300 ? gethostbyname(php_uname('n')) : gethostbyname(getHostName());
-	}
+		static $serverIp = null;
 
-	public static function getServerAllInternalIPs()
-	{
-		return PHP_VERSION_ID < 50300 ? gethostbynamel(php_uname('n')) : gethostbynamel(getHostName());
+		return null !== $serverIp ? $serverIp : $serverIp = (PHP_VERSION_ID < 50300 ? gethostbyname(php_uname('n')) : gethostbyname(getHostName()));
 	}
-
 }

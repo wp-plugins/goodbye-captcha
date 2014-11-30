@@ -41,10 +41,22 @@ class GdbcPluginUpdater
 			self::updateToVersion_1_1_0();
 		}
 
+//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.1'))
+//		{
+//			self::updateToVersion_1_1_1();
+//		}
+
 		#Save the new version of the plugin
 		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, $currentPluginVersionId);
 
 	}
+
+//	private static function updateToVersion_1_1_1()
+//	{
+//		GdbcTaskScheduler::scheduleGdbcTasks();
+//	}
+
+
 
 	private static function updateToVersion_1_1_0()
 	{

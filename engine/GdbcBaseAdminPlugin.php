@@ -56,7 +56,8 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 
 		$selectedTab = $this->getAdminSettingsCurrentTab();
 
-		if ($selectedTab === GdbcModulesController::MODULE_REPORTS) {
+		if ($selectedTab === GdbcModulesController::MODULE_REPORTS)
+		{
 
 			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-flot', plugins_url('/admin/scripts/jquery-flot.js', $this->PLUGIN_MAIN_FILE), array('jquery'), $this->PLUGIN_VERSION);
 			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-flot-tooltip', plugins_url('/admin/scripts/jquery-flot-tooltip.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
@@ -72,14 +73,15 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 			));
 
 			wp_enqueue_script($this->PLUGIN_SLUG . '-bootstrap', plugins_url('/admin/scripts/bootstrap.min.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
-			//wp_enqueue_script($this->PLUGIN_SLUG . '-easy-pie-chart', plugins_url('/admin/scripts/easy-pie-chart.js', $this->PLUGIN_MAIN_FILE), array('jquery-ui-core'), $this->PLUGIN_VERSION);
+
 			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-jvectormap', plugins_url('/admin/scripts/jquery-jvectormap-1.2.2.min.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-jvectormap-world', plugins_url('/admin/scripts/jquery-jvectormap-world-mill-en.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 
 			wp_enqueue_style($this->PLUGIN_SLUG . '-bootstrap', plugins_url('/admin/styles/bootstrap.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 			wp_enqueue_style($this->PLUGIN_SLUG . '-morris', plugins_url('/admin/styles/morris.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
-			wp_enqueue_style($this->PLUGIN_SLUG . '-admin-style', plugins_url('/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 		}
+
+		wp_enqueue_style($this->PLUGIN_SLUG . '-admin-style', plugins_url('/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 
 	}
 

@@ -11,8 +11,8 @@
  * @wordpress-plugin
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
- * Description: GoodBye Captcha is the best solution for protecting your site without annoying captcha images.
- * Version: 1.1.0
+ * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
+ * Version: 1.1.1
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 	
-	CONST PLUGIN_VERSION    = '1.1.0';
+	CONST PLUGIN_VERSION    = '1.1.1';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';	
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -63,6 +63,8 @@ class GoodByeCaptcha
 									'GdbcReasonDataSource'    => '/engine/dbaccess/GdbcReasonDataSource.php',
 									'GdbcBaseAdminModule'     => '/engine/modules/GdbcBaseAdminModule.php',
 									'GdbcBasePublicModule'    => '/engine/modules/GdbcBasePublicModule.php',
+									'GdbcCheckAttemptsTask'   => '/engine/tasks/GdbcCheckAttemptsTask.php',
+									'GdbcTaskScheduler'       => '/engine/GdbcTaskScheduler.php',
 								);
 
 	
@@ -77,6 +79,12 @@ class GoodByeCaptcha
 		self::$isFreeVersion = ( count(self::getModulesControllerInstance()->getRegisteredModules()) === count(self::getModulesControllerInstance()->getFreeModuleNames()));
 
 		GdbcPluginUpdater::updateToCurrentVersion();
+
+
+
+		//GdbcTaskScheduler::registerGdbcTasks();
+		MchWpTaskScheduler::getInstance()->unscheduleRegisteredTasks();
+
 	}
 
 	public static function isFreeVersion()
@@ -99,7 +107,7 @@ class GoodByeCaptcha
 			return null;
 		
 		$filePath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . trim(self::$arrClassMap[$className], '/\\');
-		
+
 		return file_exists($filePath) ? include_once $filePath : null;
 	}
 
@@ -113,15 +121,16 @@ class GoodByeCaptcha
 		static $gdbcInstance = null;
 		return (null !== $gdbcInstance) ? $gdbcInstance : $gdbcInstance = new self();
 	}
-	
+
 	public static function activate($isForNetwork)
 	{
 		spl_autoload_register('self::classAutoLoad');
-		
+
 		if ( ! MchWp::isUserInDashboad() )
 			return null;
 
-		return GdbcAdmin::activatePlugin(self::$arrPluginInfo, $isForNetwork);
+		GdbcAdmin::activatePlugin(self::$arrPluginInfo, $isForNetwork);
+
 
 	}
 	
@@ -132,12 +141,12 @@ class GoodByeCaptcha
 		if ( ! MchWp::isUserInDashboad() )
 			return null;
 		
-		return GdbcAdmin::deactivatePlugin(self::$arrPluginInfo, $isForNetwork);
+		GdbcAdmin::deactivatePlugin(self::$arrPluginInfo, $isForNetwork);
 
+		//GdbcTaskScheduler::unscheduleGdbcTasks();
 	}
 
 }
-
 
 /*
  * Registered hooks that are fired when the plugin is activated or deactivated.

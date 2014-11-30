@@ -1,6 +1,5 @@
 <?php
-
-/* 
+/** 
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -18,20 +17,35 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-class MchWpSettingField 
+final class GdbcTaskScheduler
 {
-	public $Id          = null;
-	public $Name        = null;
-	public $Value       = null;
-	public $Description = null;
-	
-	public $HTMLLabelText = null;
-	public $HTMLInputType = null;
-
-	public function __construct($fieldName, $fieldValue)
+	private static function getGdbcTasks()
 	{
-		$this->Name  = $fieldName;
-		$this->Value = $fieldValue;
+		static $arrGdbcTasks = array();
+		if(!empty($arrGdbcTasks))
+			return $arrGdbcTasks;
+
+
+		return $arrGdbcTasks;
 	}
-	
-}
+
+	public static function scheduleGdbcTasks()
+	{
+		foreach(self::getGdbcTasks() as $gdbcTask)
+			MchWpTaskScheduler::getInstance()->registerTask($gdbcTask);
+
+
+		MchWpTaskScheduler::getInstance()->scheduleRegisteredTasks();
+	}
+
+	public static function unscheduleGdbcTasks()
+	{
+		foreach(self::getGdbcTasks() as $gdbcTask)
+			MchWpTaskScheduler::getInstance()->registerTask($gdbcTask);
+
+		MchWpTaskScheduler::getInstance()->unscheduleRegisteredTasks();
+	}
+
+	private function __construct(){}
+	private function __clone(){}
+} 

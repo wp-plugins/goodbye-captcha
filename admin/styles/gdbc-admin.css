@@ -548,3 +548,31 @@ input[type="checkbox"], input[type="radio"] {
     margin-top: 0;
     margin-bottom: 0
 }
+
+.mchwp-settings form table.form-table
+{
+    width:auto !important;
+}
+
+.mchwp-settings form table.form-table tr
+{
+    position:relative !important;
+}
+
+.mchwp-settings form table.form-table th
+{
+    width: 245px !important;
+    padding: 18px 10px 12px 0 !important;
+}
+
+.mchwp-settings form table.form-table td
+{
+    padding:10px 0;
+}
+
+.mchwp-settings form table.form-table td p
+{
+    left: 0;
+    position: absolute;
+    width: 700px;
+}

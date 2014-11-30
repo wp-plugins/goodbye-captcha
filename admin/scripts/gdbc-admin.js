@@ -26,7 +26,7 @@ jQuery( document ).ready(function($) {
     {
         $("[id^='wid-id-']").each(function() {
             var moduleId = $(this).attr('id').substr(7);
-            displayModuleTable(moduleId, 1, '');
+            displayModuleTable(moduleId, 1, 'CreatedDate');
         });
     }
 

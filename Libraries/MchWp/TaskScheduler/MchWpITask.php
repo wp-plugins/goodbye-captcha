@@ -1,6 +1,5 @@
 <?php
-
-/* 
+/*
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -17,21 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-class MchWpSettingField 
+interface MchWpITask
 {
-	public $Id          = null;
-	public $Name        = null;
-	public $Value       = null;
-	public $Description = null;
-	
-	public $HTMLLabelText = null;
-	public $HTMLInputType = null;
+	public function run();
 
-	public function __construct($fieldName, $fieldValue)
-	{
-		$this->Name  = $fieldName;
-		$this->Value = $fieldValue;
-	}
-	
 }

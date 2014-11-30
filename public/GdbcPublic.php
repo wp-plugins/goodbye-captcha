@@ -33,31 +33,37 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		{
 			/**
 			*
-			* @var \GdbcDefaultPublicModule 
+			* @var \GdbcWordpressPublicModule
 			*/
-			$defaultModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_WORDPRESS, MchWpModule::MODULE_TYPE_PUBLIC);
+			$wordpressModuleInstance = $this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_WORDPRESS);
+
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::COMMENTS_FORM))
 			{
-				$defaultModuleInstance->activateCommentsActions();
+				$wordpressModuleInstance->activateCommentsActions();
 			}
 
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::LOGIN_FORM))
 			{
 				add_action('login_enqueue_scripts', array($this,'enqueuePublicScriptsAndStyles') );
-				$defaultModuleInstance->activateLoginActions();
+				$wordpressModuleInstance->activateLoginActions();
 			}
 			
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::REGISTRATION_FORM))
 			{
-				$defaultModuleInstance->activateRegisterActions();
+				$wordpressModuleInstance->activateRegisterActions();
 			}
 			
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::LOST_PASSWORD_FORM))
 			{
-				$defaultModuleInstance->activateLostPasswordActions();			
+				$wordpressModuleInstance->activateLostPasswordActions();			
 			}
-			
-			unset($defaultModuleInstance);
+
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::COMMENTS_FORM_WEBSITE_FIELD))
+			{
+			    $wordpressModuleInstance->activateFormDefaultFieldsActions();
+			}
+
+			unset($wordpressModuleInstance);
 		}
 		
 		/**
@@ -169,7 +175,19 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 	{
 		parent::initPlugin();
 	}
-	
+
+	public function addAfterSetupThemeActions()
+	{
+		if(!$this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_WORDPRESS))
+			return;
+
+		$wordpressModuleInstance = $this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_WORDPRESS);
+
+		if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::COMMENTS_FORM_NOTES_FIELDS))
+			$wordpressModuleInstance->activateCommentsFormNotesActions();
+
+	}
+
 	/**
 	 * 
 	 * @staticvar array $arrInstances

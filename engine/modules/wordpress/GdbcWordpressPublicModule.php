@@ -24,7 +24,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 	{
 		parent::__construct($arrPluginInfo);
 	}
-	
+
 	public function activateCommentsActions()
 	{
 		add_action('comment_form_after_fields',    array($this, 'renderHiddenFieldIntoForm'), 1);
@@ -35,7 +35,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 	public function activateLoginActions()
 	{
 		add_action('login_form', array($this, 'renderHiddenFieldIntoForm'));
-		add_filter('authenticate',  array($this, 'validateAuthenticationFormEncryptedToken'), 23, 3);				
+		add_filter('authenticate',  array($this, 'validateAuthenticationFormEncryptedToken'), 73, 3);
 	}
 	
 	public function activateRegisterActions()
@@ -54,7 +54,16 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 		add_action('lostpassword_post', array($this, 'validateLostPasswordFormEncryptedToken'), 10);				
 	}
 
-	
+	public function activateFormDefaultFieldsActions()
+    {
+        add_filter('comment_form_default_fields', array($this, 'hideFormWebSiteField'));
+    }
+
+	public function activateCommentsFormNotesActions()
+	{
+		add_filter('comment_form_defaults', array($this, 'hideFormNotesFields'));
+	}
+
 	public function renderHiddenFieldIntoForm()
 	{
 		echo GdbcTokenController::getInstance()->getTokenInputField();
@@ -107,21 +116,42 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 	public function validateCommentsFormEncryptedToken($arrComment)
 	{	
 		if(is_admin())
+		{
 			return $arrComment;
+		}
 
 		if(!empty($arrComment['comment_type']) && $arrComment['comment_type'] !== 'comment')
 			return $arrComment;
 		
 		if( GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::COMMENTS_FORM)) )
 			return $arrComment;
-		
-		$arrComment['comment_approved'] = 'spam';
-		wp_insert_comment($arrComment);
-			
-		return $arrComment;
+
+//		if(null !== GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::STORE_SPAM_ATTEMPTS))
+//		{
+//			$arrComment['comment_approved'] = 'spam';
+//			wp_insert_comment($arrComment);
+//
+//			return $arrComment;
+//		}
+
+		wp_die( __( '<strong>ERROR</strong>: Your comment could not be saved. Please try again later.' ) );
 	}
 	
-	
+	public function hideFormWebSiteField($arrDefaultFields)
+    {
+		unset($arrDefaultFields['url']);
+
+	    return $arrDefaultFields;
+    }
+
+	public function hideFormNotesFields($arrDefaultFields)
+	{
+		$arrDefaultFields['comment_notes_before'] = '';
+		$arrDefaultFields['comment_notes_after'] = '';
+
+		return $arrDefaultFields;
+	}
+
 	public static function getInstance(array $arrPluginInfo)
 	{
 		static $arrInstances = array();
