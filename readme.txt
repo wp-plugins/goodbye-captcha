@@ -136,7 +136,7 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 = 1.1.1 =
-Fixed Bug - Token generated twice for IE11 browser. Now the admin cannot block private ip addresses or server ip address.
+Fixed Bug - Token generated twice for IE11 browser.
 New features: Disable comments form Website URL field, Allowed Tags field and the "Your email address will not be published" text
 
  
@@ -144,7 +144,7 @@ New features: Disable comments form Website URL field, Allowed Tags field and th
 
 = 1.1.1: November 29, 2014 =
 *   Fixed Bug - Token generated twice for IE11 browser
-*   Now the admin cannot block private ip addresses or server ip address
+*   Improved the IP blocking functionality
 *   New Feature - Remove comments form Website URL field
 *   New Feature - Remove comments form Allowed Tags field and the "Your email address will not be published" text
 
