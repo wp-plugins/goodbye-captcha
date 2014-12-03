@@ -319,15 +319,18 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 			if (null === $section)
 				$section = 'N/A';
 
-			$contentArray[$i][self::TABLE_HEADER_MODULE_SECTION] = $moduleName;
+			//$contentArray[$i][self::TABLE_HEADER_MODULE_SECTION] = $moduleName;
+
+			$contentArray[$i][self::TABLE_HEADER_MODULE_SECTION] = empty($attemptsList[$i]->ModuleId) ? 'Custom Form' : $moduleName;
+
 			$contentArray[$i][self::TABLE_HEADER_ID] = $attemptsList[$i]->Id;
 			$contentArray[$i][self::TABLE_HEADER_IS_IP_BLOCKED] = $attemptsList[$i]->IsIpBlocked;
 
 			if ($moduleName !== $section) {
 				if ($section !== 'N/A')
 					$contentArray[$i][self::TABLE_HEADER_MODULE_SECTION] = $moduleName . ' / ' . $section;
-				else
-					$contentArray[$i][self::TABLE_HEADER_MODULE_SECTION] = $moduleName;
+//				else
+//					$contentArray[$i][self::TABLE_HEADER_MODULE_SECTION] = $moduleName;
 			}
 
 			$clientIp = ($attemptsList[$i]->ClientIp !== null) ?  MchHttpUtil::ipAddressFromBinary($attemptsList[$i]->ClientIp) : 'N/A';
@@ -519,6 +522,8 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 		$ajaxData['ModulesDescriptionArray'] = $this->getModulesFromAttemptArray($attemptsByModuleAndDay);
 		$ajaxData['ModulesAttemptsArray'] = $displayableAttemptsArray;
 
+
+
 		echo json_encode($ajaxData);
 
 		exit;
@@ -569,6 +574,12 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 		$resultArray = array();
 		foreach($attemptsArray as $attempt)
 		{
+			if(0 == $attempt->ModuleId)
+			{
+				$resultArray[$attempt->ModuleId] = 'Custom Form';
+				continue;
+			}
+
 			$resultArray[$attempt->ModuleId] = $this->moduleController->getModuleNameById($attempt->ModuleId);
 		}
 
