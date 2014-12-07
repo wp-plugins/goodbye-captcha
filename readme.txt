@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.0.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,11 +15,10 @@ An extremely powerful anti-spam plugin that blocks Spam-bots without annoying ca
 This plugin will eliminate spam by completely blocking Spam-bots. Unlike other anti-spam plugins which simply sort spam comments from "good" comments (leaving you with all the spam in your comments folder), we stop the bots from leaving the spam in the first place.
 The plugin uses a proprietary algorithm to identify the spam-bots and physically blocks them from your site.
 
-To further eliminate spam from both bots and humans, this plugin gives you the option to disable the "website field" from your comments box. Users also have the option to disable the "allowed tags" box that appears below posts and above the comments box.
-All with the click of a button!
+In addition, we give you the option to add extra layers of security to your Wordpress site by incorporating our Bot blocking technology into your login page, your registration page, and new password request page.  With the click of a button, you can choose which options you want to enable.
 
-In addition, we give you the option to add extra layers of security to your Wordpress site by incorporating our Bot blocking technology into your login page, registration page, and lost password page **protecting you against brute force attacks**.
-With the click of a button, you can choose which options you want to enable.
+To further eliminate spam from both bots and humans, this plugin gives you the option to disable the "website field" from your comments box. Users also have the option to disable the "HTML allowed tags" box that appears below posts and above the comments box.
+All with the click of a button!
 
 = Features available in GoodBye Captcha Free version =
 *   Comments form integration
@@ -37,6 +36,10 @@ With the click of a button, you can choose which options you want to enable.
 *   Geographic map chart with blocked attempts
 *   Top of attempts organized by countries
 *   Spam attempts statistics per modules
+
+
+= Integration with other plugins =
+*   [MailChimp for WordPress ](https://wordpress.org/plugins/mailchimp-for-wp/)
 
 
 = Features available in GoodBye Captcha Pro version =
@@ -136,12 +139,15 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 9. Total Attempts per Module/Day Charts, Modules Latest Attempts.
 
 == Upgrade Notice ==
-= 1.1.1 =
-Fixed Bug - Token generated twice for IE11 browser.
-New features: Disable comments form Website URL field, Allowed Tags field and the "Your email address will not be published" text
+= 1.1.2 =
+Fixed several minor bugs and added integration with MailChimp for WordPress plugin
 
- 
 == Changelog ==
+
+= 1.1.2: December 6, 2014 =
+*   Fixed several minor bugs
+*   New Feature - Integration with MailChimp for WordPress plugin
+
 
 = 1.1.1: November 29, 2014 =
 *   Fixed Bug - Token generated twice for IE11 browser

@@ -20,6 +20,10 @@
 
 final class GdbcPluginUtils
 {
+	public static function isMailChimpLiteActivated()
+	{
+		return function_exists('mc4wp_load_plugin');
+	}
 	public static function isNinjaFormsActivated()
 	{
 		return class_exists('Ninja_Forms', false);

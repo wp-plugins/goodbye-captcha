@@ -168,6 +168,15 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			
 			unset($popularFormsModuleInstance);
 		}
+
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_SUBSCRIPTIONS))
+		{
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SUBSCRIPTIONS, GdbcSubscriptionsAdminModule::MAIL_CHIMP_LITE_ACTIVATED))
+			{
+				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_MAIL_CHIMP_LITE)->activateActions();
+			}
+		}
+
 		
 	}
 

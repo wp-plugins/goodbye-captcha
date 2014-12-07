@@ -32,11 +32,14 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_FAST_SECURE_FORM = 'FastSecureForm';
 	CONST MODULE_FORMIDABLE_FORMS = 'FormidableForms';
 
+	CONST MODULE_SUBSCRIPTIONS    = 'Subscriptions';
+	CONST MODULE_MAIL_CHIMP_LITE  = 'MailChimpLite';
+
 	private static $arrModules = array(
 
 		self::MODULE_SETTINGS => array(
 			'info'    => array(
-				'ModuleId'   => 0,
+				'ModuleId'   => -1,
 				'IsFree' => true,
 			),
 			'classes' => array(
@@ -47,7 +50,7 @@ final class GdbcModulesController extends MchWpModulesController
 
 		self::MODULE_POPULAR_FORMS => array(
 			'info'    => array(
-				'ModuleId' => 0,
+				'ModuleId' => -2,
 				'IsFree' => true,
 			),
 			'classes' => array(
@@ -145,9 +148,31 @@ final class GdbcModulesController extends MchWpModulesController
 			)
 		),
 
+		self::MODULE_SUBSCRIPTIONS => array(
+			'info'    => array(
+				'ModuleId' => -3,
+				'IsFree' => true,
+			),
+			'classes' => array(
+				'GdbcSubscriptionsAdminModule'  => '/modules/subscriptions/GdbcSubscriptionsAdminModule.php',
+				'GdbcSubscriptionsPublicModule' => '/modules/subscriptions/GdbcSubscriptionsPublicModule.php',
+			)
+		),
+
+		self::MODULE_MAIL_CHIMP_LITE => array(
+			'info'    => array(
+				'ModuleId' => 9,
+				'IsFree' => true,
+			),
+			'classes' => array(
+				'GdbcMailChimpLiteAdminModule'  => '/modules/mail-chimp-lite/GdbcMailChimpLiteAdminModule.php',
+				'GdbcMailChimpLitePublicModule' => '/modules/mail-chimp-lite/GdbcMailChimpLitePublicModule.php',
+			)
+		),
+
 		self::MODULE_REPORTS => array(
 			'info'    => array(
-				'ModuleId' => 0,
+				'ModuleId' => -4,
 				'IsFree' => true,
 			),
 			'classes' => array(
