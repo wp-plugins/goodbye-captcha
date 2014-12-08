@@ -58,7 +58,7 @@ With the click of a button, you can choose which options you want to enable.
 *	Visit our website for more information on Goodbye Captcha [GoodBye Captcha](http://www.goodbyecaptcha.com)
 
 
-= Key Features of both versions= 
+= Key Features of both versions = 
 *   No more captcha images
 *   Eliminates automated form submissions from robots
 *   Eliminates automated comment spams from robots
