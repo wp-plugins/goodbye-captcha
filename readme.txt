@@ -15,10 +15,11 @@ An extremely powerful anti-spam plugin that blocks Spam-bots without annoying ca
 This plugin will eliminate spam by completely blocking Spam-bots. Unlike other anti-spam plugins which simply sort spam comments from "good" comments (leaving you with all the spam in your comments folder), we stop the bots from leaving the spam in the first place.
 The plugin uses a proprietary algorithm to identify the spam-bots and physically blocks them from your site.
 
-In addition, we give you the option to add extra layers of security to your Wordpress site by incorporating our Bot blocking technology into your login page, your registration page, and new password request page.  With the click of a button, you can choose which options you want to enable.
-
 To further eliminate spam from both bots and humans, this plugin gives you the option to disable the "website field" from your comments box. Users also have the option to disable the "HTML allowed tags" box that appears below posts and above the comments box.
 All with the click of a button!
+
+In addition, we give you the option to add extra layers of security to your Wordpress site by incorporating our Bot blocking technology into your login page, registration page, and lost password page **protecting you against brute force attacks**.
+With the click of a button, you can choose which options you want to enable.
 
 = Features available in GoodBye Captcha Free version =
 *   Comments form integration
