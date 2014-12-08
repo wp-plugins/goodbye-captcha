@@ -55,7 +55,7 @@ With the click of a button, you can choose which options you want to enable.
 *   Fast Secure Contact Form integration - Fast Secure Contact Form captcha replacement
 
 
-*	Visit our website for more information on Goodbye Captcha [GoodBye Captcha](http://www.goodbyecaptcha.com)
+*	Visit our website for more information on [GoodBye Captcha](http://www.goodbyecaptcha.com)
 
 
 = Key Features of both versions = 
