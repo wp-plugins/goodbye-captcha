@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * @package   GoodBye Captcha
@@ -12,64 +11,62 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.3
+ * Version: 1.1.4
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
  * License: GPL-2.0+
- * Domain Path: /languages 
+ * Domain Path: /languages
  */
-
 
 defined( 'ABSPATH' ) || exit;
 
-
 class GoodByeCaptcha
 {
-	
-	CONST PLUGIN_VERSION    = '1.1.3';
-	CONST PLUGIN_SHORT_CODE = 'gdbc';	
+
+	CONST PLUGIN_VERSION    = '1.1.4';
+	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
-	
-	private static $arrPluginInfo = array(
-		
-									'PLUGIN_DOMAIN_PATH' => 'languages',
-									'PLUGIN_MAIN_FILE'   => __FILE__,
-									'PLUGIN_SHORT_CODE'  => self::PLUGIN_SHORT_CODE,
-									'PLUGIN_VERSION'     => self::PLUGIN_VERSION,
-									'PLUGIN_SLUG'        => self::PLUGIN_SLUG,
-		
-										);
-	
-	private static $arrClassMap = array(
-		
-									'GdbcModulesController'   => '/engine/GdbcModulesController.php',
-									'GdbcBasePublicPlugin'    => '/engine/GdbcBasePublicPlugin.php',
-									'GdbcBaseAdminPlugin'     => '/engine/GdbcBaseAdminPlugin.php',
-									'GdbcTokenController'     => '/engine/GdbcTokenController.php',
-									'GdbcPluginUpdater'       => '/engine/GdbcPluginUpdater.php',
-									'GdbcPluginUtils'         => '/engine/GdbcPluginUtils.php',
-									'GdbcRequest'			  => '/engine/GdbcRequest.php',
-									'GdbcPublic'              => '/public/GdbcPublic.php',
-									'GdbcAdmin'               => '/admin/GdbcAdmin.php',
-									'MchCrypt'				  => '/Libraries/MchCrypt/MchCrypt.php',
-									'MchWp'				      => '/Libraries/MchWp/MchWp.php',
-									'MchHttpUtil'			  => '/Libraries/MchHttp/MchHttpUtil.php',
-									'MchHttpRequest'          => '/Libraries/MchHttp/MchHttpRequest.php',
-									'GdbcAttemptEntity'       => '/engine/dbaccess/entities/GdbcAttemptEntity.php',
-									'GdbcAttemptsManager'     => '/engine/dbaccess/GdbcAttemptsManager.php',
-									'GdbcCountryDataSource'   => '/engine/dbaccess/GdbcCountryDataSource.php',
-									'GdbcReasonDataSource'    => '/engine/dbaccess/GdbcReasonDataSource.php',
-									'GdbcBaseAdminModule'     => '/engine/modules/GdbcBaseAdminModule.php',
-									'GdbcBasePublicModule'    => '/engine/modules/GdbcBasePublicModule.php',
-									'GdbcCheckAttemptsTask'   => '/engine/tasks/GdbcCheckAttemptsTask.php',
-									'GdbcTaskScheduler'       => '/engine/GdbcTaskScheduler.php',
-								);
 
-	
+	private static $arrPluginInfo = array(
+
+		'PLUGIN_DOMAIN_PATH' => 'languages',
+		'PLUGIN_MAIN_FILE'   => __FILE__,
+		'PLUGIN_SHORT_CODE'  => self::PLUGIN_SHORT_CODE,
+		'PLUGIN_VERSION'     => self::PLUGIN_VERSION,
+		'PLUGIN_SLUG'        => self::PLUGIN_SLUG,
+
+	);
+
+	private static $arrClassMap = array(
+
+		'GdbcModulesController'   => '/engine/GdbcModulesController.php',
+		'GdbcBasePublicPlugin'    => '/engine/GdbcBasePublicPlugin.php',
+		'GdbcBaseAdminPlugin'     => '/engine/GdbcBaseAdminPlugin.php',
+		'GdbcTokenController'     => '/engine/GdbcTokenController.php',
+		'GdbcPluginUpdater'       => '/engine/GdbcPluginUpdater.php',
+		'GdbcPluginUtils'         => '/engine/GdbcPluginUtils.php',
+		'GdbcRequest'			  => '/engine/GdbcRequest.php',
+		'GdbcPublic'              => '/public/GdbcPublic.php',
+		'GdbcAdmin'               => '/admin/GdbcAdmin.php',
+		'MchCrypt'				  => '/Libraries/MchCrypt/MchCrypt.php',
+		'MchWp'				      => '/Libraries/MchWp/MchWp.php',
+		'MchHttpUtil'			  => '/Libraries/MchHttp/MchHttpUtil.php',
+		'MchHttpRequest'          => '/Libraries/MchHttp/MchHttpRequest.php',
+		'GdbcAttemptEntity'       => '/engine/dbaccess/entities/GdbcAttemptEntity.php',
+		'GdbcAttemptsManager'     => '/engine/dbaccess/GdbcAttemptsManager.php',
+		'GdbcCountryDataSource'   => '/engine/dbaccess/GdbcCountryDataSource.php',
+		'GdbcReasonDataSource'    => '/engine/dbaccess/GdbcReasonDataSource.php',
+		'GdbcBaseAdminModule'     => '/engine/modules/GdbcBaseAdminModule.php',
+		'GdbcBasePublicModule'    => '/engine/modules/GdbcBasePublicModule.php',
+		'GdbcCheckAttemptsTask'   => '/engine/tasks/GdbcCheckAttemptsTask.php',
+		'GdbcTaskScheduler'       => '/engine/GdbcTaskScheduler.php',
+	);
+
+
 	private static $isFreeVersion = true;
-	
+
 	protected function __construct()
 	{
 		spl_autoload_register('self::classAutoLoad');
@@ -79,8 +76,6 @@ class GoodByeCaptcha
 		self::$isFreeVersion = ( count(self::getModulesControllerInstance()->getRegisteredModules()) === count(self::getModulesControllerInstance()->getFreeModuleNames()));
 
 		GdbcPluginUpdater::updateToCurrentVersion();
-
-
 
 		//GdbcTaskScheduler::registerGdbcTasks();
 		MchWpTaskScheduler::getInstance()->unscheduleRegisteredTasks();
@@ -105,7 +100,7 @@ class GoodByeCaptcha
 	{
 		if( !isset(self::$arrClassMap[$className]) )
 			return null;
-		
+
 		$filePath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . trim(self::$arrClassMap[$className], '/\\');
 
 		return file_exists($filePath) ? include_once $filePath : null;
@@ -115,7 +110,7 @@ class GoodByeCaptcha
 	{
 		return self::$arrPluginInfo;
 	}
-	
+
 	public static function getInstance()
 	{
 		static $gdbcInstance = null;
@@ -133,14 +128,14 @@ class GoodByeCaptcha
 
 
 	}
-	
+
 	public static function deactivate($isForNetwork)
 	{
 		spl_autoload_register('self::classAutoLoad');
 
 		if ( ! MchWp::isUserInDashboad() )
 			return null;
-		
+
 		GdbcAdmin::deactivatePlugin(self::$arrPluginInfo, $isForNetwork);
 
 		//GdbcTaskScheduler::unscheduleGdbcTasks();

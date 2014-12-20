@@ -3,8 +3,8 @@ Contributors: MihChe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
-Tested up to: 4.0.1
-Stable tag: 1.1.3
+Tested up to: 4.1
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,13 +142,13 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.3 =
-Fixed Reports IE css issues
+= 1.1.4 =
+Fixed the issue when multiple versions of jQuery are present
 
 == Changelog ==
 
-= 1.1.3: December 15, 2014 =
-*   Fixed Reports IE css issues 
+= 1.1.4: December 20, 2014 =
+*   Fixed the issue when multiple versions of jQuery are present
 
 = 1.1.2: December 6, 2014 =
 *   Fixed several minor bugs
