@@ -21,7 +21,7 @@ All with the click of a button!
 In addition, we give you the option to add extra layers of security to your Wordpress site by incorporating our Bot blocking technology into your login page, registration page, and lost password page **protecting you against brute force attacks**.
 With the click of a button, you can choose which options you want to enable.
 
-= Features=
+= Features =
 *   Comments form integration
 *   Register form integration
 *   Login form integration
@@ -43,7 +43,7 @@ With the click of a button, you can choose which options you want to enable.
 *   [MailChimp for WordPress ](https://wordpress.org/plugins/mailchimp-for-wp/)
 
 
-= Key Features= 
+= Key Features = 
 *   No more captcha images
 *   Eliminates automated form submissions from robots
 *   Eliminates automated comment spams from robots
