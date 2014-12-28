@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ All with the click of a button!
 In addition, we give you the option to add extra layers of security to your Wordpress site by incorporating our Bot blocking technology into your login page, registration page, and lost password page **protecting you against brute force attacks**.
 With the click of a button, you can choose which options you want to enable.
 
-= Features available in GoodBye Captcha Free version =
+= Features=
 *   Comments form integration
 *   Register form integration
 *   Login form integration
@@ -43,22 +43,7 @@ With the click of a button, you can choose which options you want to enable.
 *   [MailChimp for WordPress ](https://wordpress.org/plugins/mailchimp-for-wp/)
 
 
-= Features available in GoodBye Captcha Pro version =
-*   JetPack contact form integration  - JetPack contact form captcha replacement
-*   JetPack comments form integration - JetPack comments form captcha replacement
-*   BuddyPress registration form integration - BuddyPress registration form captcha replacement
-*   BuddyPress login form integration - BuddyPress login form captcha replacement
-*   Contact Form 7 integration - Contact Form 7 captcha replacement
-*   Gravity Forms integration - Gravity Forms captcha replacement
-*   Ninja Forms integration - Ninja Forms captcha replacement
-*   Formidable Forms(Pro and Free) integration - Formidable Forms captcha replacement
-*   Fast Secure Contact Form integration - Fast Secure Contact Form captcha replacement
-
-
-*	Visit our website for more information on [GoodBye Captcha](http://www.goodbyecaptcha.com)
-
-
-= Key Features of both versions = 
+= Key Features= 
 *   No more captcha images
 *   Eliminates automated form submissions from robots
 *   Eliminates automated comment spams from robots
@@ -110,9 +95,6 @@ Yes. The algorithm behind the plugin was fully tested and there is no way a spid
 = What forms can be secured by using Goodbye Captcha WordPress plugin? =
 All standard WordPress forms(Login, Register, Comment and Forgot Password) can be secured by using GoodBye Captcha Free plugin.
 
-= What other popular plugins which are generating forms can be integrated with this plugin =
-Plugins like JetPack, BuddyPress, Contact Form 7, Formidable Forms, Gravity Forms, Ninja Forms and Fast Secure Contact Form can be integrated with GoodBye Captcha Pro plugin. You can find more information about this on [GoodBye Captcha Website](http://www.goodbyecaptcha.com).
-
 = Are there any php extensions that need to be activated so this plugin could work? =
 No. The plugin runs 100% without activating any additional php extensions.
 
@@ -131,21 +113,20 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Screenshots ==
 1. GoodBye Captcha settings are available trough Settings menu.
-2. In GoodBye Captcha settings page, activate the plugin.
-3. GoodBye Captcha Popular Forms - Activate the plugin for Contact Form 7, Gravity Forms, Ninja Forms, Formidable Forms, Fast Secure Forms.
 4. GoodBye Captcha - WordPress Forms. Activate the plugin for the standard WordPress forms.
-5. GoodBye Captcha Pro - JetPack Page. Activate the plugin for JetPack Comments Form feature and/or for Contact Form feature.
-6. GoodBye Captcha Pro - BuddyPress Page. Activate the plugin for Buddy Press registration form or for Buddy Press Login form.
 7. Total Attempts per Day Chart, Monthly Spam Attempts Percentage Comparison, Latest Blocked Attempts Table.
 8. Geographical Locations of The Attempts, Top of Attempts per Country, Statistics of Attempts per Modules.
 9. Total Attempts per Module/Day Charts, Modules Latest Attempts.
 
 == Upgrade Notice ==
 
-= 1.1.4 =
-Fixed the issue when multiple versions of jQuery are present
+= 1.1.5 =
+Improved security token generator
 
 == Changelog ==
+
+= 1.1.5: December 28, 2014 =
+*   Improved security token generator
 
 = 1.1.4: December 20, 2014 =
 *   Fixed the issue when multiple versions of jQuery are present
