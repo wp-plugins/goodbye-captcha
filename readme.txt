@@ -59,7 +59,7 @@ With the click of a button, you can choose which options you want to enable.
 *   Block IP feature for both IPV6 and IPV4 addresses
 *   Statistics, reports and charts with all blocked spam attempts
 
-= Please [Contact me](http://www.goodbyecaptcha.com/contact/) if you need support for the following: = 
+Please [Contact me](http://www.goodbyecaptcha.com/contact/) if you need support for the following: 
 *   JetPack contact form integration  - JetPack contact form captcha replacement
 *   BuddyPress registration form integration - BuddyPress registration form captcha replacement
 *   BuddyPress login form integration - BuddyPress login form captcha replacement
