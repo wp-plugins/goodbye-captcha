@@ -64,7 +64,7 @@ With the click of a button, you can choose which options you want to enable.
 >*   **Contact Form 7** integration - Contact Form 7 captcha replacement
 >*   **Gravity Forms** integration - Gravity Forms captcha replacement
 >*   **Ninja Forms** integration - Ninja Forms captcha replacement
->*   **Formidable Forms(Pro and Free)** integration - Formidable Forms captcha replacement
+>*   **Formidable Forms** integration - Formidable Forms captcha replacement
 >*   **Fast Secure Contact Form** integration - Fast Secure Contact Form captcha replacement
 >*   **JetPack Contact Form** integration  - JetPack contact form captcha replacement
 >*	 **BuddyPress Registration Form** integration - BuddyPress registration form captcha replacement
