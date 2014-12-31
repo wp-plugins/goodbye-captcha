@@ -59,6 +59,17 @@ With the click of a button, you can choose which options you want to enable.
 *   Block IP feature for both IPV6 and IPV4 addresses
 *   Statistics, reports and charts with all blocked spam attempts
 
+= Please [Contact me](http://www.goodbyecaptcha.com/contact/) if you need support for the following: = 
+*   JetPack contact form integration  - JetPack contact form captcha replacement
+*   BuddyPress registration form integration - BuddyPress registration form captcha replacement
+*   BuddyPress login form integration - BuddyPress login form captcha replacement
+*   Contact Form 7 integration - Contact Form 7 captcha replacement
+*   Gravity Forms integration - Gravity Forms captcha replacement
+*   Ninja Forms integration - Ninja Forms captcha replacement
+*   Formidable Forms(Pro and Free) integration - Formidable Forms captcha replacement
+*   Fast Secure Contact Form integration - Fast Secure Contact Form captcha replacement
+
+
 = Technical support =
 If you notice any problems by using this plugin, please notify us and we will investigate and fix the issues. Ideally your request should contain: URL of the website (if your site is public), Php version, WordPress version and all the steps in order to replicate the issue (if you are able to reproduce it somehow)
 
