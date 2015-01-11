@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,7 +40,7 @@ With the click of a button, you can choose which options you want to enable.
 
 
 = Integration with other plugins =
-*   [MailChimp for WordPress](https://wordpress.org/plugins/mailchimp-for-wp/)
+*   [MailChimp for WordPress PRO/FREE](https://wordpress.org/plugins/mailchimp-for-wp/)
 
 
 = Key Features = 
@@ -132,10 +132,14 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.5 =
-Improved security token generator
+= 1.1.6 =
+Integration with MailChimp for WordPress (PRO/FREE) and fixing the issue when FORCE_SSL_ADMIN is set to true
 
 == Changelog ==
+
+= 1.1.6: January 10, 2015 =
+*   Integration with MailChimp for WordPress plugin - PRO and FREE
+*   Fixed the issue when FORCE_SSL_ADMIN is set to true
 
 = 1.1.5: December 28, 2014 =
 *   Improved security token generator

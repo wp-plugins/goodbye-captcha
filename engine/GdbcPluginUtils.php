@@ -20,10 +20,17 @@
 
 final class GdbcPluginUtils
 {
+
+	public static function isUjiCountDownActivated()
+	{
+		return class_exists('Uji_Countdown', false);
+	}
+
 	public static function isMailChimpLiteActivated()
 	{
-		return function_exists('mc4wp_load_plugin');
+		return function_exists('mc4wp_load_plugin') || function_exists('mc4wp_pro_load_plugin');
 	}
+
 	public static function isNinjaFormsActivated()
 	{
 		return class_exists('Ninja_Forms', false);

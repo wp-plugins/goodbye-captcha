@@ -1,27 +1,21 @@
-body{
-    background-color: #f1f1f1 !important;
+body
+{
+    background: #f1f1f1 right bottom url("http://www.fancythemes.com/images/gdbc-box-bg.png") !important;
 }
 
-#adminmenuwrap
-{
+#adminmenuwrap{
     height: 100%
 }
 
-#chart-container
-{ 
-	height: 235px; 
-	width: 100% 
-}
+#chart-container{ height: 235px; width: 100% }
 
-.gdbcwidget 
-{
+.gdbcwidget {
     border-radius: 0;
     margin: 0 0 30px;
     padding: 0;
 }
 
-.gdbcwidget .widget-body 
-{ 
+.gdbcwidget .widget-body { 
 	min-height: 100px; 
 	padding-bottom: 13px; 
 	position: relative; 
@@ -39,15 +33,13 @@ body{
 	font-size: 13px;
 }
 
-.gdbcwidget > header 
-{
+.gdbcwidget > header {
     background: none repeat scroll 0 0 #fafafa;
     border: 1px solid #c2c2c2;
     color: #333;
 }
 
-.gdbcwidget header h2 
-{     
+.gdbcwidget header h2 {     
 	float: left;
 	display: inline-block;
     font-size: 14px;
@@ -61,8 +53,7 @@ body{
 	padding: 0 !important;
 } 
 
-.gdbcwidget > div 
-{
+.gdbcwidget > div {
     border-bottom-color: #ccc !important;
     border-left-color: #ccc !important;
     border-radius: 0;
@@ -80,25 +71,21 @@ body{
 	background-color: #fff !important
 }
 	
-.no-padding 
-{
+.no-padding {
     padding: 0 !important;
 }
 
-.row.no-space 
-{
+.row.no-space {
 	margin:0; 
 	padding:0; 
 	border:none; 
 }
 
-.no-space 
-{
+.no-space {
     margin: 0;
 }
 
-.widget-icon 
-{ 
+.widget-icon { 
 	display:block; 
 	float: left; 
 	font-size: 111%; 
@@ -108,14 +95,11 @@ body{
 	text-align: center; 
 	width: 30px
 }
-
-#dashboard-navigation
-{
+#dashboard-navigation{
 	float: left
 }
 
-.gdbcwidget-loader 
-{
+.gdbcwidget-loader {
     background-position: center center;
     background-repeat: no-repeat;
     display: none;
@@ -128,8 +112,7 @@ body{
     width: 32px
 }
 
-.no-space > [class*="col-"] 
-{
+.no-space > [class*="col-"] {
     margin: 0 !important;
     padding-left: 0;
     padding-right: 0;
@@ -140,14 +123,12 @@ body{
     position: relative;
 }
 
-.nav-tabs > li 
-{
+.nav-tabs > li {
     float: left;
     margin-bottom: -1px;
 }
 
-.gdbcwidget header:first-child .nav-tabs li 
-{
+.gdbcwidget header:first-child .nav-tabs li {
     padding-left: 0;
 }
 
@@ -200,38 +181,32 @@ body{
     cursor: default;
 }
 
-.nav-tabs > li > a 
-{
+.nav-tabs > li > a {
     border-radius: 0;
     color: #333;
 }
-.nav-tabs > li > a 
-{
+.nav-tabs > li > a {
     border: 1px solid transparent;
     border-radius: 2px 2px 0 0;
     line-height: 1.42857;
     margin-right: 2px;
 }
-.nav > li > a 
-{
+.nav > li > a {
     display: block;
     padding: 9px 10px 10px;
     position: relative;
 }
 
-.vector-map, #gdbc-stats
-{
+.vector-map, #gdbc-stats{
     height: 300px;
     width: 100%;
 }
 
-.vector-map
-{
+.vector-map{
     padding: 10px;
 }
 
- .progress 
- {
+ .progress {
     border-radius: 0;
     height: 7px;
     margin-bottom: 15px;

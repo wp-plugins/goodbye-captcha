@@ -101,16 +101,16 @@ final class GdbcTokenController
 		return true;
 		
 	}
-	
 
 	public function retrieveEncryptedToken()
 	{
+		ob_get_level() > 0 ? ob_end_clean() : null;
+
 		if( ! $this->isAjaxRequestForTokenValid() )
 			return json_encode (array());
 
 		if(!isset($_POST['browserInfo']) || null === ($arrBrowserInfo = json_decode(stripcslashes($_POST['browserInfo']), true)))
 			return json_encode (array());
-
 
 		foreach ($arrBrowserInfo as $prop => $propValue)
 		{
@@ -149,12 +149,10 @@ final class GdbcTokenController
 	
 	private function getTokenData()
 	{
-	
 		$arrData   = array();
 		$arrData[] = get_current_blog_id();
 		$arrData[] = MchWpBase::WP_VERSION_ID + PHP_VERSION_ID;
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('name'), '');
-		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('url'), '');
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('charset'), '');
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('language'), '');
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('version'), '');
@@ -163,8 +161,10 @@ final class GdbcTokenController
 		
 		foreach ($arrData as $key => $val)
 		{
-			if(empty($val))
-				unset($arrData[$key]);
+			if(!empty($val))
+				continue;
+
+			unset($arrData[$key]);
 		}
 		
 		return $arrData;
@@ -232,14 +232,9 @@ final class GdbcTokenController
 		$arrParts   = array();
 		
 		$arrParts[] = GoodByeCaptcha::PLUGIN_SLUG;
-				
 		$arrParts[] = GoodByeCaptcha::PLUGIN_SHORT_CODE;
 		$arrParts[] = GoodByeCaptcha::PLUGIN_VERSION;
-
 		$arrParts[] = MchWpBase::WP_VERSION_ID + PHP_VERSION_ID;
-
-		$arrParts[] = get_bloginfo('name');
-		$arrParts[] = get_bloginfo('url');
 		$arrParts[] = get_current_blog_id();
 		
 		$nonceAction = implode('', $arrParts);

@@ -169,11 +169,19 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			unset($popularFormsModuleInstance);
 		}
 
+		//Newsletter Subscriptions Plugins
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_SUBSCRIPTIONS))
 		{
+			// MailChimp for WP Lite
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SUBSCRIPTIONS, GdbcSubscriptionsAdminModule::MAIL_CHIMP_LITE_ACTIVATED))
 			{
 				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_MAIL_CHIMP_LITE)->activateActions();
+			}
+
+			//Uji CountDown
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SUBSCRIPTIONS, GdbcSubscriptionsAdminModule::UJI_COUNTDOWN_ACTIVATED))
+			{
+				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_UJI_COUNTDOWN)->activateActions();
 			}
 		}
 

@@ -43,6 +43,18 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		add_action('wp_ajax_'        . 'getTotalAttemptsPerModule', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'getTotalAttemptsPerModule'));
 		add_action('wp_ajax_'        . 'manageIp', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'manageIp'));
 		add_action('wp_ajax_'        . 'retrieveLatestAttemptsTable', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'retrieveLatestAttemptsTable'));
+
+		if(MchWp::isAjaxRequest() && GdbcPluginUtils::isMailChimpLiteActivated())
+		{
+			if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_SUBSCRIPTIONS))
+			{
+				if (null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SUBSCRIPTIONS, GdbcSubscriptionsAdminModule::MAIL_CHIMP_LITE_ACTIVATED)) {
+					add_filter('mc4wp_valid_form_request', create_function('$isFormValid', 'return GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_MAIL_CHIMP_LITE));'));
+				}
+			}
+
+		}
+
 	}
 	
 
@@ -87,6 +99,8 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		GdbcPluginUpdater::updateToCurrentVersion();
 		$settingsModuleInstance = GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS);
 		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, MchWpBase::getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION));
+
+		GdbcPluginUtils::isUjiCountDownActivated() ? GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SUBSCRIPTIONS)->setSettingOption(GdbcSubscriptionsAdminModule::UJI_COUNTDOWN_ACTIVATED, true) : null;
 
 		GdbcTaskScheduler::scheduleGdbcTasks();
 	}

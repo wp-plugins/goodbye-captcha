@@ -106,6 +106,7 @@ final class MchWp
 
 	private function __clone()
 	{}
+
 	private function __construct()
 	{}
 	

@@ -33,7 +33,9 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_FORMIDABLE_FORMS = 'FormidableForms';
 
 	CONST MODULE_SUBSCRIPTIONS    = 'Subscriptions';
-	CONST MODULE_MAIL_CHIMP_LITE  = 'MailChimpLite';
+	CONST MODULE_MAIL_CHIMP_LITE  = 'MailChimpForWordPress';
+
+	CONST MODULE_UJI_COUNTDOWN    = 'UjiCountDown';
 
 	private static $arrModules = array(
 
@@ -167,6 +169,17 @@ final class GdbcModulesController extends MchWpModulesController
 			'classes' => array(
 				'GdbcMailChimpLiteAdminModule'  => '/modules/mail-chimp-lite/GdbcMailChimpLiteAdminModule.php',
 				'GdbcMailChimpLitePublicModule' => '/modules/mail-chimp-lite/GdbcMailChimpLitePublicModule.php',
+			)
+		),
+
+		self::MODULE_UJI_COUNTDOWN => array(
+			'info'    => array(
+				'ModuleId' => 10,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcUjiCountDownAdminModule'  => '/modules/uji-countdown/GdbcUjiCountDownAdminModule.php',
+				'GdbcUjiCountDownPublicModule' => '/modules/uji-countdown/GdbcUjiCountDownPublicModule.php',
 			)
 		),
 

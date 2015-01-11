@@ -27,11 +27,19 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 	public function activateCommentsActions()
 	{
-		add_action('comment_form_after_fields',    array($this, 'renderHiddenFieldIntoForm'), 1);
-		add_action('comment_form_logged_in_after', array($this,'renderHiddenFieldIntoForm'), 1);
+		add_action('comment_form_after_fields',    array($this, 'renderHiddenFieldIntoCommentsForm'), 1);
+		add_action('comment_form_logged_in_after', array($this, 'renderHiddenFieldIntoCommentsForm'), 1);
+		add_action('comment_form',                 array($this, 'renderHiddenFieldIntoForm'));
+
 		add_filter('preprocess_comment', array($this, 'validateCommentsFormEncryptedToken'));
 	}
-	
+
+	public function renderHiddenFieldIntoCommentsForm()
+	{
+		$this->renderHiddenFieldIntoForm();
+		remove_action('comment_form', array($this,'renderHiddenFieldIntoForm') );
+	}
+
 	public function activateLoginActions()
 	{
 		add_action('login_form', array($this, 'renderHiddenFieldIntoForm'));
@@ -87,7 +95,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
 			return $results;
 		
-		$results['errors']->add('gdbc-invalid-token', __( '<strong>ERROR</strong>: Invalid token received !', $this->PLUGIN_SLUG ));
+		$results['errors']->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
 		
 		return $results;
 	}
@@ -97,7 +105,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
 			return $errors;
 		
-		$errors->add('gdbc-invalid-token', __( '<strong>ERROR</strong>: Invalid token received', $this->PLUGIN_SLUG ));
+		$errors->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
 		
 		return $errors;
 	}
@@ -134,7 +142,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 //			return $arrComment;
 //		}
 
-		wp_die( __( '<strong>ERROR</strong>: Your comment could not be saved. Please try again later.' ) );
+		wp_die(__( '<strong>ERROR</strong>: Your comment could not be saved. Please try again later.'));
 	}
 	
 	public function hideFormWebSiteField($arrDefaultFields)

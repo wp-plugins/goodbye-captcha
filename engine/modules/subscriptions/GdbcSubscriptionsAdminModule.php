@@ -20,18 +20,25 @@
 
 final class GdbcSubscriptionsAdminModule extends GdbcBaseAdminModule
 {
-
-	CONST MAIL_CHIMP_LITE_ACTIVATED   = 'IsMCLActivated';
+	CONST MAIL_CHIMP_LITE_ACTIVATED = 'IsMCLActivated';
+	CONST UJI_COUNTDOWN_ACTIVATED   = 'IsUJICActivated';
 
 	private $arrDefaultSettingOptions = array(
 
 			self::MAIL_CHIMP_LITE_ACTIVATED    => array(
 				'Id'         => 1,
 				'Value'      => NULL,
-				'LabelText' => 'MailChimp Lite for WordPress',
+				'LabelText' => 'MailChimp Lite/Pro for WordPress',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 			),
-		
+
+			self::UJI_COUNTDOWN_ACTIVATED    => array(
+				'Id'         => 2,
+				'Value'      => NULL,
+				'LabelText' => 'Uji CountDown',
+				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
+			),
+
 	);
 
 	/**
@@ -115,7 +122,6 @@ final class GdbcSubscriptionsAdminModule extends GdbcBaseAdminModule
 				
 				$arrAttributes['value'] = true;	
 
-				
 				echo MchWpUtilHtml::createInputElement($arrAttributes);
 				
 				break;

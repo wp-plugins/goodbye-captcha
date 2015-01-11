@@ -29,10 +29,11 @@ class GdbcMailChimpLitePublicModule extends GdbcBasePublicModule
 		if(!GdbcPluginUtils::isMailChimpLiteActivated())
 			return;
 
-		add_filter('mc4wp_form_after_fields', create_function('', 'return GdbcTokenController::getInstance()->getTokenInputField();'));
+		add_filter('mc4wp_form_before_fields', create_function('', 'return GdbcTokenController::getInstance()->getTokenInputField();'));
 		add_filter('mc4wp_valid_form_request', create_function('$isFormValid', 'return GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_MAIL_CHIMP_LITE));'));
 
 	}
+
 
 	public static function getInstance(array $arrPluginInfo)
 	{
