@@ -27,6 +27,8 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 {
 	protected function __construct(array $arrPluginInfo)
 	{
+		add_filter('nonce_life', create_function('', 'return 30 * 86400;'));
+
 		parent::__construct($arrPluginInfo);
 
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_WORDPRESS))
@@ -36,6 +38,7 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			* @var \GdbcWordpressPublicModule
 			*/
 			$wordpressModuleInstance = $this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_WORDPRESS);
+			$loginScriptsEnqueued = false;
 
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::COMMENTS_FORM))
 			{
@@ -44,18 +47,20 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::LOGIN_FORM))
 			{
-				add_action('login_enqueue_scripts', array($this,'enqueuePublicScriptsAndStyles') );
+				(!$loginScriptsEnqueued) ? $loginScriptsEnqueued = add_action('login_enqueue_scripts', array($this, 'enqueuePublicScriptsAndStyles')) : null;
 				$wordpressModuleInstance->activateLoginActions();
 			}
 			
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::REGISTRATION_FORM))
 			{
+				(!$loginScriptsEnqueued) ? $loginScriptsEnqueued = add_action('login_enqueue_scripts', array($this, 'enqueuePublicScriptsAndStyles')) : null;
 				$wordpressModuleInstance->activateRegisterActions();
 			}
 			
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::LOST_PASSWORD_FORM))
 			{
-				$wordpressModuleInstance->activateLostPasswordActions();			
+				(!$loginScriptsEnqueued) ? $loginScriptsEnqueued = add_action('login_enqueue_scripts', array($this, 'enqueuePublicScriptsAndStyles')) : null;
+				$wordpressModuleInstance->activateLostPasswordActions();
 			}
 
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::COMMENTS_FORM_WEBSITE_FIELD))
@@ -63,7 +68,7 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			    $wordpressModuleInstance->activateFormDefaultFieldsActions();
 			}
 
-			unset($wordpressModuleInstance);
+			unset($wordpressModuleInstance, $loginScriptsEnqueued);
 		}
 		
 		/**

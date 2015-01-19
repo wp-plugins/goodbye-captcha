@@ -220,7 +220,7 @@ final class MchCrypt_Core_Generator
 	{
 		static $canUseURandom = null;
 
-		return null !== $canUseURandom ? $canUseURandom : $canUseURandom = (file_exists('/dev/urandom') && is_readable('/dev/urandom'));
+		return null !== $canUseURandom ? $canUseURandom : $canUseURandom = (@is_readable('/dev/urandom'));
 	}
 	
     private static function getBytesUsingDevURandom($length)

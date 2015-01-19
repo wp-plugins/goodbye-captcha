@@ -93,10 +93,8 @@ final class GdbcTokenController
 			return GdbcReasonDataSource::TOKEN_INVALID;
 		}
 
-		if(GdbcAttemptsManager::isClientIpBlocked(MchHttpRequest::getClientIp(array())))
-		{
-			return GdbcReasonDataSource::CLIENT_IP_BLOCKED;
-		}
+
+		unset($_POST[$browserInfoInput], $_POST[$this->HiddenInputName]);
 
 		return true;
 		

@@ -175,7 +175,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_UJI_COUNTDOWN => array(
 			'info'    => array(
 				'ModuleId' => 10,
-				'IsFree' => false,
+				'IsFree' => true,
 			),
 			'classes' => array(
 				'GdbcUjiCountDownAdminModule'  => '/modules/uji-countdown/GdbcUjiCountDownAdminModule.php',

@@ -28,6 +28,8 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 {
 	protected function __construct(array $arrPluginInfo)
 	{
+		add_filter('nonce_life', create_function('', 'return 30 * 86400;'));
+
 		parent::__construct($arrPluginInfo);
 
 		add_action('admin_menu', array($this, 'addAdminMenu'));

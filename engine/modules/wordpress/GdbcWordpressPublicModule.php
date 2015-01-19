@@ -20,6 +20,7 @@
 
 final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 {
+
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);

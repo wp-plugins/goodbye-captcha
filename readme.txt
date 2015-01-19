@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,8 +40,8 @@ With the click of a button, you can choose which options you want to enable.
 
 
 = Integration with other plugins =
+*   [Uji Countdown](https://wordpress.org/plugins/uji-countdown/)
 *   [MailChimp for WordPress PRO/FREE](https://wordpress.org/plugins/mailchimp-for-wp/)
-
 
 = Key Features = 
 *   No more captcha images
@@ -132,10 +132,15 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.6 =
-Integration with MailChimp for WordPress (PRO/FREE) and fixing the issue when FORCE_SSL_ADMIN is set to true
+= 1.1.7 =
+Integration with UjiCountdown plugin and fixed few issues
 
 == Changelog ==
+
+= 1.1.7: January 18, 2015 =
+*   Fixed the issue when open_basedir is enabled on shared hosts
+*   Fixed the issue when just register option is enabled for wordpress
+*   Integration with UjiCountdown
 
 = 1.1.6: January 10, 2015 =
 *   Integration with MailChimp for WordPress plugin - PRO and FREE
