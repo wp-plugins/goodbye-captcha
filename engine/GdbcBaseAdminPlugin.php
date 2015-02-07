@@ -25,8 +25,6 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);
-
-		//GdbcPluginUpdater::updateToCurrentVersion();
 	}
 	
 	/**
@@ -63,9 +61,10 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-flot-tooltip', plugins_url('/admin/scripts/jquery-flot-tooltip.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 			wp_enqueue_script($this->PLUGIN_SLUG . '-raphael', plugins_url('/admin/scripts/raphael.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 			wp_enqueue_script($this->PLUGIN_SLUG . '-morris', plugins_url('/admin/scripts/morris.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
-			wp_enqueue_script($this->PLUGIN_SLUG . '-admin-script', plugins_url('/admin/scripts/gdbc-admin.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 
-			wp_localize_script($this->PLUGIN_SLUG . '-admin-script', 'GdbcAdmin', array(
+			wp_enqueue_script($this->PLUGIN_SLUG . '-reports-script', plugins_url('/admin/scripts/gdbc-reports.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
+
+			wp_localize_script($this->PLUGIN_SLUG . '-reports-script', 'GdbcAdmin', array(
 				'ajaxUrl' => admin_url('admin-ajax.php'),
 				'shortCode' => $this->PLUGIN_SHORT_CODE,
 				'reportsNonce' => wp_create_nonce(self::ADMIN_NONCE_VALUE),
@@ -80,6 +79,8 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 			wp_enqueue_style($this->PLUGIN_SLUG . '-bootstrap', plugins_url('/admin/styles/bootstrap.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 			wp_enqueue_style($this->PLUGIN_SLUG . '-morris', plugins_url('/admin/styles/morris.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 		}
+
+		wp_enqueue_script($this->PLUGIN_SLUG . '-admin-script', plugins_url('/admin/scripts/gdbc-admin.js', $this->PLUGIN_MAIN_FILE), array('jquery'), $this->PLUGIN_VERSION);
 
 		wp_enqueue_style($this->PLUGIN_SLUG . '-admin-style', plugins_url('/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 

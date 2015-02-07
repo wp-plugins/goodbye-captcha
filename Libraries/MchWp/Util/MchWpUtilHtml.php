@@ -26,9 +26,36 @@ final class MchWpUtilHtml
 {
 	const FORM_ELEMENT_INPUT_HIDDEN   = 'hidden';
 	const FORM_ELEMENT_INPUT_TEXT     = 'text';	
-	const FORM_ELEMENT_INPUT_CHECKBOX = 'checkbox'; 
+	const FORM_ELEMENT_INPUT_CHECKBOX = 'checkbox';
+	const FORM_ELEMENT_SELECT         = 'select';
 
-	
+
+	public static function createSelectElement(array $arrAttributes)
+	{
+		$optionsCode = '';
+		if(isset($arrAttributes['options']) && is_array($arrAttributes['options']))
+		foreach($arrAttributes['options'] as $key => $value)
+		{
+			$selected = isset($arrAttributes['value']) && $arrAttributes['value'] == $value ? 'selected = "selected"' : '';
+			$optionsCode .=  '<option value="' . esc_attr($value) . '" '.$selected.'>' . esc_html($key) . '</option>';
+		}
+		unset($arrAttributes['value'], $arrAttributes['options'], $arrAttributes['type']);
+
+		empty($arrAttributes['id']) && !empty($arrAttributes['name']) ? $arrAttributes['id'] = MchWpUtil::replaceNonAlphaCharacters($arrAttributes['name'], '-') : null;
+
+		$code  = '<select';
+		foreach ($arrAttributes as $key => $value)
+		{
+			$code .= " {$key}=\"{$value}\"";
+		}
+
+		$code .= '>' . $optionsCode . '</select>';
+		return $code;
+
+
+	}
+
+
 	public static function createInputElement(array $arrAttributes)
 	{
 		$code  = '<input';
@@ -36,7 +63,9 @@ final class MchWpUtilHtml
 		$code .= isset($arrAttributes['type'])   ? " type=\"{$arrAttributes['type']}\"" : " type=\"text\"";
 		
 		unset($arrAttributes['type']);
-		
+
+		empty($arrAttributes['id']) && !empty($arrAttributes['name']) ? $arrAttributes['id'] = MchWpUtil::replaceNonAlphaCharacters($arrAttributes['name'], '-') : null;
+
 		foreach ($arrAttributes as $key => $value)
 		{
 			$code .= " {$key}=\"{$value}\"";

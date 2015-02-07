@@ -78,7 +78,9 @@ abstract class MchWpAdminModule extends MchWpModule
 
 	public function filterOptionsBeforeSave($arrNewSettings, $arrOldSettings)
 	{
-		
+		if($this->getModuleSetting()->hasErrors())
+			return $arrOldSettings;
+
 		$arrNewSettings = !empty($arrNewSettings) ? (array)$arrNewSettings : array();
 		$arrOldSettings = !empty($arrOldSettings) ? (array)$arrOldSettings : $this->getModuleSetting()->getDefaultOptions(); 
 

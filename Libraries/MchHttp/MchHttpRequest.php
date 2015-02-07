@@ -30,7 +30,7 @@ class MchHttpRequest
 
 		if(isset($_SERVER['HTTP_CLIENT_IP']) && isset($_SERVER['REMOTE_ADDR']) && in_array($_SERVER['REMOTE_ADDR'], $arrTrustedProxyIps))
 		{
-			$arrClientIps = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+			$arrClientIps = explode(',', $_SERVER['HTTP_CLIENT_IP']);
 			return  isset($arrClientIps[0]) ? $arrClientIps[0] : null;
 		}
 

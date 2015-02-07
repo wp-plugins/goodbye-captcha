@@ -41,20 +41,27 @@ class GdbcPluginUpdater
 			self::updateToVersion_1_1_0();
 		}
 
-//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.1'))
-//		{
-//			self::updateToVersion_1_1_1();
-//		}
+		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.8'))
+		{
+			self::updateToVersion_1_1_8();
+		}
 
 		#Save the new version of the plugin
 		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, $currentPluginVersionId);
 
 	}
 
-//	private static function updateToVersion_1_1_1()
-//	{
-//		GdbcTaskScheduler::scheduleGdbcTasks();
-//	}
+	private static function updateToVersion_1_1_8()
+	{
+		$minSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingDefaultOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MIN_SUBMISSION_TIME);
+		$maxSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingDefaultOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_SUBMISSION_TIME);
+		$keepLogsMaxDays   = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingDefaultOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_LOGS_DAYS);
+
+		GoodByeCaptcha::getModulesControllerInstance()->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS)->setSettingOption(GdbcSettingsAdminModule::OPTION_MIN_SUBMISSION_TIME, $minSubmissionTime);
+		GoodByeCaptcha::getModulesControllerInstance()->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS)->setSettingOption(GdbcSettingsAdminModule::OPTION_MAX_SUBMISSION_TIME, $maxSubmissionTime);
+		GoodByeCaptcha::getModulesControllerInstance()->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS)->setSettingOption(GdbcSettingsAdminModule::OPTION_MAX_LOGS_DAYS, $keepLogsMaxDays);
+
+	}
 
 
 

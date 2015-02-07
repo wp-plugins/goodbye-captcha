@@ -20,20 +20,24 @@
 
 final class GdbcTokenController
 {
-		
+	CONST TOKEN_SEPARATOR = '|';
+
 	private $TokenSecretKey    = null;
 	private $HiddenInputName   = null;
-	private $ModulesController = null;
-	
-	CONST TOKEN_SEPARATOR = '|';
-	CONST TOKEN_LIVETIME  = 900;
-	
-	
+
+	private $minSubmissionTime = null;
+	private $maxSubmissionTime = null;
+
 	private function __construct()
 	{
-		$this->ModulesController = GdbcModulesController::getInstance(GoodByeCaptcha::getPluginInfo());
-		$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
-		$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME);
+		$this->TokenSecretKey  = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
+		$this->HiddenInputName = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME);
+
+		$this->minSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MIN_SUBMISSION_TIME);
+		$this->maxSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_SUBMISSION_TIME);
+
+		empty($this->minSubmissionTime) ? $this->minSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingDefaultOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MIN_SUBMISSION_TIME) : null;
+		empty($this->maxSubmissionTime) ? $this->maxSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingDefaultOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_SUBMISSION_TIME) : null;
 
 	}
 	
@@ -43,6 +47,9 @@ final class GdbcTokenController
 		$receivedToken = isset($_POST[$this->HiddenInputName]) ? $_POST[$this->HiddenInputName] : (null !== $this->getHiddenFieldCookie() ? $this->getHiddenFieldCookie() : null);
 		if(null === $receivedToken)
 			return GdbcReasonDataSource::TOKEN_MISSING;
+
+		if(!isset($receivedToken[10]))
+			return GdbcReasonDataSource::TOKEN_INVALID;;
 
 		if(GdbcAttemptsManager::isClientIpBlocked(MchHttpRequest::getClientIp(array())))
 			return GdbcReasonDataSource::CLIENT_IP_BLOCKED;
@@ -78,12 +85,12 @@ final class GdbcTokenController
 				
 		$timeSinceGenerated = ((int)array_pop($arrTokenData)) - ((int)array_pop($arrDecryptedToken));
 
-		if($timeSinceGenerated > self::TOKEN_LIVETIME)
+		if($timeSinceGenerated > $this->maxSubmissionTime)
 		{
 			return GdbcReasonDataSource::TOKEN_EXPIRED;
 		}
 
-		if($timeSinceGenerated < 4)
+		if($timeSinceGenerated < $this->minSubmissionTime)
 		{
 			return GdbcReasonDataSource::TOKEN_SUBMITTED_EARLY;
 		}
@@ -117,7 +124,6 @@ final class GdbcTokenController
 
 			unset($arrBrowserInfo[$prop]);
 		}
-
 
 		if( ($arrBrowserInfoLength = count($arrBrowserInfo)) < 3)
 			return json_encode (array());
@@ -178,16 +184,16 @@ final class GdbcTokenController
 		if(!$this->isAjaxNonceValid($this->HiddenInputName))
 			return false;
 
-		if(!isset($_SERVER['HTTP_X_REQUESTED_WITH'] ))
+		if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']))
 			return false;
 
-		if($_SERVER['HTTP_X_REQUESTED_WITH'] !== 'XMLHttpRequest')
+		if(0 !== strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest'))
 			return false;
 
 		if(!isset($_SERVER['HTTP_ACCEPT']))
 			return false;
 
-		if(false === strpos($_SERVER['HTTP_ACCEPT'], 'json'))
+		if(false === stripos($_SERVER['HTTP_ACCEPT'], 'json'))
 			return false;
 
 		return true;

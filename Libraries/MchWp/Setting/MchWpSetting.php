@@ -21,7 +21,8 @@
 class MchWpSetting implements MchWpISetting
 {
 	private $arrSettingSections = array();
-	
+	private $hasErrors = false;
+
 	public $SettingKey   = null;
 	public $SettingGroup = null;
 	
@@ -38,8 +39,17 @@ class MchWpSetting implements MchWpISetting
 			$this->arrDefaultOptions[$optionName] = $arrOptionInfo['Value'];
 		}
 
+		if(MchWpBase::isUserInDashboad())
+		{
+			add_action('admin_notices', array($this, 'registerAdminNotices'));
+		}
 	}
-	
+
+	public function registerAdminNotices()
+	{
+		settings_errors($this->SettingKey, false, true);
+	}
+
 	public function getDefaultOptions()
 	{
 		return $this->arrDefaultOptions;
@@ -71,6 +81,11 @@ class MchWpSetting implements MchWpISetting
 		return isset($arrSavedOptions[$optionName]) ? $arrSavedOptions[$optionName] : null;
 	}
 
+	public function getSettingDefaultOption($optionName)
+	{
+		return array_key_exists($optionName, $this->arrDefaultOptions) ? $this->arrDefaultOptions[$optionName] : null;
+	}
+
 	public function deleteSettingOption($optionName)
 	{
 		$arrSavedOptions = $this->getAllSavedOptions();
@@ -96,6 +111,22 @@ class MchWpSetting implements MchWpISetting
 	public function getSettingSections()
 	{
 		return $this->arrSettingSections;
+	}
+
+	public function hasErrors()
+	{
+		return $this->hasErrors;
+	}
+	public function addErrorMessage($message)
+	{
+
+		add_settings_error($this->SettingKey, $this->SettingGroup, $message, 'error');
+		$this->hasErrors = true;
+	}
+
+	public function addSuccessMessage($message)
+	{
+		add_settings_error($this->SettingKey, $this->SettingGroup, $message, 'updated');
 	}
 
 }

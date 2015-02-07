@@ -125,18 +125,7 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 	
 	public function renderModuleSettingSection(array $arrSectionInfo)
 	{
-		if(!GoodByeCaptcha::isFreeVersion())
-		{
-			echo '<h4 style = "position:relative;">' . __("Enable GoodBye Captcha with the following forms", $this->PLUGIN_SLUG) . '</h4>';
-			return;
-		}
-	
-		$imageSrc = plugins_url( 'admin/images/donate.png', $this->PLUGIN_MAIN_FILE);
-		$settingSectionHtml  = '<h4 style = "position:relative;">' . __("Enable GoodBye Captcha with the following forms", $this->PLUGIN_SLUG);
-		$settingSectionHtml .= '<a target = "_blank" style = "top:-10px;right:0;position:absolute;display:inline-block; width:80px; height:32px;background:url('.$imageSrc.')" href = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U"></a>';
-		$settingSectionHtml .= '</h4>';
-
-		echo $settingSectionHtml;
+		echo '<h4 style = "position:relative;">' . __("Enable GoodBye Captcha with the following forms", $this->PLUGIN_SLUG) . '</h4>';
 	}
 
 
@@ -172,18 +161,18 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 
 				
 				echo MchWpUtilHtml::createInputElement($arrAttributes);
-				if(!empty($settingField->Description))
-				{
-					echo '<p class = "description">' . $settingField->Description . '</p>';
-				}
 				break;
 
 			case MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT :
 				echo MchWpUtilHtml::createInputElement($arrAttributes);
 				break;
 		}
-		
-		
+
+		if(!empty($settingField->Description))
+		{
+			echo '<p class = "description">' . $settingField->Description . '</p>';
+		}
+
 	}
 	
 

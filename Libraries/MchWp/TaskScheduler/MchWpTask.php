@@ -39,6 +39,6 @@ abstract class MchWpTask implements MchWpITask
 
 	public function getTaskCronActionHookName()
 	{
-		return get_class($this) . '-' . $this->runningInterval . '-' . $this->isRecurringTask;
+		return get_class($this) . '-' . $this->runningInterval . '-' . var_export($this->isRecurringTask, true);
 	}
 }

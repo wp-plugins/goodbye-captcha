@@ -25,6 +25,8 @@ final class GdbcTaskScheduler
 		if(!empty($arrGdbcTasks))
 			return $arrGdbcTasks;
 
+		$arrGdbcTasks[] = new GdbcLogsCleanerTask(MchWpTaskScheduler::SECONDS_IN_DAY, true);
+
 
 		return $arrGdbcTasks;
 	}
@@ -32,8 +34,9 @@ final class GdbcTaskScheduler
 	public static function scheduleGdbcTasks()
 	{
 		foreach(self::getGdbcTasks() as $gdbcTask)
+		{
 			MchWpTaskScheduler::getInstance()->registerTask($gdbcTask);
-
+		}
 
 		MchWpTaskScheduler::getInstance()->scheduleRegisteredTasks();
 	}

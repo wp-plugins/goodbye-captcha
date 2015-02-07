@@ -576,4 +576,10 @@ input[type="checkbox"], input[type="radio"] {
     left: 0;
     position: absolute;
     width: 700px;
+    margin:0 !important;
+}
+
+.gdbcsettingsadminmodule-settings form table.form-table th, .gdbcsettingsadminmodule-settings form table.form-table td
+{
+    padding-bottom: 30px !important;
 }

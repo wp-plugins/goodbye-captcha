@@ -22,12 +22,15 @@ final class GdbcRequest
 {
 	public static function isValid(array $arrParameters = null)
 	{
+		if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST)
+			return true;
+
 		$isTokenValid = GdbcTokenController::getInstance()->isReceivedTokenValid();
 
 		if(true === $isTokenValid)
 			return true;
 
-		if($isTokenValid === GdbcReasonDataSource::CLIENT_IP_BLOCKED)
+		if( 0 == GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_LOGS_DAYS))
 			return false;
 
 		(null === ($attemptEntity = GdbcAttemptsManager ::getSoftDeletedAttempt())) ? $attemptEntity = new GdbcAttemptEntity() : null;

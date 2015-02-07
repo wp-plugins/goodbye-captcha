@@ -46,11 +46,16 @@ class MchWpDbManager implements MchWpIDb
 
 	public static function executePreparedQuery($sqlQuery)
 	{
+		$sqlQuery = trim($sqlQuery);
 		if(empty($sqlQuery))
 			return null;
 
 		global $wpdb;
-		return false !== ($queryResult = $wpdb->get_results($sqlQuery)) ? $queryResult : null;
+
+		if(stripos($sqlQuery, 'select') === 0)
+			return false !== ($queryResult = $wpdb->get_results($sqlQuery)) ? $queryResult : null;
+
+		return false !== ($queryResult = $wpdb->query($sqlQuery)) ? $queryResult : null;
 	}
 
 	/**

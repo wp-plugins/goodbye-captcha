@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -21,41 +21,46 @@ abstract class MchWpPlugin extends MchWpBase implements MchWpIPlugin
 {
 	/**
 	 *
-	 * @var \MchWpModulesController  
+	 * @var \MchWpModulesController
 	 */
 	protected $ModulesController     = null;
-	
-	protected function __construct(array $arrPluginInfo) 
+
+	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);
-		
+
 		if(null === ($this->ModulesController = $this->getModulesControllerInstance($arrPluginInfo)))
 			throw new Exception ('Please implement getModulesControllerInstance method! ');
-		
+
 		if( ! ($this->ModulesController instanceof MchWpModulesController) )
 			throw new Exception ('The getModulesControllerInstance method should return an instance of MchWpModulesController class! ');
 
 
 		add_action('init', array($this, 'initPlugin' ) );
-		
+
 	}
-	
+
 	public function getRegisteredModules()
 	{
 		return $this->ModulesController->getRegisteredModules();
 	}
-	
+
+	public function isNetworkActivated()
+	{
+		function_exists( 'is_plugin_active_for_network' ) || require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		return !empty($this->PLUGIN_MAIN_FILE) ? is_plugin_active_for_network(plugin_basename( $this->PLUGIN_MAIN_FILE)) : false;
+	}
+
 	public function initPlugin()
 	{
 		if(null !== $this->PLUGIN_DOMAIN_PATH)
-		{	
+		{
 			$locale = apply_filters('plugin_locale', get_locale(), $this->PLUGIN_SLUG);
 
 			load_textdomain($this->PLUGIN_SLUG, trailingslashit( WP_LANG_DIR ) . $this->PLUGIN_SLUG . DIRECTORY_SEPARATOR . $this->PLUGIN_SLUG . '-' . $locale . '.mo' );
 
 			load_plugin_textdomain($this->PLUGIN_SLUG, false, $this->PLUGIN_DIRECTORY_NAME . DIRECTORY_SEPARATOR . $this->PLUGIN_DOMAIN_PATH . DIRECTORY_SEPARATOR );
 		}
-	}	
-	
-	
+	}
+
 }

@@ -28,6 +28,7 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 {
 	protected function __construct(array $arrPluginInfo)
 	{
+
 		add_filter('nonce_life', create_function('', 'return 30 * 86400;'));
 
 		parent::__construct($arrPluginInfo);
@@ -54,7 +55,6 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 					add_filter('mc4wp_valid_form_request', create_function('$isFormValid', 'return GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_MAIL_CHIMP_LITE));'));
 				}
 			}
-
 		}
 
 	}
@@ -62,8 +62,8 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 
 	public function addAdminMenu() 
 	{
-		$this->AdminSettingsPageHook = add_options_page( __('GoodByeCaptha Settings', $this->PLUGIN_SLUG), 
-														 'GoodByeCaptha', 
+		$this->AdminSettingsPageHook = add_options_page( __('GoodByeCaptcha Settings', $this->PLUGIN_SLUG),
+														 'GoodByeCaptcha',
 														 'manage_options', 
 														 $this->PLUGIN_SLUG, 
 														 array( $this, 'renderPluginAdminPage' ));
@@ -82,13 +82,14 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 	 */
 	public static function activatePlugin(array $arrPluginInfo, $isForNetwork) 
 	{
+
 		if( !self::isMultiSite() || !$isForNetwork )
 			return self::singleSiteActivate($arrPluginInfo);
-	
+
 		foreach ( self::getAllBlogIds() as $blogId )
 		{
 			switch_to_blog( $blogId );
-			
+
 			self::singleSiteActivate($arrPluginInfo);
 
 			restore_current_blog();
@@ -99,9 +100,9 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 	private static function singleSiteActivate(array $arrPluginInfo)
 	{
 		GdbcPluginUpdater::updateToCurrentVersion();
+
 		$settingsModuleInstance = GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS);
 		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, MchWpBase::getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION));
-
 		GdbcPluginUtils::isUjiCountDownActivated() ? GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SUBSCRIPTIONS)->setSettingOption(GdbcSubscriptionsAdminModule::UJI_COUNTDOWN_ACTIVATED, true) : null;
 
 		GdbcTaskScheduler::scheduleGdbcTasks();

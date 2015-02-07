@@ -19,5 +19,5 @@
 interface MchWpITask
 {
 	public function run();
-
+	public function getTaskCronActionHookName();
 }

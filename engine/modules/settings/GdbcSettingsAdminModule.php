@@ -26,11 +26,38 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 	CONST OPTION_TOKEN_SECRET_KEY          = 'TokenSecretKey';
 	CONST OPTION_TOKEN_CREATED_TIMESTAMP   = 'TokenCreatedTimestamp';
 	CONST OPTION_HIDDEN_INPUT_NAME         = 'HiddenInputName';
-	
+
+	CONST OPTION_MIN_SUBMISSION_TIME       = 'MinSubmissionTime';
+	CONST OPTION_MAX_SUBMISSION_TIME       = 'MaxSubmissionTime';
+	CONST OPTION_MAX_LOGS_DAYS             = 'MaxLogsDays'; // in days
+
 	CONST OPTION_LICENSE_KEY          = 'LicenseKey';
 	CONST OPTION_LICENSE_ACTIVATED    = 'IsLicenseActivated';
 	
 	private $arrDefaultSettingOptions = array(
+
+
+		self::OPTION_MIN_SUBMISSION_TIME  => array(
+			'Value'       => 5,
+			'LabelText'   => 'Minimum Submission Time',
+			'Description' => 'Number of seconds before the submission is considered valid!',
+			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
+		),
+
+		self::OPTION_MAX_SUBMISSION_TIME  => array(
+			'Value'       => 600,
+			'LabelText'   => 'Maximum Submission Time',
+			'Description' => 'Number of seconds after the submission is not considered valid!',
+			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
+		),
+
+		self::OPTION_MAX_LOGS_DAYS  => array(
+			'Value'       => 60,
+			'LabelText'   => 'Automatically purge logs after',
+			'Description' => 'Logs older than selected number of days will be automatically purged',
+			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_SELECT
+		),
+
 
 		self::OPTION_PLUGIN_VERSION_ID  => array(
 			'Value'      => NULL,
@@ -44,17 +71,17 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
 		),
 
-		self::OPTION_LICENSE_KEY  => array(
-			'Value'      => NULL,
-			'LabelText' => 'License Key',
-			'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
-		),
-
-		self::OPTION_LICENSE_ACTIVATED  => array(
-			'Value'      => NULL,
-			'LabelText' => 'License not activated',
-			'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
-		),
+//		self::OPTION_LICENSE_KEY  => array(
+//			'Value'      => NULL,
+//			'LabelText' => 'License Key',
+//			'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
+//		),
+//
+//		self::OPTION_LICENSE_ACTIVATED  => array(
+//			'Value'      => NULL,
+//			'LabelText' => 'License not activated',
+//			'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
+//		),
 
 		self::OPTION_TOKEN_SECRET_KEY  => array(
 			'Value'      => NULL,
@@ -96,7 +123,7 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 	protected function getModuleSettingSections()
 	{
 		$settingSection = new MchWpSettingSection($this->moduleSetting->SettingKey . '-section', __('GoodBye Captcha General Settings', $this->PLUGIN_SLUG));
-		
+
 		foreach ($this->arrDefaultSettingOptions as $fieldName => $fieldInfo)
 		{
 			if(empty($fieldInfo['LabelText']) || empty($fieldInfo['InputType']))
@@ -106,12 +133,13 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			
 			$settingField->HTMLLabelText = $fieldInfo['LabelText'];
 			$settingField->HTMLInputType = $fieldInfo['InputType'];
-			
+			$settingField->Description   = !empty($fieldInfo['Description']) ? $fieldInfo['Description'] : null;
+
 			if($fieldName === self::OPTION_LICENSE_ACTIVATED)
 			{
 				if(GoodByeCaptcha::isFreeVersion())
 					continue;
-				 
+
 				$this->getModuleSetting()->getSettingOption($fieldName) ? $settingField->HTMLLabelText =  __('Your license is activated', $this->PLUGIN_SLUG): null;
 			}
 
@@ -127,23 +155,28 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 	
 	public function renderModuleSettingSection(array $arrSectionInfo)
 	{
-		if(!GoodByeCaptcha::isFreeVersion())
-		{
-			echo '<h4 style = "position:relative;"></h4>';
-			return;
-		}
-	
-		$imageSrc = plugins_url( 'admin/images/donate.png', $this->PLUGIN_MAIN_FILE);
-		$settingSectionHtml  = '<h4 style = "position:relative;">' . __("General Settings", $this->PLUGIN_SLUG);
-		$settingSectionHtml .= '<a target = "_blank" style = "top:-10px;right:0;position:absolute;display:inline-block; width:80px; height:32px;background:url('.$imageSrc.')" href = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U"></a>';
-		$settingSectionHtml .= '</h4>';
-
+		$settingSectionHtml  = '<h4 style = "position:relative;">' . __("General Settings", $this->PLUGIN_SLUG) . "</h4>";
 		echo $settingSectionHtml;
+
 	}
 
 
 	public function validateModuleSetting($arrSettingOptions)
 	{
+		if(empty($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]) || false === ($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME] = filter_var(sanitize_text_field($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]), FILTER_VALIDATE_INT)))
+		{
+			$this->moduleSetting->addErrorMessage(__('Minimum Submission Time should be a numeric value greater than 1 !', $this->PLUGIN_SLUG));
+			unset($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]);
+		}
+		if(empty($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]) || false === ($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME] = filter_var(sanitize_text_field($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]), FILTER_VALIDATE_INT)) || $arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME] <= $arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME])
+		{
+			$this->moduleSetting->addErrorMessage(__('Minimum Submission Time should be a numeric value greater than Minimum Submission Time !', $this->PLUGIN_SLUG));
+			unset($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]);
+		}
+
+		//print_r($arrSettingOptions);
+//
+//		return array();
 		return $arrSettingOptions;
 	}
 
@@ -155,23 +188,43 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 		/* @var $settingField \MchWpSettingField */
 		$settingField = $arrSettingField[0];
 		
-			
 		$arrAttributes = array(
 								'type' => $settingField->HTMLInputType,
 								'name' => $this->moduleSetting->SettingKey . '[' . $settingField->Name . ']',
 								'value' => $this->moduleSetting->getSettingOption($settingField->Name),
 							);
-		
-		if($settingField->Name === self::OPTION_LICENSE_ACTIVATED)
+
+		if(!isset($arrAttributes['value']) && isset($this->arrDefaultSettingOptions[$settingField->Name]))
 		{
-			unset($arrAttributes['type']);
+			if(!is_array($this->arrDefaultSettingOptions[$settingField->Name]['Value']))
+				$arrAttributes['value'] = $this->arrDefaultSettingOptions[$settingField->Name]['Value'];
 		}
-		
-		if(!isset($arrAttributes['type']))
-			return;
+
+
+//		if($settingField->Name === self::OPTION_LICENSE_ACTIVATED)
+//		{
+//			unset($arrAttributes['type']);
+//		}
+//
+//		if(!isset($arrAttributes['type']))
+//			return;
 		
 		switch ($settingField->HTMLInputType)
 		{
+			case MchWpUtilHtml::FORM_ELEMENT_SELECT :
+
+				if($settingField->Name === self::OPTION_MAX_LOGS_DAYS)
+				{
+					$arrAttributes['options'] = array();
+					for($i = 0; $i <= 6; ++$i)
+					$arrAttributes['options'][(60 * $i) . ' days'] = 60 * $i;
+
+				}
+
+				echo MchWpUtilHtml::createSelectElement($arrAttributes);
+				break;
+
+
 			case MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX :
 
 				!empty($arrAttributes['value']) ? $arrAttributes['checked'] = 'checked' : null;
@@ -186,8 +239,17 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 				echo MchWpUtilHtml::createInputElement($arrAttributes);
 				break;
 		}
-		
-		
+
+		if(!empty($settingField->Description))
+		{
+			echo '<p class = "description">' . $settingField->Description . '</p>';
+
+			if($settingField->Name === self::OPTION_MAX_LOGS_DAYS)
+			{
+				echo '<p class = "description hidden" style = "color:#d54e21">' .  __('By selecting ZERO you TURN OFF logging and you wont be protected against brute-force attacks !', $this->PLUGIN_SLUG)  . '</p>';
+			}
+		}
+
 	}
 
 	public function filterOptionsBeforeSave($arrNewSettings, $arrOldSettings)

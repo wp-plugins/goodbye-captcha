@@ -62,15 +62,15 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 
 	public function renderPluginAdminPage()
 	{
-
-		$code  = '<div class="wrap container-fluid mchwp-settings">' . $this->getAdminSettingsTabsCode();
+		$moduleSetting = $this->ModulesController->getModuleSetting($this->getAdminSettingsCurrentTab());
+		$className = 'wrap container-fluid mchwp-settings '. $moduleSetting->SettingKey;
+		$code  = '<div class="' . $className . '">' . $this->getAdminSettingsTabsCode();
 		
 		$code .= '<form method="post" action="options.php">';
 
 		ob_start();
 		
-		$moduleSetting = $this->ModulesController->getModuleSetting($this->getAdminSettingsCurrentTab());
-		
+
 		if(null !== $moduleSetting)
 		{
 

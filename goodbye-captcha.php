@@ -11,7 +11,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.7
+ * Version: 1.1.8
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 
-	CONST PLUGIN_VERSION    = '1.1.7';
+	CONST PLUGIN_VERSION    = '1.1.8';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -61,25 +61,24 @@ class GoodByeCaptcha
 		'GdbcBaseAdminModule'     => '/engine/modules/GdbcBaseAdminModule.php',
 		'GdbcBasePublicModule'    => '/engine/modules/GdbcBasePublicModule.php',
 		'GdbcCheckAttemptsTask'   => '/engine/tasks/GdbcCheckAttemptsTask.php',
+		'GdbcLogsCleanerTask'     => '/engine/tasks/GdbcLogsCleanerTask.php',
 		'GdbcTaskScheduler'       => '/engine/GdbcTaskScheduler.php',
 	);
 
 
-	private static $isFreeVersion = true;
+	private static $isFreeVersion      = true;
+	private static $isNetworkActivated = false;
 
 	protected function __construct()
 	{
 		spl_autoload_register('self::classAutoLoad');
 
-		(MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
+		$pluginInstance = (MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
+		self::$isNetworkActivated = $pluginInstance->isNetworkActivated();
 
 		self::$isFreeVersion = ( count(self::getModulesControllerInstance()->getRegisteredModules()) === count(self::getModulesControllerInstance()->getFreeModuleNames()));
-
 		GdbcPluginUpdater::updateToCurrentVersion();
-
-		//GdbcTaskScheduler::registerGdbcTasks();
-		MchWpTaskScheduler::getInstance()->unscheduleRegisteredTasks();
-
+		GdbcTaskScheduler::scheduleGdbcTasks();
 
 	}
 
@@ -138,7 +137,7 @@ class GoodByeCaptcha
 
 		GdbcAdmin::deactivatePlugin(self::$arrPluginInfo, $isForNetwork);
 
-		//GdbcTaskScheduler::unscheduleGdbcTasks();
+		GdbcTaskScheduler::unscheduleGdbcTasks();
 	}
 
 }

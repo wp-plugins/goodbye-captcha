@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,7 +47,7 @@ With the click of a button, you can choose which options you want to enable.
 *   No more captcha images
 *   Eliminates automated form submissions from robots
 *   Eliminates automated comment spams from robots
-*   Eliminates automated robots sign-up trough registration form
+*   Eliminates automated robots sign-up through registration form
 *   Eliminates automated robots login attempts
 *   No requests to external APIs
 *   Compatible with WordPress Multisite
@@ -124,7 +124,7 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 
 == Screenshots ==
-1. GoodBye Captcha settings are available trough Settings menu.
+1. GoodBye Captcha settings are available through Settings menu.
 2. GoodBye Captcha - WordPress Forms. Activate the plugin for the standard WordPress forms.
 3. Total Attempts per Day Chart, Monthly Spam Attempts Percentage Comparison, Latest Blocked Attempts Table.
 4. Geographical Locations of The Attempts, Top of Attempts per Country, Statistics of Attempts per Modules.
@@ -132,10 +132,15 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.7 =
-Integration with UjiCountdown plugin and fixed few issues
+= 1.1.8 =
+Daily logs purge, optional logging and min/max form submission time
 
 == Changelog ==
+
+= 1.1.8: February 07, 2015 =
+*   Logs are automatically purged daily
+*   Ability to turn off logging
+*   Settings for max/min form submission time
 
 = 1.1.7: January 18, 2015 =
 *   Fixed the issue when open_basedir is enabled on shared hosts

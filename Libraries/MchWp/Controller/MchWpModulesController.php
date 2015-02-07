@@ -32,8 +32,7 @@ abstract class MchWpModulesController extends MchWpBase implements MchWpIControl
 		parent::__construct($arrPluginInfo);
 		
 		spl_autoload_register(array($this, 'autoLoadModuleClass'), false);
-		
-		
+
 	}
 
 	public function activatePublicModule($moduleName, MchWpPublicPlugin $publicPlugin)
@@ -48,6 +47,12 @@ abstract class MchWpModulesController extends MchWpBase implements MchWpIControl
 	{
 		$module = $this->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN);
 		return (null === $module) ? null : $module->getModuleSetting()->getSettingOption($optionName);
+	}
+
+	public function getModuleSettingDefaultOption($moduleName, $optionName)
+	{
+		$module = $this->getModuleInstance($moduleName, MchWpModule::MODULE_TYPE_ADMIN);
+		return (null === $module) ? null : $module->getModuleSetting()->getSettingDefaultOption($optionName);
 	}
 
 	/**
