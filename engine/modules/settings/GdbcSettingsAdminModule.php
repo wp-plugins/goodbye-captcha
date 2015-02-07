@@ -53,7 +53,7 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 
 		self::OPTION_MAX_LOGS_DAYS  => array(
 			'Value'       => 60,
-			'LabelText'   => 'Automatically purge logs after',
+			'LabelText'   => 'Automatically purge logs older than',
 			'Description' => 'Logs older than selected number of days will be automatically purged',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_SELECT
 		),
