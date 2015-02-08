@@ -125,10 +125,11 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Screenshots ==
 1. GoodBye Captcha settings are available through Settings menu.
-2. GoodBye Captcha - WordPress Forms. Activate the plugin for the standard WordPress forms.
-3. Total Attempts per Day Chart, Monthly Spam Attempts Percentage Comparison, Latest Blocked Attempts Table.
-4. Geographical Locations of The Attempts, Top of Attempts per Country, Statistics of Attempts per Modules.
-5. Total Attempts per Module/Day Charts, Modules Latest Attempts.
+2. GoodBye Captcha - All common settings.
+3. GoodBye Captcha - WordPress Forms. Activate the plugin for the standard WordPress forms.
+4. Total Attempts per Day Chart, Monthly Spam Attempts Percentage Comparison, Latest Blocked Attempts Table.
+5. Geographical Locations of The Attempts, Top of Attempts per Country, Statistics of Attempts per Modules.
+6. Total Attempts per Module/Day Charts, Modules Latest Attempts.
 
 == Upgrade Notice ==
 
