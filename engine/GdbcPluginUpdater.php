@@ -67,7 +67,7 @@ class GdbcPluginUpdater
 
 		$attemptEntity = new GdbcAttemptEntity();
 
-		$sqlQuery = 'UPDATE ' . $attemptEntity->getTableName() . 'SET IsDeleted = 0 WHERE IsDeleted <> 0 AND CreatedDate >= %s';
+		$sqlQuery = 'UPDATE ' . $attemptEntity->getTableName() . ' SET IsDeleted = 0 WHERE IsDeleted <> 0 AND CreatedDate >= %s';
 		$preparedQuery = $wpdb->prepare($sqlQuery, $maxLogsDate);
 		MchWpDbManager::executePreparedQuery($preparedQuery);
 
