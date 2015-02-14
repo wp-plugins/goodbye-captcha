@@ -111,6 +111,10 @@ abstract class MchWpBase implements MchWpIBase
 		return (null !== $isMultisite) ? $isMultisite :  $isMultisite = function_exists( 'is_multisite' ) && is_multisite();
 	}
 	
-	
+	public static function isPermalinkStructureActivated()
+	{
+		static $isActivated = null;
+		return (null !== $isActivated) ? $isActivated : $isActivated = (bool)(get_option('permalink_structure'));
+	}
 	
 }

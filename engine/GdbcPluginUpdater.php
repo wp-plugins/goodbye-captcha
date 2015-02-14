@@ -46,8 +46,30 @@ class GdbcPluginUpdater
 			self::updateToVersion_1_1_8();
 		}
 
+		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.9'))
+		{
+			self::updateToVersion_1_1_9();
+		}
+
+
 		#Save the new version of the plugin
 		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, $currentPluginVersionId);
+
+	}
+
+	private static function updateToVersion_1_1_9()
+	{
+		global $wpdb;
+
+		$keepLogsMaxDays   = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_LOGS_DAYS);
+
+		$maxLogsDate = date('Y-m-d H:i:s',  strtotime(((-1) * (abs($keepLogsMaxDays))) . ' days', current_time( 'timestamp' )));
+
+		$attemptEntity = new GdbcAttemptEntity();
+
+		$sqlQuery = 'UPDATE ' . $attemptEntity->getTableName() . 'SET IsDeleted = 0 WHERE IsDeleted <> 0 AND CreatedDate >= %s';
+		$preparedQuery = $wpdb->prepare($sqlQuery, $maxLogsDate);
+		MchWpDbManager::executePreparedQuery($preparedQuery);
 
 	}
 

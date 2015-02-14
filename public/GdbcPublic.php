@@ -76,12 +76,13 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		 */ 
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_JETPACK))
 		{
+
 			$jetPackModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_JETPACK, MchWpModule::MODULE_TYPE_PUBLIC);
 
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::COMMENTS_FORM))
-			{
-				$jetPackModuleInstance->activateCommentsFormActions();
-			}
+//			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::COMMENTS_FORM))
+//			{
+//				$jetPackModuleInstance->activateCommentsFormActions();
+//			}
 			
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::CONTACT_FORM))
 			{
@@ -123,9 +124,6 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		 */
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_POPULAR_FORMS))
 		{
-			$popularFormsModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_POPULAR_FORMS, MchWpModule::MODULE_TYPE_PUBLIC);
-			
-
 			#Formidable Forms - Free and Pro
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::FORMIDABLE_FORMS))
 			{
@@ -171,7 +169,6 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 				}
 			}
 			
-			unset($popularFormsModuleInstance);
 		}
 
 		//Newsletter Subscriptions Plugins
@@ -190,7 +187,18 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			}
 		}
 
-		
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_POPULAR_PLUGINS))
+		{
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_PLUGINS, GdbcPopularPluginsAdminModule::USER_PRO_LOGIN_FORM))
+			{
+				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_POPULAR_PLUGINS)->activateUserProLoginActions();
+			}
+
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_PLUGINS, GdbcPopularPluginsAdminModule::USER_PRO_REGISTER_FORM))
+			{
+				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_POPULAR_PLUGINS)->activateUserProRegisterActions();
+			}
+		}
 	}
 
 	public function initPlugin()

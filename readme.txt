@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,10 +133,13 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.8 =
-Daily logs purge, optional logging and min/max form submission time
+= 1.1.9 =
+Fixed the issue causing the logs to disappear
 
 == Changelog ==
+
+= 1.1.9: February 14, 2015 =
+*   Fixed the issue causing the logs to disappear
 
 = 1.1.8: February 07, 2015 =
 *   Logs are automatically purged daily

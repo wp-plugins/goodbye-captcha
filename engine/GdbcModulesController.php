@@ -25,6 +25,7 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_JETPACK          = 'JetPack';
 	CONST MODULE_BUDDY_PRESS      = 'BuddyPress';
 	CONST MODULE_POPULAR_FORMS    = 'PopularForms';
+	CONST MODULE_POPULAR_PLUGINS  = 'PopularPlugins';
 	CONST MODULE_REPORTS		  = 'Reports';
 	CONST MODULE_NINJA_FORMS      = 'NinjaForms';
 	CONST MODULE_CONTACT_FORM_7   = 'ContactForm7';
@@ -182,6 +183,18 @@ final class GdbcModulesController extends MchWpModulesController
 				'GdbcUjiCountDownPublicModule' => '/modules/uji-countdown/GdbcUjiCountDownPublicModule.php',
 			)
 		),
+
+		self::MODULE_POPULAR_PLUGINS => array(
+			'info'    => array(
+				'ModuleId' => 11,
+				'IsFree' => false,
+			),
+			'classes' => array(
+				'GdbcPopularPluginsAdminModule'  => '/modules/popular-plugins/GdbcPopularPluginsAdminModule.php',
+				'GdbcPopularPluginsPublicModule' => '/modules/popular-plugins/GdbcPopularPluginsPublicModule.php',
+			)
+		),
+
 
 		self::MODULE_REPORTS => array(
 			'info'    => array(

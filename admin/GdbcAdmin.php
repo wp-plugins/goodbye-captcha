@@ -57,6 +57,20 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 			}
 		}
 
+		if(MchWp::isAjaxRequest() && GdbcPluginUtils::isUserProPluginActivated())
+		{
+			if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_POPULAR_PLUGINS))
+			{
+				if (null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_PLUGINS, GdbcPopularPluginsAdminModule::USER_PRO_LOGIN_FORM))
+				{
+					add_filter('userpro_login_validation', create_function('', 'return !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_POPULAR_PLUGINS));'));
+				}
+				if (null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_PLUGINS, GdbcPopularPluginsAdminModule::USER_PRO_REGISTER_FORM))
+				{
+					add_filter('userpro_register_validation', create_function('', 'return !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_POPULAR_PLUGINS));'));
+				}
+			}
+		}
 	}
 	
 

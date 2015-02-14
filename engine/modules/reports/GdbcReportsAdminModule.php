@@ -311,6 +311,7 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 		{
 			$moduleName = $this->moduleController->getModuleNameById($attemptsList[$i]->ModuleId);
 
+
 			if(null === $moduleName)
 				continue;
 
@@ -320,6 +321,8 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 				$section = 'N/A';
 
 			//$contentArray[$i][self::TABLE_HEADER_MODULE_SECTION] = $moduleName;
+
+			($moduleName === GdbcModulesController::MODULE_POPULAR_PLUGINS) ? $moduleName = 'UserPro' : null;
 
 			$contentArray[$i][self::TABLE_HEADER_MODULE_SECTION] = empty($attemptsList[$i]->ModuleId) ? 'Custom Form' : $moduleName;
 

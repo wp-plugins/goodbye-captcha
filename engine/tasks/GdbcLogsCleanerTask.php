@@ -38,7 +38,7 @@ class GdbcLogsCleanerTask extends MchWpTask
 		$sqlQuery = 'SELECT ModuleId, COUNT(ModuleId) AS BlockedAttempts FROM ' . $attemptEntity->getTableName() . ' WHERE IsDeleted = 0 AND CreatedDate < %s GROUP BY ModuleId';
 		$preparedQuery = $wpdb->prepare($sqlQuery, $maxDate);
 		$result = MchWpDbManager::executePreparedQuery($preparedQuery);
-
+		
 		$arrSavedBlockedAttempts = get_site_option( 'gdbc-blocked-attempts', array() );
 		$currentBlogId = get_current_blog_id();
 
@@ -52,13 +52,13 @@ class GdbcLogsCleanerTask extends MchWpTask
 		update_site_option('gdbc-blocked-attempts', $arrSavedBlockedAttempts);
 
 		$sqlQuery = 'UPDATE ' . $attemptEntity->getTableName() . ' SET IsDeleted = 1
-					WHERE Id NOT IN (SELECT Id FROM (SELECT MAX(Id) AS Id
+					WHERE IsDeleted = 0 AND CreatedDate < %s AND Id NOT IN (SELECT Id FROM (SELECT MAX(Id) AS Id
 					FROM ' . $attemptEntity->getTableName() . '
 					WHERE IsDeleted = 0 AND
 					IsIpBlocked = 1 AND CreatedDate < %s
 					GROUP BY ClientIp) AllClientIps)';
 
-		$preparedQuery = $wpdb->prepare($sqlQuery, $maxDate);
+		$preparedQuery = $wpdb->prepare($sqlQuery, $maxDate, $maxDate);
 
 		MchWpDbManager::executePreparedQuery($preparedQuery);
 

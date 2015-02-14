@@ -174,9 +174,6 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			unset($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]);
 		}
 
-		//print_r($arrSettingOptions);
-//
-//		return array();
 		return $arrSettingOptions;
 	}
 

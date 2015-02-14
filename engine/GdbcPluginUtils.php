@@ -50,13 +50,17 @@ final class GdbcPluginUtils
 	{
 		return class_exists('FSCF_Util', false);
 	}
-	
-	
+
 	public static function isFormidableFormsActivated()
 	{
 		return class_exists('FrmSettings', false);
 	}
-	
+
+	public static function isUserProPluginActivated()
+	{
+		return class_exists('userpro_api', false);
+	}
+
 	public static function setCookie($cookieKey, $cookieValue, $cookieTime, $path = null)
 	{
 		if(headers_sent()) return;
@@ -128,5 +132,6 @@ final class GdbcPluginUtils
 		$dateTime = (null === $timezone) ? new DateTime($time) : new DateTime($time, $timezone);
 		return $dateTime->format('Y-m-d');
 	}
+
 
 }
