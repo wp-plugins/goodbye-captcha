@@ -3,8 +3,8 @@ Contributors: MihChe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
-Tested up to: 4.1
-Stable tag: 1.1.9
+Tested up to: 4.1.1
+Stable tag: 1.1.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,14 +22,14 @@ In addition, we give you the option to add extra layers of security to your Word
 With the click of a button, you can choose which options you want to enable.
 
 = Features =
-*   Comments form integration
-*   Register form integration
 *   Login form integration
+*   Register form integration
+*   Comments form integration
 *   Forgot password form integration
 *   Disable comments form Website URL field
 *   Disable comments form Allowed Tags field
 *   Disable the "Your email address will not be published" text
-*   Block Ip address feature (IPV4 and IPV6)
+*   Block IP address feature (IPV4 and IPV6)
 *   Reports and statistics with blocked attempts
 *   Total attempts per days and modules charts
 *   Monthly attempts percentage comparison
@@ -40,8 +40,11 @@ With the click of a button, you can choose which options you want to enable.
 
 
 = Integration with other plugins =
-*   [Uji Countdown](https://wordpress.org/plugins/uji-countdown/)
+
 *   [MailChimp for WordPress PRO/FREE](https://wordpress.org/plugins/mailchimp-for-wp/)
+
+*   [Uji Countdown](https://wordpress.org/plugins/uji-countdown/)
+
 
 = Key Features = 
 *   No more captcha images
@@ -55,7 +58,6 @@ With the click of a button, you can choose which options you want to enable.
 *   Invisible for end users (works in background)
 *   It does not affect pages loading time
 *   It does not use PHP Session
-*   This version is free for both Commercial and Personal use
 *   Block IP feature for both IPV6 and IPV4 addresses
 *   Statistics, reports and charts with all blocked spam attempts
 
@@ -105,7 +107,7 @@ After installation, a GoodBye Captcha menu item will appear in the Settings sect
 Yes. The algorithm behind the plugin was fully tested and there is no way a spider or robot can spam your sites.
 
 = What forms can be secured by using Goodbye Captcha WordPress plugin? =
-All standard WordPress forms(Login, Register, Comment and Forgot Password) can be secured by using GoodBye Captcha Free plugin.
+All standard WordPress forms(Login, Register, Comment and Forgot Password) can be secured by using GoodBye Captcha plugin.
 
 = Are there any php extensions that need to be activated so this plugin could work? =
 No. The plugin runs 100% without activating any additional php extensions.
@@ -133,10 +135,22 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.9 =
+= 1.1.10 =
 Fixed the issue causing the logs to disappear
 
 == Changelog ==
+
+= 1.1.10: February 25, 2015 =
+
+**Additions**
+
+- Ability to set the maximum form submissions per minute
+- Ability to Automatically Block IP Address
+
+**Fixed**
+
+- Issue with non popular caching plugins
+
 
 = 1.1.9: February 14, 2015 =
 *   Fixed the issue causing the logs to disappear

@@ -29,26 +29,42 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 
 	CONST OPTION_MIN_SUBMISSION_TIME       = 'MinSubmissionTime';
 	CONST OPTION_MAX_SUBMISSION_TIME       = 'MaxSubmissionTime';
+	CONST OPTION_MAX_ALLOWED_ATTEMPTS      = 'MaxAllowedAttempts';
 	CONST OPTION_MAX_LOGS_DAYS             = 'MaxLogsDays'; // in days
+	CONST OPTION_AUTO_BLOCK_IP             = 'AutoBlockIp';
 
 	CONST OPTION_LICENSE_KEY          = 'LicenseKey';
 	CONST OPTION_LICENSE_ACTIVATED    = 'IsLicenseActivated';
-	
+
 	private $arrDefaultSettingOptions = array(
 
 
 		self::OPTION_MIN_SUBMISSION_TIME  => array(
 			'Value'       => 5,
-			'LabelText'   => 'Minimum Submission Time',
-			'Description' => 'Number of seconds before the submission is considered valid!',
+			'LabelText'   => 'Minimum Form Submission Time',
+			'Description' => 'Number of seconds before the submission is considered valid',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
 		),
 
 		self::OPTION_MAX_SUBMISSION_TIME  => array(
 			'Value'       => 600,
-			'LabelText'   => 'Maximum Submission Time',
-			'Description' => 'Number of seconds after the submission is not considered valid!',
+			'LabelText'   => 'Maximum Form Submission Time',
+			'Description' => 'Number of seconds after the submission is not considered valid',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
+		),
+
+		self::OPTION_MAX_ALLOWED_ATTEMPTS  => array(
+			'Value'       => 10,
+			'LabelText'   => 'Maximum Submissions per Minute',
+			'Description' => 'Maximum number of allowed form submissions per minute',
+			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
+		),
+
+		self::OPTION_AUTO_BLOCK_IP => array(
+			'Value'       => NULL,
+			'LabelText'   => 'Automatically Block IP Address',
+			'Description' => 'Automatically block IP Address if the Maximum Submissions per Minute is reached',
+			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 		),
 
 		self::OPTION_MAX_LOGS_DAYS  => array(
@@ -145,7 +161,7 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 
 			if($fieldName === self::OPTION_LICENSE_KEY && GoodByeCaptcha::isFreeVersion())
 				continue;
-			
+
 			$settingSection->addSettingField($settingField);
 		}
 		
@@ -163,15 +179,41 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 
 	public function validateModuleSetting($arrSettingOptions)
 	{
-		if(empty($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]) || false === ($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME] = filter_var(sanitize_text_field($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]), FILTER_VALIDATE_INT)))
+		$hasErrors = false;
+
+		if(!$hasErrors)
 		{
-			$this->moduleSetting->addErrorMessage(__('Minimum Submission Time should be a numeric value greater than 1 !', $this->PLUGIN_SLUG));
-			unset($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]);
+			if (empty($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME])
+				|| false === ($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME] = filter_var(sanitize_text_field($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]), FILTER_VALIDATE_INT))
+				|| $arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME] < 1
+			){
+				$this->moduleSetting->addErrorMessage(__('Minimum Submission Time should be a numeric value greater than 1 !', $this->PLUGIN_SLUG));
+				unset($arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]);
+				$hasErrors = true;
+			}
 		}
-		if(empty($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]) || false === ($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME] = filter_var(sanitize_text_field($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]), FILTER_VALIDATE_INT)) || $arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME] <= $arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME])
+
+		if(!$hasErrors)
 		{
-			$this->moduleSetting->addErrorMessage(__('Minimum Submission Time should be a numeric value greater than Minimum Submission Time !', $this->PLUGIN_SLUG));
-			unset($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]);
+			if (empty($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME])
+				|| false === ($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME] = filter_var(sanitize_text_field($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]), FILTER_VALIDATE_INT))
+				|| $arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME] <= $arrSettingOptions[self::OPTION_MIN_SUBMISSION_TIME]
+			){
+				$this->moduleSetting->addErrorMessage(__('Minimum Submission Time should be a numeric value greater than Minimum Submission Time !', $this->PLUGIN_SLUG));
+				unset($arrSettingOptions[self::OPTION_MAX_SUBMISSION_TIME]);
+				$hasErrors = true;
+			}
+		}
+		if(!$hasErrors)
+		{
+			if (empty($arrSettingOptions[self::OPTION_MAX_ALLOWED_ATTEMPTS])
+				|| false === ($arrSettingOptions[self::OPTION_MAX_ALLOWED_ATTEMPTS] = filter_var(sanitize_text_field($arrSettingOptions[self::OPTION_MAX_ALLOWED_ATTEMPTS]), FILTER_VALIDATE_INT))
+				|| $arrSettingOptions[self::OPTION_MAX_ALLOWED_ATTEMPTS] < 1
+			){
+				$this->moduleSetting->addErrorMessage(__('Minimum Form Submissions per Minute should be a numeric value greater 0 !', $this->PLUGIN_SLUG));
+				unset($arrSettingOptions[self::OPTION_MAX_ALLOWED_ATTEMPTS]);
+				$hasErrors = true;
+			}
 		}
 
 		return $arrSettingOptions;
@@ -205,7 +247,7 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 //
 //		if(!isset($arrAttributes['type']))
 //			return;
-		
+
 		switch ($settingField->HTMLInputType)
 		{
 			case MchWpUtilHtml::FORM_ELEMENT_SELECT :

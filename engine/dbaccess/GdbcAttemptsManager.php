@@ -102,6 +102,21 @@ final class GdbcAttemptsManager
 		return $arrModuleAttempts[$moduleId] = (isset($queryResult[0])) ? (int)$queryResult[0]->Total : 0;
 	}
 
+	public static function getLatestAttemptsPerMinute($clientIp, $numberOfMinutes)
+	{
+		global $wpdb;
+		$attemptEntity = new GdbcAttemptEntity();
+
+		$preparedQuery = $wpdb->prepare('SELECT COUNT(Id) FROM ' . $attemptEntity->getTableName() . ' WHERE IsDeleted = 0 AND IsIpBlocked = 0 AND ClientIp = %s AND CreatedDate BETWEEN %s AND %s',
+											MchHttpUtil::ipAddressToBinary($clientIp),
+											date('Y-m-d H:i:s',  strtotime($numberOfMinutes.' minute ago',
+											current_time( 'timestamp' ))),  current_time( 'mysql' )
+										);
+
+		return (int)$wpdb->get_var($preparedQuery);
+
+	}
+
 	public static function moduleHasAttempts($moduleId)
 	{
 		return (0 !== self::getTotalNumberOfAttemptsPerModule($moduleId));
@@ -231,7 +246,7 @@ final class GdbcAttemptsManager
 		global $wpdb;
 		$attemptEntity = new GdbcAttemptEntity();
 		$query = 'UPDATE ' . $attemptEntity->getTableName() . ' SET IsIpBlocked = %d WHERE ClientIp = %s';
-		$preparedQuery = $wpdb->prepare($query, $shouldBlock, MchHttpUtil::ipAddressToBinary($ip));
+		$preparedQuery = $wpdb->prepare($query, (int)$shouldBlock, MchHttpUtil::ipAddressToBinary($ip));
 
 		return  MchWpDbManager::executePreparedQuery($preparedQuery);
 	}

@@ -101,6 +101,15 @@ final class MchWpUtil
 		return trim($str, '/\\');
 	}
 
+	public static function stringStartsWith($string, $stringToFind)
+	{
+		return 0 === strpos($string, $stringToFind);
+	}
+
+	public static function stringEndsWith($string, $stringToFind, $caseSensitive = true)
+	{
+		return 0 === substr_compare($string, $stringToFind, -($count = strlen($stringToFind)) , $count, $caseSensitive ? false : true);
+	}
 
 	public static function stripLeftSlashes($str)
 	{

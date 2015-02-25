@@ -27,7 +27,6 @@ final class GdbcTaskScheduler
 
 		$arrGdbcTasks[] = new GdbcLogsCleanerTask(MchWpTaskScheduler::SECONDS_IN_DAY, true);
 
-
 		return $arrGdbcTasks;
 	}
 

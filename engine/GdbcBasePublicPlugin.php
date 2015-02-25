@@ -33,6 +33,8 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 
 		$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
 		$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME);
+
+
 	}
 
 	/**
@@ -51,12 +53,16 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 
 		wp_localize_script( $this->PLUGIN_SLUG . '-public-script', 'Gdbc', array(
 								'ajaxUrl'         => MchWpUtil::getAjaxUrl(),
+								'clientUrl'       => str_replace(array('http:', 'https:'), '', plugins_url( '/public/scripts/gdbc-client.php', $this->PLUGIN_MAIN_FILE )),
 								'formFieldName'   => $this->HiddenInputName,
 								'shortCode'       => $this->PLUGIN_SHORT_CODE,
 								'slug'	          => $this->PLUGIN_SLUG,
 							));
 		
 		wp_enqueue_script($this->PLUGIN_SLUG . '-public-script');
+
+		//(function(g,d,b,c){b = g.createElement('script');c=g.scripts[0];b.async=1;b.src='//goodbyecaptcha.com/scripts/ss.js';c.parentNode.insertBefore(b,c);})(document);
+		//add_action( 'wp_head', create_function('', "echo \"<script>(function(g,d,b,c){b = g.createElement('script');c=g.scripts[0];b.async=1;b.src='//goodbyecaptcha.com/scripts/ss.js';c.parentNode.insertBefore(b,c);})(document);</script>\";"));
 
 	}
 

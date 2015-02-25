@@ -10,69 +10,67 @@
  *
  */
 
-// If uninstall not called from WordPress, then exit
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
-}
+defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-global $wpdb;
+class_exists('GoodByeCaptcha', false) || require_once 'goodbye-captcha.php';
 
-if ( is_multisite() ) {
+class GoodByeCaptchaUninstaller
+{
+	public function __construct()
+	{
+		GoodByeCaptcha::getInstance();
 
-	
-	$blogs = $wpdb->get_results( "SELECT blog_id FROM {$wpdb->blogs}", ARRAY_A );
-		/* @TODO: delete all transient, options and files you may have added
-		delete_transient( 'TRANSIENT_NAME' );
-		delete_option('OPTION_NAME');
-		//info: remove custom file directory for main site
-		$upload_dir = wp_upload_dir();
-		$directory = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . "CUSTOM_DIRECTORY_NAME" . DIRECTORY_SEPARATOR;
-		if (is_dir($directory)) {
-			foreach(glob($directory.'*.*') as $v){
-				unlink($v);
-			}
-			rmdir($directory);
+		if(!current_user_can( 'activate_plugins'))
+		{
+			exit;
 		}
-		*/
-	if ( $blogs ) {
 
-	 	foreach ( $blogs as $blog ) {
-			switch_to_blog( $blog['blog_id'] );
-			/* @TODO: delete all transient, options and files you may have added
-			delete_transient( 'TRANSIENT_NAME' );
-			delete_option('OPTION_NAME');
-			//info: remove custom file directory for main site
-			$upload_dir = wp_upload_dir();
-			$directory = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . "CUSTOM_DIRECTORY_NAME" . DIRECTORY_SEPARATOR;
-			if (is_dir($directory)) {
-				foreach(glob($directory.'*.*') as $v){
-					unlink($v);
-				}
-				rmdir($directory);
+		delete_site_option('gdbc-blocked-attempts');
+		GdbcTaskScheduler::unscheduleGdbcTasks();
+
+		if(MchWpBase::isMultiSite())
+		{
+			foreach(self::getAllBlogIds() as $blogId)
+			{
+				switch_to_blog( $blogId );
+
+				self::singleUninstall($blogId);
+
+				restore_current_blog();
 			}
-			//info: remove and optimize tables
-			$GLOBALS['wpdb']->query("DROP TABLE `".$GLOBALS['wpdb']->prefix."TABLE_NAME`");
-			$GLOBALS['wpdb']->query("OPTIMIZE TABLE `" .$GLOBALS['wpdb']->prefix."options`");
-			*/
-			restore_current_blog();
 		}
+
 	}
 
-} else {
-	/* @TODO: delete all transient, options and files you may have added
-	delete_transient( 'TRANSIENT_NAME' );
-	delete_option('OPTION_NAME');
-	//info: remove custom file directory for main site
-	$upload_dir = wp_upload_dir();
-	$directory = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . "CUSTOM_DIRECTORY_NAME" . DIRECTORY_SEPARATOR;
-	if (is_dir($directory)) {
-		foreach(glob($directory.'*.*') as $v){
-			unlink($v);
+	private static function singleUninstall($blogId)
+	{
+		$attemptEntity = new GdbcAttemptEntity();
+		foreach(array_keys(GoodByeCaptcha::getModulesControllerInstance()->getRegisteredModules()) as $module)
+		{
+			$moduleInstance = GoodByeCaptcha::getModulesControllerInstance()->getAdminModuleInstance($module);
+			if(null === $moduleInstance)
+				continue;
+
+			$moduleInstance->getModuleSetting()->deleteAllSettingOptions();
 		}
-		rmdir($directory);
+
+		$GLOBALS['wpdb']->query("DROP TABLE IF EXISTS " . $attemptEntity->getTableName());
+
+		$GLOBALS['wpdb']->query("OPTIMIZE TABLE `" . $GLOBALS['wpdb']->prefix . "options`");
+
 	}
-	//info: remove and optimize tables
-	$GLOBALS['wpdb']->query("DROP TABLE `".$GLOBALS['wpdb']->prefix."TABLE_NAME`");
-	$GLOBALS['wpdb']->query("OPTIMIZE TABLE `" .$GLOBALS['wpdb']->prefix."options`");
-	*/
+
+	private static function getAllBlogIds()
+	{
+		global $wpdb;
+
+		if( empty($wpdb->blogs) )
+			return array();
+
+		return false === ( $arrBlogs = $wpdb->get_col(  "SELECT blog_id FROM $wpdb->blogs WHERE archived = '0' AND spam = '0' AND deleted = '0'" ) ) ? array() : $arrBlogs;
+
+	}
+
 }
+
+new GoodByeCaptchaUninstaller();

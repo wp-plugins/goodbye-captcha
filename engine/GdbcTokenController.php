@@ -100,7 +100,6 @@ final class GdbcTokenController
 			return GdbcReasonDataSource::TOKEN_INVALID;
 		}
 
-
 		unset($_POST[$browserInfoInput], $_POST[$this->HiddenInputName]);
 
 		return true;

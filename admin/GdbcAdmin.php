@@ -63,16 +63,21 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 			{
 				if (null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_PLUGINS, GdbcPopularPluginsAdminModule::USER_PRO_LOGIN_FORM))
 				{
+					//add_action('userpro_before_fields', create_function('', 'if(0 === did_action("userpro_before_fields")) echo GdbcTokenController::getInstance()->getTokenInputField();'));
+
 					add_filter('userpro_login_validation', create_function('', 'return !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_POPULAR_PLUGINS));'));
 				}
 				if (null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_PLUGINS, GdbcPopularPluginsAdminModule::USER_PRO_REGISTER_FORM))
 				{
+					add_action('userpro_before_fields', create_function('', 'echo "<script src=\"/wp-content/plugins/goodbye-captcha/public/scripts/gdbc-public.js\"></script>";echo GdbcTokenController::getInstance()->getTokenInputField();'));
+
 					add_filter('userpro_register_validation', create_function('', 'return !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_POPULAR_PLUGINS));'));
 				}
 			}
 		}
 	}
 	
+
 
 	public function addAdminMenu() 
 	{
