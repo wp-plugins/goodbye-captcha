@@ -41,9 +41,8 @@ With the click of a button, you can choose which options you want to enable.
 
 = Integration with other plugins =
 
-*   [MailChimp for WordPress PRO/FREE](https://wordpress.org/plugins/mailchimp-for-wp/)
-
 *   [Uji Countdown](https://wordpress.org/plugins/uji-countdown/)
+*   [MailChimp for WordPress PRO/FREE](https://wordpress.org/plugins/mailchimp-for-wp/)
 
 
 = Key Features = 
