@@ -135,19 +135,17 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 == Upgrade Notice ==
 
 = 1.1.10 =
-Fixed the issue causing the logs to disappear
+Added ability to Automatically Block IP Address and to set the maximum form submissions per minute
 
 == Changelog ==
 
 = 1.1.10: February 25, 2015 =
 
 **Additions**
-
 - Ability to set the maximum form submissions per minute
 - Ability to Automatically Block IP Address
 
 **Fixed**
-
 - Issue with non popular caching plugins
 
 
