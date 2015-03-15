@@ -583,3 +583,40 @@ input[type="checkbox"], input[type="radio"] {
 {
     padding-bottom: 30px !important;
 }
+
+
+.text-center
+{
+    margin-top: 10px;
+    text-align: center !important;
+}
+
+.btn-label
+{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.15);
+    border-radius: 3px 0 0 3px;
+    display: inline-block;
+    left: -12px;
+    padding: 6px 12px;
+    position: relative;
+}
+
+.btn {
+    border-radius: 2px;
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.05) inset;
+}
+
+a.btn-rate-gdbc
+{
+    display:none;
+}
+
+a.btn-rate-gdbc:hover i.glyphicon
+{
+    color: #ffff00;
+}
+
+.btn-labeled {
+    padding-bottom: 0;
+    padding-top: 0;
+}

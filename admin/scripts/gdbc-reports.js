@@ -309,10 +309,15 @@ jQuery( document ).ready(function($) {
                 $.each(response, function(prop, chartData){
                     if (prop === 'ChartDataArray' && $("#chart-container").length) {
                         var chartArray = [];
+                        var attemptsCounter = 0;
                         $.each(chartData, function(key, value){
                             chartArray.push([key, value]);
+                            attemptsCounter += parseInt(value);
                         });
                         displayAttemptsChart("#chart-container", chartArray);
+                        if(attemptsCounter > 9) {
+                            $("a.btn-rate-gdbc").css('display', 'inline-block');
+                        }
                     }
                 });
             }

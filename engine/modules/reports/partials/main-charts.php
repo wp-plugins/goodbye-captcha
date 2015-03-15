@@ -64,7 +64,8 @@
                                                             $lastMonthAttempt = 0;
                                                         if ($previousMonthAttempt === '')
                                                             $previousMonthAttempt = 0;
-															$badgeTitle = $lastMonthAttempt . ' attempt(s) in the last month and ' . $previousMonthAttempt . ' attempt(s) in the previous month';
+
+														$badgeTitle = $lastMonthAttempt . ' attempt(s) in the last month and ' . $previousMonthAttempt . ' attempt(s) in the previous month';
 													?>
 													<a class="badge <?php echo $progressBarClassArray[$i % 4]; ?>"
 													      title="<?php echo $badgeTitle; ?>">i</a>
@@ -75,7 +76,21 @@
 												<div class="progress-bar <?php echo $progressBarClassArray[$i % 4]; ?>" style="width: <?php echo $progress == 0 ? 1 : $progress; ?>%"></div>
 											</div>
 										</div>
-									<?php $i++;} ?>
+									<?php
+											$i++;
+										}
+									?>
+
+									<div class="col-xs-6 col-sm-6 col-md-12 col-lg-12 text-justify">
+										<p class="text-center">
+											<a  class="btn btn-rate-gdbc btn-labeled btn-primary" target = "_blank" href = "https://wordpress.org/support/view/plugin-reviews/goodbye-captcha?filter=5#postform">
+												<span class="btn-label">
+													<i class="glyphicon glyphicon-star"></i>
+												</span>
+												Rate GoodBye Captcha
+											</a>
+										</p>
+									</div>
 
 								</div>
 							</div>

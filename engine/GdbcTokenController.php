@@ -28,6 +28,8 @@ final class GdbcTokenController
 	private $minSubmissionTime = null;
 	private $maxSubmissionTime = null;
 
+	private $arrTrustedIpAddresses = null;
+
 	private function __construct()
 	{
 		$this->TokenSecretKey  = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
@@ -39,10 +41,13 @@ final class GdbcTokenController
 		empty($this->minSubmissionTime) ? $this->minSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingDefaultOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MIN_SUBMISSION_TIME) : null;
 		empty($this->maxSubmissionTime) ? $this->maxSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingDefaultOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_SUBMISSION_TIME) : null;
 
+		$this->arrTrustedIpAddresses = (array)GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TRUSTED_IPS);
 	}
 	
 	public function isReceivedTokenValid()
 	{
+		if(!empty($this->arrTrustedIpAddresses) && in_array(MchHttpRequest::getClientIp(array()), $this->arrTrustedIpAddresses, true))
+			return true;
 
 		$receivedToken = isset($_POST[$this->HiddenInputName]) ? $_POST[$this->HiddenInputName] : (null !== $this->getHiddenFieldCookie() ? $this->getHiddenFieldCookie() : null);
 		if(null === $receivedToken)
@@ -108,6 +113,7 @@ final class GdbcTokenController
 
 	public function retrieveEncryptedToken()
 	{
+
 		ob_get_level() > 0 ? ob_end_clean() : null;
 
 		if( ! $this->isAjaxRequestForTokenValid() )
@@ -203,6 +209,7 @@ final class GdbcTokenController
 	{
 		return GdbcPluginUtils::setCookie(GoodByeCaptcha::PLUGIN_SLUG . '-' . $this->HiddenInputName, $this->getAjaxNonce(), 86400);
 	}
+
 	public function getHiddenFieldNonceCookie()
 	{
 		return GdbcPluginUtils::getCookie(GoodByeCaptcha::PLUGIN_SLUG . '-' . $this->HiddenInputName, $this->getAjaxNonce(), 86400);
@@ -252,11 +259,11 @@ final class GdbcTokenController
 	
 	public function getTokenInputField()
 	{
-		return '<input type="hidden" autocomplete="off" autocorrect="off" name="' . esc_attr( $this->HiddenInputName ) . '" value="' . wp_create_nonce( $this->getComplexNonceAction(true) ) . '" />';
+		return '<input type="hidden" autocomplete="off" autocorrect="off" name="' . esc_attr( $this->HiddenInputName ) . '" value="" />';
 	}
 	
 	
-	private function getAjaxNonce()
+	public function getAjaxNonce()
 	{
 		return wp_create_nonce($this->getComplexNonceAction(true));
 	}

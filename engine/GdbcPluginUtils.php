@@ -61,15 +61,14 @@ final class GdbcPluginUtils
 		return class_exists('userpro_api', false);
 	}
 
-	public static function setCookie($cookieKey, $cookieValue, $cookieTime, $path = null)
+	public static function setCookie($cookieKey, $cookieValue, $cookieTime, $path = null, $httpOnly = true)
 	{
 		if(headers_sent()) return;
-		return setcookie($cookieKey, $cookieValue, $cookieTime  + (isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time()), empty($path) ? '/' : $path);
+		return setcookie($cookieKey, $cookieValue, $cookieTime  + (isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time()), empty($path) ? COOKIEPATH : $path, COOKIE_DOMAIN, is_ssl(), $httpOnly);
 	}
 	
 	public static function getCookie($cookieKey)
 	{
-		if(headers_sent()) return;
 		return isset($_COOKIE[$cookieKey]) ? $_COOKIE[$cookieKey] : null;
 	}
 

@@ -30,14 +30,22 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 	CONST OPTION_MIN_SUBMISSION_TIME       = 'MinSubmissionTime';
 	CONST OPTION_MAX_SUBMISSION_TIME       = 'MaxSubmissionTime';
 	CONST OPTION_MAX_ALLOWED_ATTEMPTS      = 'MaxAllowedAttempts';
-	CONST OPTION_MAX_LOGS_DAYS             = 'MaxLogsDays'; // in days
+	CONST OPTION_MAX_LOGS_DAYS             = 'MaxLogsDays';
 	CONST OPTION_AUTO_BLOCK_IP             = 'AutoBlockIp';
 
-	CONST OPTION_LICENSE_KEY          = 'LicenseKey';
-	CONST OPTION_LICENSE_ACTIVATED    = 'IsLicenseActivated';
+	CONST OPTION_TRUSTED_IPS               = 'TrustedIps';
+
+	CONST OPTION_LICENSE_KEY               = 'LicenseKey';
+	CONST OPTION_LICENSE_ACTIVATED         = 'IsLicenseActivated';
 
 	private $arrDefaultSettingOptions = array(
 
+		self::OPTION_TRUSTED_IPS  => array(
+			'Value'       => array(),
+			'LabelText'   => 'Most Trusted IP Address',
+			'Description' => 'All requests from this IP will be trusted!',
+			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
+		),
 
 		self::OPTION_MIN_SUBMISSION_TIME  => array(
 			'Value'       => 5,
@@ -55,15 +63,16 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 
 		self::OPTION_MAX_ALLOWED_ATTEMPTS  => array(
 			'Value'       => 10,
-			'LabelText'   => 'Maximum Submissions per Minute',
-			'Description' => 'Maximum number of allowed form submissions per minute',
+			'LabelText'   => 'Maximum Attempts per Minute',
+			'Description' => 'Maximum number of allowed attempts per minute',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
 		),
+
 
 		self::OPTION_AUTO_BLOCK_IP => array(
 			'Value'       => NULL,
 			'LabelText'   => 'Automatically Block IP Address',
-			'Description' => 'Automatically block IP Address if the Maximum Submissions per Minute is reached',
+			'Description' => 'Automatically block IP Address if the Maximum Attempts per Minute is reached',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 		),
 
@@ -173,12 +182,23 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 	{
 		$settingSectionHtml  = '<h4 style = "position:relative;">' . __("General Settings", $this->PLUGIN_SLUG) . "</h4>";
 		echo $settingSectionHtml;
-
 	}
 
+//	public function getSettingOption($settingOptionName)
+//	{
+//		$optionValue = parent::getSettingOption($settingOptionName);
+//
+//		if($settingOptionName === self::OPTION_TRUSTED_IPS)
+//		{
+//			return isset($optionValue[0]) && is_array($optionValue) ? $optionValue[0] : null;
+//		}
+//
+//		return $optionValue;
+//	}
 
 	public function validateModuleSetting($arrSettingOptions)
 	{
+
 		$hasErrors = false;
 
 		if(!$hasErrors)
@@ -216,6 +236,24 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			}
 		}
 
+		if(!$hasErrors && !empty($arrSettingOptions[self::OPTION_TRUSTED_IPS]))
+		{
+			$arrSettingOptions[self::OPTION_TRUSTED_IPS] = sanitize_text_field($arrSettingOptions[self::OPTION_TRUSTED_IPS]);
+
+			if(!MchHttpUtil::isValidIpAddress($arrSettingOptions[self::OPTION_TRUSTED_IPS]))
+			{
+				$this->moduleSetting->addErrorMessage(__('Please enter a valid IP address!', $this->PLUGIN_SLUG));
+				unset($arrSettingOptions[self::OPTION_TRUSTED_IPS]);
+				$hasErrors = true;
+			}
+
+			!$hasErrors ? $arrSettingOptions[self::OPTION_TRUSTED_IPS] = array($arrSettingOptions[self::OPTION_TRUSTED_IPS]) : null;
+
+		}
+
+//		print_r($arrSettingOptions);exit;
+
+
 		return $arrSettingOptions;
 	}
 
@@ -223,15 +261,30 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 	{
 		if(! isset($arrSettingField[0]) )
 			return;
-		
+
 		/* @var $settingField \MchWpSettingField */
 		$settingField = $arrSettingField[0];
-		
+
+
 		$arrAttributes = array(
 								'type' => $settingField->HTMLInputType,
 								'name' => $this->moduleSetting->SettingKey . '[' . $settingField->Name . ']',
 								'value' => $this->moduleSetting->getSettingOption($settingField->Name),
 							);
+
+		if($settingField->Name === self::OPTION_TRUSTED_IPS)
+		{
+			if(!empty($arrAttributes['value']) && is_array($arrAttributes['value']))
+			{
+				$arrAttributes['value'] = $arrAttributes['value'][0];
+			}
+			else
+			{
+				$arrAttributes['value'] = '';
+				$settingField->Description =  __('<strong style = "color:#d54e21">Whitelist your current IP Address: <b style = "color:#1618d5">' . MchHttpRequest::getClientIp() . '</b></strong>', $this->PLUGIN_SLUG);
+			}
+		}
+
 
 		if(!isset($arrAttributes['value']) && isset($this->arrDefaultSettingOptions[$settingField->Name]))
 		{

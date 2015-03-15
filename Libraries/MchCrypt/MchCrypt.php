@@ -128,7 +128,6 @@ final class MchCrypt
 	{
 		try
 		{
-			
 			$crypter = new MchCrypt_Core_Crypter($cipherId, $encryptionModeId);
 			
 			$derivedKey = self::deriveKey($secretKey, $crypter->getRandomSalt(), 2 * $crypter->getCipherKeySize());

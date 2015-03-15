@@ -74,8 +74,9 @@ abstract class MchWpBase implements MchWpIBase
 	
 	public static function isAdminLoggedIn()
 	{
-		static $isLoggedIn = null;
-		return (null !== $isLoggedIn) ? $isLoggedIn : $isLoggedIn = self::isUserLoggedIn() && current_user_can( 'manage_options' );
+		return self::isSuperAdminLoggedIn();
+		//static $isLoggedIn = null;
+		//return (null !== $isLoggedIn) ? $isLoggedIn : $isLoggedIn = self::isUserLoggedIn() && current_user_can( 'manage_options' );
 	}
 	
 	public static function isSuperAdminLoggedIn()
@@ -111,7 +112,7 @@ abstract class MchWpBase implements MchWpIBase
 		return (null !== $isMultisite) ? $isMultisite :  $isMultisite = function_exists( 'is_multisite' ) && is_multisite();
 	}
 	
-	public static function isPermalinkStructureActivated()
+	public static function hasPermalinkActivated()
 	{
 		static $isActivated = null;
 		return (null !== $isActivated) ? $isActivated : $isActivated = (bool)(get_option('permalink_structure'));

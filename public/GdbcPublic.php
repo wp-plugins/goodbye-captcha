@@ -27,8 +27,6 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 {
 	protected function __construct(array $arrPluginInfo)
 	{
-		add_filter('nonce_life', create_function('', 'return 30 * 86400;'));
-
 		parent::__construct($arrPluginInfo);
 
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_WORDPRESS))

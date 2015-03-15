@@ -28,9 +28,6 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 {
 	protected function __construct(array $arrPluginInfo)
 	{
-
-		add_filter('nonce_life', create_function('', 'return 30 * 86400;'));
-
 		parent::__construct($arrPluginInfo);
 
 		add_action('admin_menu', array($this, 'addAdminMenu'));
@@ -46,6 +43,17 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		add_action('wp_ajax_'        . 'getTotalAttemptsPerModule', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'getTotalAttemptsPerModule'));
 		add_action('wp_ajax_'        . 'manageIp', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'manageIp'));
 		add_action('wp_ajax_'        . 'retrieveLatestAttemptsTable', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'retrieveLatestAttemptsTable'));
+
+
+		if(!MchWp::isAjaxRequest())
+		{
+			$arrTrustedIps = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TRUSTED_IPS);
+			if(empty($arrTrustedIps))
+			{
+				add_action('admin_notices', array($this, 'showEmptyTrustedIpNotice'));
+			}
+
+		}
 
 		if(MchWp::isAjaxRequest() && GdbcPluginUtils::isMailChimpLiteActivated())
 		{
@@ -63,20 +71,39 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 			{
 				if (null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_PLUGINS, GdbcPopularPluginsAdminModule::USER_PRO_LOGIN_FORM))
 				{
-					//add_action('userpro_before_fields', create_function('', 'if(0 === did_action("userpro_before_fields")) echo GdbcTokenController::getInstance()->getTokenInputField();'));
-
-					add_filter('userpro_login_validation', create_function('', 'return !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_POPULAR_PLUGINS));'));
+					add_filter('userpro_login_validation', array($this, 'userProValidateToken'));
 				}
 				if (null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_PLUGINS, GdbcPopularPluginsAdminModule::USER_PRO_REGISTER_FORM))
 				{
-					add_action('userpro_before_fields', create_function('', 'echo "<script src=\"/wp-content/plugins/goodbye-captcha/public/scripts/gdbc-public.js\"></script>";echo GdbcTokenController::getInstance()->getTokenInputField();'));
+					add_action('userpro_before_fields', array($this, 'userProRegisterBeforeFields'));
 
-					add_filter('userpro_register_validation', create_function('', 'return !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_POPULAR_PLUGINS));'));
+					add_filter('userpro_register_validation', array($this, 'userProValidateToken'));
 				}
 			}
 		}
 	}
 	
+	public function userProValidateToken()
+	{
+		return !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_POPULAR_PLUGINS));
+	}
+
+	public function userProRegisterBeforeFields()
+	{
+		echo GdbcTokenController::getInstance()->getTokenInputField() . '<script>(new jQuery.GdbcClient()).requestTokens();</script>';
+	}
+
+	public function showEmptyTrustedIpNotice()
+	{
+		$screen = get_current_screen();
+		if($screen->id !== $this->AdminSettingsPageHook)
+			return;
+
+		if( $this->getAdminSettingsCurrentTab() === GdbcModulesController::MODULE_SETTINGS)
+			return;
+
+		echo '<div class="update-nag"><span>' . _('Please go to <a href = "?page=goodbye-captcha&tab=Settings">Settings</a> to whitelist your current IP Address!' ) . '</span></div>';
+	}
 
 
 	public function addAdminMenu() 

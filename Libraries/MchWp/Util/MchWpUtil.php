@@ -20,7 +20,6 @@
 
 final class MchWpUtil
 {
-
 	public static function getAjaxUrl()
 	{
 		$ajaxUrl = admin_url('admin-ajax.php', self::isSslRequest() ? 'admin' : 'http');

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -22,10 +22,10 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 {
 	private $TokenSecretKey  = null;
 	private $HiddenInputName = null;
-	
+
 	CONST TOKEN_SEPARATOR = '|';
 	CONST TOKEN_LIVETIME  = 900;
-	
+
 
 	protected function __construct(array $arrPluginInfo)
 	{
@@ -34,13 +34,14 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 		$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
 		$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME);
 
-
+		add_filter('query_vars', array($this, 'filterQueryVariables'));
+		add_action('template_redirect', array($this, 'templateRedirect'));
 	}
 
 	/**
 	 *
-	 * @return \GdbcModulesController 
-	 */	
+	 * @return \GdbcModulesController
+	 */
 	public function getModulesControllerInstance(array $arrPluginInfo)
 	{
 		return GdbcModulesController::getInstance($arrPluginInfo);
@@ -52,19 +53,38 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 		wp_register_script( $this->PLUGIN_SLUG . '-public-script', plugins_url( '/public/scripts/gdbc-public.js', $this->PLUGIN_MAIN_FILE ), array( 'jquery' ), $this->PLUGIN_VERSION);
 
 		wp_localize_script( $this->PLUGIN_SLUG . '-public-script', 'Gdbc', array(
-								'ajaxUrl'         => MchWpUtil::getAjaxUrl(),
-								'clientUrl'       => str_replace(array('http:', 'https:'), '', plugins_url( '/public/scripts/gdbc-client.php', $this->PLUGIN_MAIN_FILE )),
-								'formFieldName'   => $this->HiddenInputName,
-								'shortCode'       => $this->PLUGIN_SHORT_CODE,
-								'slug'	          => $this->PLUGIN_SLUG,
-							));
-		
-		wp_enqueue_script($this->PLUGIN_SLUG . '-public-script');
+			'ajaxUrl'         => MchWpUtil::getAjaxUrl(),
+			'clientUrl'       => '/?gdbc-client=' . $this->getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION),
+			'formFieldName'   => $this->HiddenInputName,
+			'shortCode'       => $this->PLUGIN_SHORT_CODE,
+			'slug'	          => $this->PLUGIN_SLUG,
+		));
 
-		//(function(g,d,b,c){b = g.createElement('script');c=g.scripts[0];b.async=1;b.src='//goodbyecaptcha.com/scripts/ss.js';c.parentNode.insertBefore(b,c);})(document);
-		//add_action( 'wp_head', create_function('', "echo \"<script>(function(g,d,b,c){b = g.createElement('script');c=g.scripts[0];b.async=1;b.src='//goodbyecaptcha.com/scripts/ss.js';c.parentNode.insertBefore(b,c);})(document);</script>\";"));
+		wp_enqueue_script($this->PLUGIN_SLUG . '-public-script');
 
 	}
 
-	
+	public function initPlugin()
+	{
+		parent::initPlugin();
+	}
+
+
+	public function templateRedirect()
+	{
+		if(null === ($pluginVersion = get_query_var('gdbc-client', null)))
+			return;
+
+		if(file_exists($this->PLUGIN_DIRECTORY_PATH . '/public/scripts/gdbc-client.js.php'))
+			require $this->PLUGIN_DIRECTORY_PATH . '/public/scripts/gdbc-client.js.php';
+
+		exit;
+	}
+
+	public function filterQueryVariables($queryVars)
+	{
+		$queryVars[] = 'gdbc-client';
+		return $queryVars;
+	}
+
 }

@@ -152,33 +152,41 @@ final class MchCrypt_Core_Generator
 			throw new Exception('Cannot generate secure random bytes!');
 		}
 		
-		$randomResult  = null;
-		
-		$openSSLResult = self::getBytesUsingOpenSSL($length);
-		$mCryptResult  = self::getBytesUsingMCrypt($length);
-		$uRandomResult = self::getBytesUsingDevURandom($length);
+		if(null !== ($randomResult  = self::getBytesUsingOpenSSL($length)))
+			return $randomResult;
 
-		if(null !== $openSSLResult)
-		{
-			$randomResult = $openSSLResult;
-		}
-		
-		if(null !== $mCryptResult)
-		{
-			(null === $randomResult)          ? 
-				$randomResult = $mCryptResult : 
-				$randomResult ^= hash_hmac('sha256', $mCryptResult, $randomResult, true);
-		}
-		
-		if(null !== $uRandomResult)
-		{
-			(null === $randomResult)           ? 
-				$randomResult = $uRandomResult : 
-				$randomResult ^= hash_hmac('sha256', $uRandomResult, $randomResult, true);
-			
-		}
+	    if(null !== ($randomResult  = self::getBytesUsingDevURandom($length)))
+		    return $randomResult;
 
-		if((null === $randomResult) && self::isWindowsOS())
+	    if(null !== ($randomResult  = self::getBytesUsingMCrypt($length)))
+		    return $randomResult;
+
+//		$openSSLResult = self::getBytesUsingOpenSSL($length);
+//		$uRandomResult = self::getBytesUsingDevURandom($length);
+//	    $mCryptResult  = self::getBytesUsingMCrypt($length);
+
+//		if(null !== $openSSLResult)
+//		{
+//			$randomResult = $openSSLResult;
+//		}
+//
+//
+//		if(null !== $uRandomResult)
+//		{
+//			(null === $randomResult)           ?
+//				$randomResult = $uRandomResult :
+//				$randomResult ^= hash_hmac('sha256', $uRandomResult, $randomResult, true);
+//
+//		}
+//
+//	    if(null !== $mCryptResult)
+//	    {
+//		    (null === $randomResult)          ?
+//			    $randomResult = $mCryptResult :
+//			    $randomResult ^= hash_hmac('sha256', $mCryptResult, $randomResult, true);
+//	    }
+//
+	    if((null === $randomResult) && self::isWindowsOS())
 		{
 			$randomResult = self::getBytesUsingCapicom($length);
 		}

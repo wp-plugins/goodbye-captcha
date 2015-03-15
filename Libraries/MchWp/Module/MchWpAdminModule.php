@@ -84,12 +84,10 @@ abstract class MchWpAdminModule extends MchWpModule
 		$arrNewSettings = !empty($arrNewSettings) ? (array)$arrNewSettings : array();
 		$arrOldSettings = !empty($arrOldSettings) ? (array)$arrOldSettings : $this->getModuleSetting()->getDefaultOptions(); 
 
-		
 		$arrSettings = array_merge($this->getModuleSetting()->getDefaultOptions(), $arrNewSettings);
 		
 		$arrSettings = array_merge($arrOldSettings, $arrSettings);
-		
-		
+
 		return $arrSettings;
 	}
 

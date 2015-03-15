@@ -119,7 +119,6 @@ class MchWpSetting implements MchWpISetting
 	}
 	public function addErrorMessage($message)
 	{
-
 		add_settings_error($this->SettingKey, $this->SettingGroup, $message, 'error');
 		$this->hasErrors = true;
 	}

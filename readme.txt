@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.1.1
-Stable tag: 1.1.10
+Stable tag: 1.1.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,10 +26,13 @@ With the click of a button, you can choose which options you want to enable.
 *   Register form integration
 *   Comments form integration
 *   Forgot password form integration
-*   Disable comments form Website URL field
-*   Disable comments form Allowed Tags field
-*   Disable the "Your email address will not be published" text
-*   Block IP address feature (IPV4 and IPV6)
+*   Ability to enable/disable logging
+*   Limit the number of allowed attempts
+*   Automatically Block IP Address if number of allowed attempts is reached
+*   Automatically purge logs older than certain number of days
+*   Manually whitelist your trusted IP address
+*   Manually block/unblock IP addresses (IPV4 and IPV6)
+*   Properly detects client IP Address when using CloudFlare, Incapsula or Cloudfront
 *   Reports and statistics with blocked attempts
 *   Total attempts per days and modules charts
 *   Monthly attempts percentage comparison
@@ -56,21 +59,9 @@ With the click of a button, you can choose which options you want to enable.
 *   Compatible with cache plugins(WP Super Cache, W3 Total Cache and others)
 *   Invisible for end users (works in background)
 *   It does not affect pages loading time
-*   It does not use PHP Session
 *   Block IP feature for both IPV6 and IPV4 addresses
+*   Properly detects client IP Address when using CloudFlare, Incapsula or Cloudfront
 *   Statistics, reports and charts with all blocked spam attempts
-
->>**Please [Contact Us](http://www.goodbyecaptcha.com/contact/) if you need support for the following:**
-
->*   **Contact Form 7** integration - Contact Form 7 captcha replacement
->*   **Gravity Forms** integration - Gravity Forms captcha replacement
->*   **Ninja Forms** integration - Ninja Forms captcha replacement
->*   **Formidable Forms** integration - Formidable Forms captcha replacement
->*   **Fast Secure Contact Form** integration - Fast Secure Contact Form captcha replacement
->*   **JetPack Contact Form** integration  - JetPack contact form captcha replacement
->*	 **BuddyPress Registration Form** integration - BuddyPress registration form captcha replacement
->*   **BuddyPress Login Form** integration - BuddyPress login form captcha replacement
-
 
 = Technical support =
 If you notice any problems by using this plugin, please notify us and we will investigate and fix the issues. Ideally your request should contain: URL of the website (if your site is public), Php version, WordPress version and all the steps in order to replicate the issue (if you are able to reproduce it somehow)
@@ -134,10 +125,20 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.10 =
-Added ability to Automatically Block IP Address and to set the maximum form submissions per minute
+= 1.1.11 =
+Added ability to whitelist your current IP address and fixed the incompatibility with Sucuri Firewall. Now, GoodBye Captcha properly handles client IP Address when using CloudFlare, Incapsula or Cloudfront.
 
 == Changelog ==
+
+= 1.1.11: March 15, 2015 =
+
+**Additions**
+- Ability to whitelist your current IP address
+- Properly detects client IP Address when using CloudFlare, Incapsula or Cloudfront
+
+**Fixed**
+- Issue with Sucuri Firewall
+
 
 = 1.1.10: February 25, 2015 =
 
