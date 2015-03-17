@@ -45,6 +45,7 @@ With the click of a button, you can choose which options you want to enable.
 = Integration with other plugins =
 
 *   [Uji Countdown](https://wordpress.org/plugins/uji-countdown/)
+*   [WP User Control](https://wordpress.org/plugins/wp-user-control/)
 *   [MailChimp for WordPress PRO/FREE](https://wordpress.org/plugins/mailchimp-for-wp/)
 
 
