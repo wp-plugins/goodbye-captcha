@@ -12,57 +12,46 @@ An extremely powerful anti-spam plugin that blocks Spam-bots without annoying ca
 
 == Description ==
 **Goodbye Captcha anti-spam and security plugin is based on algorithms that identify spam bots without any annoying and hard to read captcha images.**
-This plugin will eliminate spam by completely blocking Spam-bots. Unlike other anti-spam plugins which simply sort spam comments from "good" comments (leaving you with all the spam in your comments folder), we stop the bots from leaving the spam in the first place.
-The plugin uses a proprietary algorithm to identify the spam-bots and physically blocks them from your site.
 
-To further eliminate spam from both bots and humans, this plugin gives you the option to disable the "website field" from your comments box. Users also have the option to disable the "HTML allowed tags" box that appears below posts and above the comments box.
-All with the click of a button!
+Goodbye Captcha completely eliminates spam-bot signups, spam comments, even brute force attacks, the second you install it on your Wordpress website.  It’s completely invisible to the end-user - no need to ever fill out a Captcha or other “human-detection” field ever again - and it just works. Period.
 
-In addition, we give you the option to add extra layers of security to your Wordpress site by incorporating our Bot blocking technology into your login page, registration page, and lost password page **protecting you against brute force attacks**.
-With the click of a button, you can choose which options you want to enable.
+Unlike other anti-spam plugins, which detect spam comments and signups after the fact and move them to your spam folder, which you then have to delete - using up not only your website’s resources, but your time as well, Goodbye Captcha prevents the bots from leaving spam in the first place. The result is that your site is not only spam free, it’s faster and more secure.
 
-= Features =
-*   Login form integration
-*   Register form integration
-*   Comments form integration
-*   Forgot password form integration
-*   Ability to enable/disable logging
-*   Limit the number of allowed attempts
-*   Automatically Block IP Address if number of allowed attempts is reached
-*   Automatically purge logs older than certain number of days
-*   Manually whitelist your trusted IP address
-*   Manually block/unblock IP addresses (IPV4 and IPV6)
-*   Properly detects client IP Address when using CloudFlare, Incapsula or Cloudfront
-*   Reports and statistics with blocked attempts
-*   Total attempts per days and modules charts
-*   Monthly attempts percentage comparison
-*   Latest spam attempts table per day and module
-*   Geographic map chart with blocked attempts
-*   Top of attempts organized by countries
-*   Spam attempts statistics per modules
+In addition, Goodbye Captcha is completely self-contained and does not need to connect to any outside service.  Your logins remain yours, 100%.
+
+Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login and password reset pages. At the click of a button, you can decide which forms to protect.
+
+= It also currently works with the following plugins: =
+
+* MailChimp for WordPress (https://wordpress.org/plugins/mailchimp-for-wp)
+  GoodBye Captcha offers protection for all forms the user will create with MailChimp
+
+* Ultimate Member (https://wordpress.org/plugins/ultimate-member)
+  GoodBye Captcha offers protection for Login, Registration and Reset Password forms
+
+* WP User Control (https://wordpress.org/plugins/wp-user-control)
+  GoodBye Captcha offers protection for Login, Registration and Lost Password forms
+
+= Summary of Goodbye Captcha features =
+* Login form integration
+* Register form integration
+* Comments form integration
+* Forgot password form integration
+* Logging with the ability to enable/disable it
+* Limit the number of allowed attempts
+* Automatically Block IP Address if number of allowed attempts is reached
+* Automatically purge logs older than a certain number of days
+* Manually whitelist trusted IP Address
+* Manually block/unblock IP Addresses (IPV4 and IPV6)
+* Properly detects client IP Address when using CloudFlare, Incapsula or Cloudfront
+* Provides statistics, reports, maps and charts with all blocked spam attempts
+* No requests to external APIs
+* Compatible with WordPress Multisite
+* Compatible with cache plugins (WP Super Cache, W3 Total Cache and others)
+* Invisible for end users (works in the background)
+* Does not affect page loading times
 
 
-= Integration with other plugins =
-
-*   [Uji Countdown](https://wordpress.org/plugins/uji-countdown/)
-*   [WP User Control](https://wordpress.org/plugins/wp-user-control/)
-*   [MailChimp for WordPress PRO/FREE](https://wordpress.org/plugins/mailchimp-for-wp/)
-
-
-= Key Features = 
-*   No more captcha images
-*   Eliminates automated form submissions from robots
-*   Eliminates automated comment spams from robots
-*   Eliminates automated robots sign-up through registration form
-*   Eliminates automated robots login attempts
-*   No requests to external APIs
-*   Compatible with WordPress Multisite
-*   Compatible with cache plugins(WP Super Cache, W3 Total Cache and others)
-*   Invisible for end users (works in background)
-*   It does not affect pages loading time
-*   Block IP feature for both IPV6 and IPV4 addresses
-*   Properly detects client IP Address when using CloudFlare, Incapsula or Cloudfront
-*   Statistics, reports and charts with all blocked spam attempts
 
 = Technical support =
 If you notice any problems by using this plugin, please notify us and we will investigate and fix the issues. Ideally your request should contain: URL of the website (if your site is public), Php version, WordPress version and all the steps in order to replicate the issue (if you are able to reproduce it somehow)
