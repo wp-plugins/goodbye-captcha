@@ -30,7 +30,7 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
   GoodBye Captcha offers protection for Login, Registration and Reset Password forms
 
 * WP User Control (https://wordpress.org/plugins/wp-user-control)
-  GoodBye Captcha offers protection for Login, Registration and Lost Password forms
+  >GoodBye Captcha offers protection for Login, Registration and Lost Password forms
 
 = Summary of Goodbye Captcha features =
 * Login form integration
