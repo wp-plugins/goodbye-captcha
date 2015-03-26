@@ -26,10 +26,10 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * MailChimp for WordPress (https://wordpress.org/plugins/mailchimp-for-wp)
   GoodBye Captcha offers protection for all forms the user will create with MailChimp
 
-* Ultimate Member (https://wordpress.org/plugins/ultimate-member)
+* Ultimate Member (https://wordpress.org/plugins/ultimate-member)                  
   GoodBye Captcha offers protection for Login, Registration and Reset Password forms
 
-* WP User Control (https://wordpress.org/plugins/wp-user-control)
+* WP User Control (https://wordpress.org/plugins/wp-user-control)                   
   GoodBye Captcha offers protection for Login, Registration and Lost Password forms
 
 = Summary of Goodbye Captcha features =
