@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -77,22 +77,20 @@ final class MchWpUtil
 
 	public static function replaceNonAlphaCharacters($strText, $token = '-')
 	{
-		$strText = str_replace(' ', $token, $strText);
-		$strText = preg_replace('/[^A-Za-z\-]/', $token, $strText);
+		$strText = str_replace(' ', '-', $strText);
+		$strText = preg_replace('/[^A-Za-z\-]/', '-', $strText);
 		$strText = preg_replace('/-+/', $token, trim($strText, '-'));
 
-
-		return $strText;
+		return $token === '-' ? $strText : str_replace('-', $token, $strText);
 	}
 
 	public static function replaceNonAlphaNumericCharacters($strText, $token = '-')
 	{
-		$strText = str_replace(' ', $token, $strText);
-		$strText = preg_replace('/[^A-Za-z0-9\-]/', $token, $strText);
+		$strText = str_replace(' ', '-', $strText);
+		$strText = preg_replace('/[^A-Za-z0-9\-]/', '-', $strText);
 		$strText = preg_replace('/-+/', $token, trim($strText, '-'));
 
-
-		return $strText;
+		return $token === '-' ? $strText : str_replace('-', $token, $strText);
 	}
 
 	public static function stripLeftAndRightSlashes($str)

@@ -19,7 +19,7 @@
  */
 
 final class GdbcReportsAdminModule extends GdbcBaseAdminModule
-{	
+{
 	CONST GDBC_ITEMS_PER_PAGE                = 20;
 	CONST GDBC_MODULES_ITEMS_PER_PAGE        = 10;
 	CONST GDBC_ATTEMPTS_ITEMS_FRONT_PAGE     = 10;
@@ -44,23 +44,24 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 	private $moduleController                = null;
 
 	private $arrDefaultSettingOptions        = array();
+	private $arrTrustedIpAddresses           = array();
 
 	private static $latestAttemptsTableHeader  = array(
-												self::TABLE_HEADER_DATE             => 'Time of attempt',
-												self::TABLE_HEADER_MODULE_SECTION   => 'Module / Section',
-												self::TABLE_HEADER_CLIENT_IP        => 'Client Ip',
-												self::TABLE_HEADER_COUNTRY          => 'Country',
-												self::TABLE_HEADER_REASON           => 'Reason'
-											);
+		self::TABLE_HEADER_DATE             => 'Time of attempt',
+		self::TABLE_HEADER_MODULE_SECTION   => 'Module / Section',
+		self::TABLE_HEADER_CLIENT_IP        => 'Client Ip',
+		self::TABLE_HEADER_COUNTRY          => 'Country',
+		self::TABLE_HEADER_REASON           => 'Reason'
+	);
 	private static $attemptsLocationsTableHeader = array(
-												//self::TABLE_HEADER_NO               => 'No',
-												self::TABLE_HEADER_COUNTRY          => 'Country',
-												self::TABLE_HEADER_TOTAL            => 'Total',
-												self::TABLE_HEADER_COMMENTS         => 'Comments',
-												self::TABLE_HEADER_REGISTRATION     => 'Registration',
-												self::TABLE_HEADER_LOGIN            => 'Login',
-												self::TABLE_HEADER_FORGOT_PASSWORD  => 'Lost Password'
-											);
+		//self::TABLE_HEADER_NO               => 'No',
+		self::TABLE_HEADER_COUNTRY          => 'Country',
+		self::TABLE_HEADER_TOTAL            => 'Total',
+		self::TABLE_HEADER_COMMENTS         => 'Comments',
+		self::TABLE_HEADER_REGISTRATION     => 'Registration',
+		self::TABLE_HEADER_LOGIN            => 'Login',
+		self::TABLE_HEADER_FORGOT_PASSWORD  => 'Lost Password'
+	);
 
 	private static $moduleTableHeaderArray = array (
 		'SectionId'   => 'Section',
@@ -70,31 +71,33 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 	);
 
 	protected function __construct(array $arrPluginInfo)
-	{			
+	{
 		$this->moduleSetting = new MchWpSetting(__CLASS__, $this->arrDefaultSettingOptions);
 		parent::__construct($arrPluginInfo);
 
 		$this->moduleController = GdbcModulesController::getInstance($arrPluginInfo);
 		$this->registeredModulesArray = $this->moduleController->getRegisteredModules();
+		$this->arrTrustedIpAddresses = (array)$this->moduleController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TRUSTED_IPS);
+
 	}
-	
+
 	public function getModuleSetting()
 	{
 		return $this->moduleSetting;
 	}
-	
+
 	public function getModuleSettingTabCaption()
 	{
 		return __('Reports', $this->PLUGIN_SLUG);
 	}
-	
+
 	protected function getModuleSettingSections()
 	{
 		$settingSection = new MchWpSettingSection($this->moduleSetting->SettingKey . '-section', __('GoodBye Captcha - Blocked Attempts', $this->PLUGIN_SLUG));
 
 		return array($settingSection);
 	}
-	
+
 	private function displayContent()
 	{
 		if (!empty($_GET['report']) && $_GET['report'] == 1)
@@ -119,9 +122,9 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 		$topAttemptsLocationsArray    =  GdbcAttemptsManager::getTopAttemptsLocations($wpSectionOptionsInfo, self::GDBC_ATTEMPTS_ITEMS_FRONT_PAGE );
 		if( null === $topAttemptsLocationsArray )
-            $topAttemptsLocationsArray = array();
+			$topAttemptsLocationsArray = array();
 
-        $latestAttemptsLocationHeader = $this->getHeaderOfAttemptsLocationsArray();
+		$latestAttemptsLocationHeader = $this->getHeaderOfAttemptsLocationsArray();
 		$latestAttemptsLocationArray  = $this->getAttemptsLocationsArray($topAttemptsLocationsArray);
 		$latestAttemptsLocationJs     = $this->getTopCountriesJs($topAttemptsLocationsArray);
 
@@ -167,8 +170,8 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 		}
 
 		$attemptsArray = GdbcAttemptsManager::getAttemptsChartArray(self::GDBC_ATTEMPTS_CHART_NUMBER_OF_DAYS);
-        if (null === $attemptsArray)
-            $attemptsArray = array();
+		if (null === $attemptsArray)
+			$attemptsArray = array();
 
 		foreach ($attemptsArray as $attempt)
 		{
@@ -221,7 +224,7 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 				$percentageArray[0][$key] = floor(100 * ($latestArray[$key] / $value));
 			}
 			else {
-            	if ($latestArray[$key] > 0)
+				if ($latestArray[$key] > 0)
 					$percentageArray[0][$key] = 100;
 				else
 					$percentageArray[0][$key] = 0;
@@ -272,7 +275,7 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 		foreach($percentageArray[0] as $key => $value)
 		{
-			if($this->moduleController->isFreeModule($key))
+			if($this->moduleController->IsPublicModule($key))
 				continue;
 
 			unset($percentageArray[0][$key]);
@@ -285,8 +288,8 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 	public function retrieveInitialDashboardData()
 	{
-        if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
-            exit;
+		if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
+			exit;
 
 		$ajaxData = array();
 		$ajaxData['ChartDataArray'] = $this->getAttemptsChartArray();
@@ -316,6 +319,10 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 				continue;
 
 			$moduleInstance = $this->moduleController->getAdminModuleInstance($moduleName);
+
+			if(null === $moduleInstance)
+				continue;
+
 			$section = $moduleInstance->getSettingOptionDisplayTextByOptionId($attemptsList[$i]->SectionId);
 			if (null === $section)
 				$section = 'N/A';
@@ -359,10 +366,10 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 	{
 		$attemptsLocationArray = array();
 		for ($i = 0, $arrSize = count($topAttemptsLocationsArray); $i < $arrSize; ++$i)
-        {
+		{
 			//$attemptsLocationArray[$i][self::TABLE_HEADER_NO] = ($i + 1);
 			$attemptsLocationArray[$i][self::TABLE_HEADER_COUNTRY]         = $this->getCountry(GdbcCountryDataSource::getCountryCodeById($topAttemptsLocationsArray[$i]->CountryId),
-                                                                                               GdbcCountryDataSource::getCountryNameById($topAttemptsLocationsArray[$i]->CountryId));
+				GdbcCountryDataSource::getCountryNameById($topAttemptsLocationsArray[$i]->CountryId));
 			$attemptsLocationArray[$i][self::TABLE_HEADER_LOGIN]           = $topAttemptsLocationsArray[$i]->Login;
 			$attemptsLocationArray[$i][self::TABLE_HEADER_REGISTRATION]    = $topAttemptsLocationsArray[$i]->Registration;
 			$attemptsLocationArray[$i][self::TABLE_HEADER_COMMENTS]        = $topAttemptsLocationsArray[$i]->Comments;
@@ -375,8 +382,8 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 	public function retrieveLatestAttemptsTable()
 	{
-        if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
-            exit;
+		if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
+			exit;
 
 		$ajaxData['LatestAttemptsArrayHeader'] = $this->getHeaderOfLatestAttemptsArray();
 		$ajaxData['LatestAttemptsArray'] = $this->getLatestAttemptsArray();
@@ -387,12 +394,12 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 	public function getModuleStatsPercentage()
 	{
-        if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
-            exit;
+		if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
+			exit;
 
 		$modulesTotalAttemptsArray = GdbcAttemptsManager::getModulesTotalAttempts();
-        if (null === $modulesTotalAttemptsArray)
-            $modulesTotalAttemptsArray = array();
+		if (null === $modulesTotalAttemptsArray)
+			$modulesTotalAttemptsArray = array();
 
 		$total = 0;
 		$attemptsPerModuleArray = array();
@@ -425,8 +432,8 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 	function getTopIpAttempts()
 	{
-        if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
-            exit;
+		if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
+			exit;
 
 		$topIpAttemptsArray = GdbcAttemptsManager::getTopIpAttempts(self::GDBC_ATTEMPTS_ITEMS_FRONT_PAGE);
 		if (!isset($topIpAttemptsArray[0]))
@@ -442,7 +449,7 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 		foreach($topIpAttemptsArray as $attempt)
 		{
 			$clientIp = ($attempt->ClientIp !== null) ? MchHttpUtil::ipAddressFromBinary($attempt->ClientIp) : 'N/A';
-            $country = $this->getCountry(GdbcCountryDataSource::getCountryCodeById($attempt->CountryId), GdbcCountryDataSource::getCountryNameById($attempt->CountryId));
+			$country = $this->getCountry(GdbcCountryDataSource::getCountryCodeById($attempt->CountryId), GdbcCountryDataSource::getCountryNameById($attempt->CountryId));
 			$attemptInfo = array($clientIp, $country, $attempt->Total, $attempt->IsIpBlocked);
 
 			$resultArray[] = $attemptInfo;
@@ -453,49 +460,58 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 		exit;
 	}
 
-    function getTotalAttemptsPerModule()
-    {
-        if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
-            exit;
+	function getTotalAttemptsPerModule()
+	{
+		if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
+			exit;
 
-        $arrModulesIds = array();
-        foreach($this->registeredModulesArray as $moduleName => $moduleInfo)
-        {
-            $arrModulesIds[$moduleName] = $this->moduleController->getModuleIdByName($moduleName);
-            if(!isset($arrModulesIds[$moduleName]))
-                unset($arrModulesIds[$moduleName]);
-        }
+		$arrModulesIds = array();
+		foreach($this->registeredModulesArray as $moduleName => $moduleInfo)
+		{
+			$arrModulesIds[$moduleName] = $this->moduleController->getModuleIdByName($moduleName);
+			if(!isset($arrModulesIds[$moduleName]))
+				unset($arrModulesIds[$moduleName]);
+		}
 
-        $attemptsModuleTotalsObj = GdbcAttemptsManager::getTotalAttemptsPerModule($arrModulesIds, 365, 0);
-        $attemptsModuleTotalsArr = (array) $attemptsModuleTotalsObj[0];
+		$attemptsModuleTotalsObj = GdbcAttemptsManager::getTotalAttemptsPerModule($arrModulesIds, 365, 0);
+		$attemptsModuleTotalsArr = (array) $attemptsModuleTotalsObj[0];
 
-        $resultArray = array();
-        foreach($this->registeredModulesArray as $key => $value)
-        {
-            $moduleId = $this->moduleController->getModuleIdByName($key);
-            if (0 === $moduleId)
-                continue;
+		$resultArray = array();
+		foreach($this->registeredModulesArray as $key => $value)
+		{
+			$moduleId = $this->moduleController->getModuleIdByName($key);
+			if (0 === $moduleId)
+				continue;
 
-            if (!empty($attemptsModuleTotalsArr[$key]))
-                $resultArray[$key] =  $attemptsModuleTotalsArr[$key];
-        }
+			if (!empty($attemptsModuleTotalsArr[$key]))
+				$resultArray[$key] =  $attemptsModuleTotalsArr[$key];
+		}
 
-        $ajaxData = array();
-        $ajaxData['TopAttemptsArrayPerModule'] = $resultArray;
-        echo json_encode($ajaxData);
-        exit;
-    }
+		$ajaxData = array();
+		$ajaxData['TopAttemptsArrayPerModule'] = $resultArray;
+		echo json_encode($ajaxData);
+		exit;
+	}
 
 	public function manageIp()
 	{
-        if (!isset($_POST['reportsNonce']))
-	        return json_encode(false);
+		if (!isset($_POST['reportsNonce']))
+			return json_encode(false);
 
 		if (!isset($_POST['clientIp']))
 			return json_encode(false);
 
 		if(false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
 			return json_encode(false);
+
+		$_POST['clientIp']    = sanitize_text_field($_POST['clientIp']);
+		$_POST['shouldBlock'] = sanitize_text_field($_POST['shouldBlock']);
+
+		if(!empty($this->arrTrustedIpAddresses) && in_array($_POST['clientIp'], $this->arrTrustedIpAddresses, true))
+		{
+			echo json_encode(false);
+			return;
+		}
 
 		echo json_encode(false === GdbcAttemptsManager::manageIp(trim($_POST['clientIp']),  empty($_POST['shouldBlock']) ? 0 : 1) ? false : true);
 
@@ -513,10 +529,10 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 	public function getDisplayableAttemptsArray()
 	{
-        if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
-            exit;
+		if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
+			exit;
 
-        $endDate = strtotime(current_time('mysql'));
+		$endDate = strtotime(current_time('mysql'));
 		$startDate = $endDate - self::GDBC_ATTEMPTS_NUMBER_OF_DAYS * 24 * 60 * 60;
 		$attemptsByModuleAndDay = $this->getAttemptsArrayByModuleAndDay($startDate, $endDate);
 		$displayableAttemptsArray = $this->createDisplayableAttemptsArray($attemptsByModuleAndDay, $startDate, $endDate);
@@ -591,11 +607,15 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 	public function getModuleData()
 	{
-        if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
-            exit;
+		if (!isset($_POST['reportsNonce']) || false === wp_verify_nonce($_POST['reportsNonce'], GdbcBaseAdminPlugin::ADMIN_NONCE_VALUE))
+			exit;
 
 		if (!isset($_POST['moduleId']))
 			return array();
+
+		$_POST['moduleId']   = sanitize_text_field($_POST['moduleId']);
+		$_POST['pageNumber'] = sanitize_text_field($_POST['pageNumber']);
+		$_POST['orderBy']    = sanitize_text_field($_POST['orderBy']);
 
 		$moduleId   = $_POST['moduleId'];
 		$pageNumber = !empty($_POST['pageNumber']) ? $_POST['pageNumber'] : 1;
@@ -640,15 +660,15 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 
 		foreach($moduleDataArray as $attempt)
 		{
-            $itemArray = array();
-            $itemArray[] = $attempt->IsIpBlocked;
+			$itemArray = array();
+			$itemArray[] = $attempt->IsIpBlocked;
 			if ($hasSections)
-                $itemArray[] = isset($attempt->SectionId) ? $moduleInstance->getSettingOptionDisplayTextByOptionId($attempt->SectionId) : 'N/A';
+				$itemArray[] = isset($attempt->SectionId) ? $moduleInstance->getSettingOptionDisplayTextByOptionId($attempt->SectionId) : 'N/A';
 
 			$itemArray[] = isset($attempt->CreatedDate) ? date('M d, Y h:i:s', strtotime($attempt->CreatedDate)) : 'N/A';
 
 			if (isset($attempt->CountryId))
-                $itemArray[] = $this->getCountry(GdbcCountryDataSource::getCountryCodeById($attempt->CountryId), GdbcCountryDataSource::getCountryNameById($attempt->CountryId));
+				$itemArray[] = $this->getCountry(GdbcCountryDataSource::getCountryCodeById($attempt->CountryId), GdbcCountryDataSource::getCountryNameById($attempt->CountryId));
 
 			$itemArray[] = isset($attempt->ClientIp) ? MchHttpUtil::ipAddressFromBinary($attempt->ClientIp) : 'N/A';
 
@@ -668,31 +688,31 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 	/// End Functions for Modules Page
 
 
-    /// Utility function
-    public function getCountry($countryCode, $countryName)
-    {
+	/// Utility function
+	public function getCountry($countryCode, $countryName)
+	{
 
-        if (null === $countryCode || null === $countryName)
-            return 'N/A';
+		if (null === $countryCode || null === $countryName)
+			return 'N/A';
 
-        $country = '<img width="16px" height="11px" title="' . $countryName . '" src="' . plugins_url('/admin/images/flags/' . strtolower($countryCode) . '.gif', $this->PLUGIN_MAIN_FILE) . '"/>';
-        $country .= '<span>' . $countryName . '</span>';
-        return $country;
-    }
+		$country = '<img width="16px" height="11px" title="' . $countryName . '" src="' . plugins_url('/admin/images/flags/' . strtolower($countryCode) . '.gif', $this->PLUGIN_MAIN_FILE) . '"/>';
+		$country .= '<span>' . $countryName . '</span>';
+		return $country;
+	}
 
 	public function renderModuleSettingSection(array $arrSectionInfo)
 	{
 		$this->displayContent();
 	}
-	
+
 	public function validateModuleSetting($arrSettingOptions)
 	{
 		return $arrSettingOptions;
 	}
-	
+
 	public function renderModuleSettingField(array $arrSettingField)
 	{}
-	
+
 	public function filterOptionsBeforeSave($arrNewSettings, $arrOldSettings)
 	{}
 

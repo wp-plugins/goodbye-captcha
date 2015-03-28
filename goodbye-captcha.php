@@ -11,7 +11,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.11
+ * Version: 1.1.12
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 
-	CONST PLUGIN_VERSION    = '1.1.11';
+	CONST PLUGIN_VERSION    = '1.1.12';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -65,8 +65,6 @@ class GoodByeCaptcha
 		'GdbcTaskScheduler'       => '/engine/GdbcTaskScheduler.php',
 	);
 
-
-	private static $isFreeVersion      = true;
 	private static $isNetworkActivated = false;
 
 	protected function __construct()
@@ -76,16 +74,9 @@ class GoodByeCaptcha
 		$pluginInstance = (MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
 		self::$isNetworkActivated = $pluginInstance->isNetworkActivated();
 
-		self::$isFreeVersion = ( count(self::getModulesControllerInstance()->getRegisteredModules()) === count(self::getModulesControllerInstance()->getFreeModuleNames()));
-
 		GdbcPluginUpdater::updateToCurrentVersion();
 		GdbcTaskScheduler::scheduleGdbcTasks();
 
-	}
-
-	public static function isFreeVersion()
-	{
-		return self::$isFreeVersion;
 	}
 
 	/**

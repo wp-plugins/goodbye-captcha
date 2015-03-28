@@ -18,51 +18,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
+final class GdbcUltimateMemberAdminModule extends GdbcBaseAdminModule
 {
 
-	CONST CONTACT_FORM_7   = 'IsCFActivated';
-	CONST GRAVITY_FORMS    = 'IsGFActivated';
-	CONST NINJA_FORMS      = 'IsNFActivated';
-	CONST FORMIDABLE_FORMS = 'IsFFActivated';
-	CONST FAST_SECURE_FORM = 'IsFSActivated';
-	
+	CONST ULTIMATE_MEMBER_LOGIN_FORM         = 'IsUMLoginActivated';
+	CONST ULTIMATE_MEMBER_REGISTER_FORM      = 'IsUMRegisterActivated';
+	CONST ULTIMATE_MEMBER_LOST_PASSWORD_FORM = 'IsUMLostPasswordActivated';
+
 	private $arrDefaultSettingOptions = array(
 
-			self::CONTACT_FORM_7    => array(
+			self::ULTIMATE_MEMBER_LOGIN_FORM    => array(
 				'Id'         => 1,
 				'Value'      => NULL,
-				'LabelText' => 'Contact Form 7',
+				'LabelText' => 'Login Form',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 			),
 		
-			self::GRAVITY_FORMS     => array(
+			self::ULTIMATE_MEMBER_REGISTER_FORM  => array(
 				'Id'         => 2,
 				'Value'      => NULL,
-				'LabelText' => 'Gravity Forms',
-				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
-			),
-		
-			self::NINJA_FORMS       => array(
-				'Id'         => 3,
-				'Value'      => NULL,
-				'LabelText' => 'Ninja Forms',
-				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
-			),
-		
-			self::FORMIDABLE_FORMS  => array(
-				'Id'         => 4,
-				'Value'      => NULL,
-				'LabelText' => 'Formidable Forms',
+				'LabelText' => 'Register Form',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 			),
 
-			self::FAST_SECURE_FORM  => array(
-				'Id'         => 5,
+			self::ULTIMATE_MEMBER_LOST_PASSWORD_FORM  => array(
+				'Id'         => 3,
 				'Value'      => NULL,
-				'LabelText' => 'Fast Secure Forms',
+				'LabelText' => 'Reset Password Form',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 			),
+
 	);
 
 	/**
@@ -86,13 +71,13 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 	
 	public function getModuleSettingTabCaption()
 	{
-		return ( count(GoodByeCaptcha::getModulesControllerInstance()->getRegisteredModules()) === count(GoodByeCaptcha::getModulesControllerInstance()->getPublicModuleNames())) ? null : __('Popular Forms', $this->PLUGIN_SLUG);
+		return GdbcPluginUtils::isUltimateMemberActivated() ?  __('Ultimate Member', $this->PLUGIN_SLUG) : null;
 	}
 
 
 	protected function getModuleSettingSections()
 	{
-		$settingSection = new MchWpSettingSection($this->moduleSetting->SettingKey . '-section', "Popular forms");
+		$settingSection = new MchWpSettingSection($this->moduleSetting->SettingKey . '-section', "Ultimate Member");
 		
 		foreach ($this->arrDefaultSettingOptions as $fieldName => $fieldInfo)
 		{
@@ -101,7 +86,7 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 			
 			$settingField = new MchWpSettingField($fieldName, $fieldInfo['Value']);
 			
-			$settingField->HTMLLabelText = $fieldInfo['LabelText'];
+			$settingField->HTMLLabelText = 'Ultimate Member ' . $fieldInfo['LabelText'];
 			$settingField->HTMLInputType = $fieldInfo['InputType'];
 			
 			$settingSection->addSettingField($settingField);
@@ -112,7 +97,7 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 	
 	public function renderModuleSettingSection(array $arrSectionInfo)
 	{
-		echo '<h4 id = "' . $arrSectionInfo['id'] . '">Enable GoodBye Captcha with the following popular forms</h4>';
+		echo '<h4 id = "' . $arrSectionInfo['id'] . '">Enable GoodBye Captcha with the following:</h4>';
 	}
 
 
@@ -146,7 +131,6 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 				
 				$arrAttributes['value'] = true;	
 
-				
 				echo MchWpUtilHtml::createInputElement($arrAttributes);
 				
 				break;
@@ -155,8 +139,7 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 				echo MchWpUtilHtml::createInputElement($arrAttributes);
 				break;
 		}
-		
-		
+
 	}
 	
 	public static function getInstance(array $arrPluginInfo)

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2014 Mihai Chelaru
  *
@@ -39,11 +38,15 @@ class MchHttpRequest
 		if(null !== ($clientIp = self::getIpAddressFromCloudFlare()))
 			return $clientIp;
 
+		if(null !== ($clientIp = self::getIpAddressFromRackSpace())) // RackSpace and WPEngine
+			return $clientIp;
+
 		if(null !== ($clientIp = self::getIpAddressFromIncapsula()))
 			return $clientIp;
 
 		if(null !== ($clientIp = self::getIpAddressFromAmazonCloudFront()))
 			return $clientIp;
+
 
 		$arrProxyHeaders = array(
 			'HTTP_X_FORWARDED_FOR',
@@ -84,6 +87,44 @@ class MchHttpRequest
 
 	}
 
+	private static function getIpAddressFromRackSpace()
+	{
+
+		if(0 !== strpos($_SERVER['REMOTE_ADDR'], '10.'))
+			return null;
+
+		$arrProxyHeaders = array('HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_X_FORWARDED_FOR');
+
+		//http://www.rackspace.com/knowledge_center/article/using-cloud-load-balancers-with-rackconnect
+		$arrRackSpaceRanges = array(
+			'10.183.248.0/22',
+			'10.189.252.0/23',
+			'10.189.254.0/23',
+			'10.183.250.0/23',
+			'10.183.252.0/23',
+			'10.183.254.0/23',
+			'10.189.245.0/24',
+			'10.189.246.0/23',
+			'10.190.254.0/23',
+		);
+
+		foreach($arrProxyHeaders as $proxyHeader)
+		{
+			if(empty($_SERVER[$proxyHeader]))
+				continue;
+
+			if(null === ($ipAddress = self::getClientIpAddressFromProxyHeader($proxyHeader)))
+				continue;
+
+			if(!MchHttpUtil::isIpInRanges($_SERVER['REMOTE_ADDR'], $arrRackSpaceRanges, 4))
+				continue;
+
+			return $ipAddress;
+		}
+
+		return null;
+	}
+
 	private static function getIpAddressFromIncapsula()
 	{
 
@@ -114,29 +155,29 @@ class MchHttpRequest
 		//https://www.cloudflare.com/ips
 
 		$arrCloudFlareRanges = ( 4 === $ipVersion )
-													?
-													array(
-														'199.27.128.0/21',
-														'173.245.48.0/20',
-														'103.21.244.0/22',
-														'103.22.200.0/22',
-														'103.31.4.0/22',
-														'141.101.64.0/18',
-														'108.162.192.0/18',
-														'190.93.240.0/20',
-														'188.114.96.0/20',
-														'197.234.240.0/22',
-														'198.41.128.0/17',
-														'162.158.0.0/15',
-														'104.16.0.0/12',
-													)
-													: array(
-														'2400:cb00::/32',
-														'2606:4700::/32',
-														'2803:f800::/32',
-														'2405:b500::/32',
-														'2405:8100::/32',
-													);
+			?
+			array(
+				'199.27.128.0/21',
+				'173.245.48.0/20',
+				'103.21.244.0/22',
+				'103.22.200.0/22',
+				'103.31.4.0/22',
+				'141.101.64.0/18',
+				'108.162.192.0/18',
+				'190.93.240.0/20',
+				'188.114.96.0/20',
+				'197.234.240.0/22',
+				'198.41.128.0/17',
+				'162.158.0.0/15',
+				'104.16.0.0/12',
+			)
+			: array(
+				'2400:cb00::/32',
+				'2606:4700::/32',
+				'2803:f800::/32',
+				'2405:b500::/32',
+				'2405:8100::/32',
+			);
 
 		return MchHttpUtil::isIpInRanges($_SERVER['REMOTE_ADDR'], $arrCloudFlareRanges, $ipVersion) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : null;
 	}
@@ -146,31 +187,31 @@ class MchHttpRequest
 	{
 
 		if(!empty($_SERVER['HTTP_X_AMZ_CF_ID'])
-		   || (!empty($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] === 'Amazon CloudFront')
-		   || (!empty($_SERVER['HTTP_VIA']) &&  false !== strpos($_SERVER['HTTP_USER_VIA'], 'CloudFront'))
+			|| (!empty($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] === 'Amazon CloudFront')
+			|| (!empty($_SERVER['HTTP_VIA']) &&  false !== strpos($_SERVER['HTTP_USER_VIA'], 'CloudFront'))
 		)
 		{
 			#http://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html
 			#https://ip-ranges.amazonaws.com/ip-ranges.json
 
 			$arrAmazonCloudFront = array(
-					'205.251.254.0/24',
-					'54.239.192.0/19',
-					'204.246.176.0/20',
-					'54.230.0.0/16',
-					'205.251.250.0/23',
-					'205.251.192.0/19',
-					'216.137.32.0/19',
-					'204.246.164.0/22',
-					'205.251.249.0/24',
-					'54.192.0.0/16',
-					'54.239.128.0/18',
-					'54.240.128.0/18',
-					'204.246.174.0/23',
-					'204.246.168.0/22',
-					'205.251.252.0/23',
-					'54.182.0.0/16',
-				);
+				'205.251.254.0/24',
+				'54.239.192.0/19',
+				'204.246.176.0/20',
+				'54.230.0.0/16',
+				'205.251.250.0/23',
+				'205.251.192.0/19',
+				'216.137.32.0/19',
+				'204.246.164.0/22',
+				'205.251.249.0/24',
+				'54.192.0.0/16',
+				'54.239.128.0/18',
+				'54.240.128.0/18',
+				'204.246.174.0/23',
+				'204.246.168.0/22',
+				'205.251.252.0/23',
+				'54.182.0.0/16',
+			);
 
 			if(null === $proxyIpAddress = self::getClientIpAddressFromProxyHeader('HTTP_X_FORWARDED_FOR'))
 				return null;

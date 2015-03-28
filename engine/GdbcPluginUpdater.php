@@ -33,6 +33,7 @@ class GdbcPluginUpdater
 		$savedPluginVersionId   = (int)$settingsModuleInstance->getModuleSetting()->getSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID);
 		$currentPluginVersionId = MchWp::getVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION);
 
+
 		if($currentPluginVersionId === $savedPluginVersionId)
 			return;
 

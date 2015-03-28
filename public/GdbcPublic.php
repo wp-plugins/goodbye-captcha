@@ -92,7 +92,7 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 
 		
 		/**
-		 * GoodBye BuddyPress integration - comments and contact form
+		 * GoodBye BuddyPress integration
 		 */ 
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_BUDDY_PRESS))
 		{
@@ -110,8 +110,24 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 
 			unset($buddyPressModuleInstance);
 		}
-		
-		
+
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_ULTIMATE_MEMBER))
+		{
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_ULTIMATE_MEMBER, GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_LOGIN_FORM))
+			{
+				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_ULTIMATE_MEMBER)->activateLoginActions();
+			}
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_ULTIMATE_MEMBER, GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_REGISTER_FORM))
+			{
+				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_ULTIMATE_MEMBER)->activateRegisterActions();
+			}
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_ULTIMATE_MEMBER, GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_LOST_PASSWORD_FORM))
+			{
+				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_ULTIMATE_MEMBER)->activateLostPasswordActions();
+			}
+
+		}
+
 		/**
 		 * GoodBye Captcha - Popular Forms integration
 		 *	Gravity Forms, 

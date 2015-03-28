@@ -37,13 +37,14 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_MAIL_CHIMP_LITE  = 'MailChimpForWordPress';
 
 	CONST MODULE_UJI_COUNTDOWN    = 'UjiCountDown';
+	CONST MODULE_ULTIMATE_MEMBER  = 'UltimateMember';
 
 	private static $arrModules = array(
 
 		self::MODULE_SETTINGS => array(
 			'info'    => array(
 				'ModuleId'   => -1,
-				'IsFree' => true,
+				'IsPublic' => true,
 			),
 			'classes' => array(
 				'GdbcSettingsAdminModule'  => '/modules/settings/GdbcSettingsAdminModule.php',
@@ -54,7 +55,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_POPULAR_FORMS => array(
 			'info'    => array(
 				'ModuleId' => -2,
-				'IsFree' => true,
+				'IsPublic' => true,
 			),
 			'classes' => array(
 				'GdbcPopularFormsAdminModule'  => '/modules/popular-forms/GdbcPopularFormsAdminModule.php',
@@ -66,7 +67,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_WORDPRESS => array(
 			'info'    => array(
 				'ModuleId' => 1,
-				'IsFree' => true,
+				'IsPublic' => true,
 			),
 			'classes' => array(
 				'GdbcWordpressAdminModule'  => '/modules/wordpress/GdbcWordpressAdminModule.php',
@@ -77,7 +78,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_JETPACK => array(
 			'info'    => array(
 				'ModuleId' => 2,
-				'IsFree' => false,
+				'IsPublic' => false,
 			),
 			'classes' => array(
 				'GdbcJetPackAdminModule'  => '/modules/jetpack/GdbcJetPackAdminModule.php',
@@ -88,7 +89,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_BUDDY_PRESS => array(
 			'info'    => array(
 				'ModuleId' => 3,
-				'IsFree' => false,
+				'IsPublic' => false,
 			),
 			'classes' => array(
 				'GdbcBuddyPressAdminModule'  => '/modules/buddy-press/GdbcBuddyPressAdminModule.php',
@@ -99,7 +100,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_NINJA_FORMS => array(
 			'info'    => array(
 				'ModuleId' => 4,
-				'IsFree' => false,
+				'IsPublic' => false,
 			),
 			'classes' => array(
 				'GdbcNinjaFormsAdminModule'  => '/modules/ninja-forms/GdbcNinjaFormsAdminModule.php',
@@ -110,7 +111,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_CONTACT_FORM_7 => array(
 			'info'    => array(
 				'ModuleId' => 5,
-				'IsFree' => false,
+				'IsPublic' => false,
 			),
 			'classes' => array(
 				'GdbcContactForm7AdminModule'  => '/modules/contact-form-7/GdbcContactForm7AdminModule.php',
@@ -121,7 +122,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_GRAVITY_FORMS => array(
 			'info'    => array(
 				'ModuleId' => 6,
-				'IsFree' => false,
+				'IsPublic' => false,
 			),
 			'classes' => array(
 				'GdbcGravityFormsAdminModule'  => '/modules/gravity-forms/GdbcGravityFormsAdminModule.php',
@@ -132,7 +133,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_FAST_SECURE_FORM => array(
 			'info'    => array(
 				'ModuleId' => 7,
-				'IsFree' => false,
+				'IsPublic' => false,
 			),
 			'classes' => array(
 				'GdbcFastSecureFormAdminModule'  => '/modules/fast-secure-form/GdbcFastSecureFormAdminModule.php',
@@ -143,7 +144,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_FORMIDABLE_FORMS => array(
 			'info'    => array(
 				'ModuleId' => 8,
-				'IsFree' => false,
+				'IsPublic' => false,
 			),
 			'classes' => array(
 				'GdbcFormidableFormsAdminModule'  => '/modules/formidable-forms/GdbcFormidableFormsAdminModule.php',
@@ -154,7 +155,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_SUBSCRIPTIONS => array(
 			'info'    => array(
 				'ModuleId' => -3,
-				'IsFree' => true,
+				'IsPublic' => true,
 			),
 			'classes' => array(
 				'GdbcSubscriptionsAdminModule'  => '/modules/subscriptions/GdbcSubscriptionsAdminModule.php',
@@ -165,7 +166,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_MAIL_CHIMP_LITE => array(
 			'info'    => array(
 				'ModuleId' => 9,
-				'IsFree' => true,
+				'IsPublic' => true,
 			),
 			'classes' => array(
 				'GdbcMailChimpLiteAdminModule'  => '/modules/mail-chimp-lite/GdbcMailChimpLiteAdminModule.php',
@@ -176,7 +177,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_UJI_COUNTDOWN => array(
 			'info'    => array(
 				'ModuleId' => 10,
-				'IsFree' => true,
+				'IsPublic' => true,
 			),
 			'classes' => array(
 				'GdbcUjiCountDownAdminModule'  => '/modules/uji-countdown/GdbcUjiCountDownAdminModule.php',
@@ -187,7 +188,7 @@ final class GdbcModulesController extends MchWpModulesController
 		self::MODULE_POPULAR_PLUGINS => array(
 			'info'    => array(
 				'ModuleId' => 11,
-				'IsFree' => false,
+				'IsPublic' => false,
 			),
 			'classes' => array(
 				'GdbcPopularPluginsAdminModule'  => '/modules/popular-plugins/GdbcPopularPluginsAdminModule.php',
@@ -195,11 +196,21 @@ final class GdbcModulesController extends MchWpModulesController
 			)
 		),
 
+		self::MODULE_ULTIMATE_MEMBER => array(
+			'info'    => array(
+				'ModuleId' => 12,
+				'IsPublic' => true,
+			),
+			'classes' => array(
+				'GdbcUltimateMemberAdminModule'  => '/modules/ultimate-member/GdbcUltimateMemberAdminModule.php',
+				'GdbcUltimateMemberPublicModule' => '/modules/ultimate-member/GdbcUltimateMemberPublicModule.php',
+			)
+		),
 
 		self::MODULE_REPORTS => array(
 			'info'    => array(
 				'ModuleId' => -4,
-				'IsFree' => true,
+				'IsPublic' => true,
 			),
 			'classes' => array(
 				'GdbcReportsAdminModule'       => '/modules/reports/GdbcReportsAdminModule.php',
@@ -219,23 +230,23 @@ final class GdbcModulesController extends MchWpModulesController
 		return isset(self::$arrModules[$moduleName]['info']['ModuleId']) ? self::$arrModules[$moduleName]['info']['ModuleId'] : null;
 	}
 
-	public function isFreeModule($moduleIdORmoduleName)
+	public function IsPublicModule($moduleIdORmoduleName)
 	{
 		$moduleName = ((false === filter_var($moduleIdORmoduleName, FILTER_VALIDATE_INT)) ? $moduleIdORmoduleName : $this->getModuleNameById($moduleIdORmoduleName));
 
-		if(!isset(self::$arrModules[$moduleName]['info']['IsFree']))
+		if(!isset(self::$arrModules[$moduleName]['info']['IsPublic']))
 			return false;
 
 		#Returns TRUE for true, "1", "true", "on" and "yes"
-		return (false === filter_var(self::$arrModules[$moduleName]['info']['IsFree'], FILTER_VALIDATE_BOOLEAN)) ? false : true;
+		return (false === filter_var(self::$arrModules[$moduleName]['info']['IsPublic'], FILTER_VALIDATE_BOOLEAN)) ? false : true;
 	}
 
-	public function getFreeModuleNames()
+	public function getPublicModuleNames()
 	{
 		$arrFreeModules = array();
 		foreach(self::$arrModules as $moduleName => $arrModuleSettings)
 		{
-			$this->isFreeModule($moduleName) ? $arrFreeModules[] = $moduleName : null;
+			$this->IsPublicModule($moduleName) ? $arrFreeModules[] = $moduleName : null;
 		}
 
 		return $arrFreeModules;

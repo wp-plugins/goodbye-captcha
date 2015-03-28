@@ -46,6 +46,7 @@ final class GdbcTokenController
 	
 	public function isReceivedTokenValid()
 	{
+
 		if(!empty($this->arrTrustedIpAddresses) && in_array(MchHttpRequest::getClientIp(array()), $this->arrTrustedIpAddresses, true))
 			return true;
 
@@ -54,7 +55,7 @@ final class GdbcTokenController
 			return GdbcReasonDataSource::TOKEN_MISSING;
 
 		if(!isset($receivedToken[10]))
-			return GdbcReasonDataSource::TOKEN_INVALID;;
+			return GdbcReasonDataSource::TOKEN_INVALID;
 
 		if(GdbcAttemptsManager::isClientIpBlocked(MchHttpRequest::getClientIp(array())))
 			return GdbcReasonDataSource::CLIENT_IP_BLOCKED;
@@ -107,14 +108,23 @@ final class GdbcTokenController
 
 		unset($_POST[$browserInfoInput], $_POST[$this->HiddenInputName]);
 
+		global $ultimatemember;
+		if(isset($ultimatemember->form))
+		{
+			unset($ultimatemember->form->post_form[$browserInfoInput], $ultimatemember->form->post_form[$this->HiddenInputName]);
+			unset($ultimatemember->form->post_form['submitted'][$browserInfoInput], $ultimatemember->form->post_form['submitted'][$this->HiddenInputName]);
+		}
+
 		return true;
 		
 	}
 
 	public function retrieveEncryptedToken()
 	{
-
 		ob_get_level() > 0 ? ob_end_clean() : null;
+
+		if( ! $this->clientCanRetrieveToken() )
+			return json_encode (array());
 
 		if( ! $this->isAjaxRequestForTokenValid() )
 			return json_encode (array());
@@ -179,6 +189,11 @@ final class GdbcTokenController
 		return $arrData;
 	}
 
+	public function clientCanRetrieveToken()
+	{
+		$clientIpAddress = MchHttpRequest::getClientIp(array());
+		return !empty($clientIpAddress) && GdbcPluginUtils::isValidReferer() && !GdbcAttemptsManager::isClientIpBlocked($clientIpAddress);
+	}
 
 	private function isAjaxRequestForTokenValid()
 	{

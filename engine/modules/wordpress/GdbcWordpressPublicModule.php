@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -45,22 +45,23 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 	{
 		add_action('login_form', array($this, 'renderHiddenFieldIntoForm'));
 		add_filter('authenticate',  array($this, 'validateAuthenticationFormEncryptedToken'), 73, 3);
+		add_filter('wp_authenticate_user',  array($this, 'validateAuthenticationFormEncryptedToken'), 20, 2);
 	}
-	
+
 	public function activateRegisterActions()
 	{
 		add_action('register_form',             array($this, 'renderHiddenFieldIntoForm'), 1);
 		add_action('signup_extra_fields',       array($this, 'renderHiddenFieldIntoForm'), 1);
-		
+
 		add_action('registration_errors',       array($this, 'validateRegisterFormEncryptedToken'), 10, 3 );
 		add_filter('wpmu_validate_user_signup', array($this, 'validateMURegisterFormEncryptedToken'));
-		
+
 	}
 
 	public function activateLostPasswordActions()
 	{
-		add_action('lostpassword_form', array($this, 'renderHiddenFieldIntoForm'), 1);
-		add_action('lostpassword_post', array($this, 'validateLostPasswordFormEncryptedToken'), 10);				
+		add_action('lostpassword_form', array($this, 'renderHiddenFieldIntoForm'), 10);
+		add_action('lostpassword_post', array($this, 'validateLostPasswordFormEncryptedToken'), 10);
 	}
 
 	public function activateFormDefaultFieldsActions()
@@ -77,7 +78,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 	{
 		echo GdbcTokenController::getInstance()->getTokenInputField();
 	}
-	
+
 	public function validateLostPasswordFormEncryptedToken()
 	{
 		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::LOST_PASSWORD_FORM)))
@@ -86,44 +87,42 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 		}
 
 		wp_redirect(wp_get_referer());
-		
+
 		exit;
-		
+
 	}
-	
+
 	public function validateMURegisterFormEncryptedToken($results)
 	{
 		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
 			return $results;
-		
+
 		$results['errors']->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
-		
+
 		return $results;
 	}
-	
+
 	public function validateRegisterFormEncryptedToken($errors, $userLogin, $userEmail)
 	{
 		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
 			return $errors;
-		
+
 		$errors->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
-		
+
 		return $errors;
 	}
-	
-	
-	
-	public function validateAuthenticationFormEncryptedToken($user, $username, $password)
+
+	public function validateAuthenticationFormEncryptedToken($user, $username = null, $password = null)
 	{
-		if(empty($username) || empty($password))
+		if ( is_wp_error($user) )
 			return $user;
-		
-		return GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::LOGIN_FORM)) ? $user : null;
-		
+
+		return GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::LOGIN_FORM)) ? $user : new WP_Error($this->PLUGIN_SLUG,  __('<strong>ERROR</strong>: Invalid username or incorrect password!', $this->PLUGIN_SLUG));
+
 	}
-	
+
 	public function validateCommentsFormEncryptedToken($arrComment)
-	{	
+	{
 		if(is_admin())
 		{
 			return $arrComment;
@@ -131,7 +130,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 		if(!empty($arrComment['comment_type']) && $arrComment['comment_type'] !== 'comment')
 			return $arrComment;
-		
+
 		if( GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::COMMENTS_FORM)) )
 			return $arrComment;
 
@@ -145,7 +144,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 		wp_die(__( '<strong>ERROR</strong>: Your comment could not be saved. Please try again later.'));
 	}
-	
+
 	public function hideFormWebSiteField($arrDefaultFields)
     {
 		unset($arrDefaultFields['url']);
@@ -167,5 +166,5 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 		$instanceKey         = implode('', $arrPluginInfo);
 		return isset($arrInstances[$instanceKey]) ? $arrInstances[$instanceKey] : $arrInstances[$instanceKey] = new self($arrPluginInfo);
 	}
-	
+
 }

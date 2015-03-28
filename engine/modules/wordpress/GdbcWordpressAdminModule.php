@@ -159,7 +159,6 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 				
 				$arrAttributes['value'] = true;	
 
-				
 				echo MchWpUtilHtml::createInputElement($arrAttributes);
 				break;
 
@@ -174,41 +173,7 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 		}
 
 	}
-	
 
-
-	
-//	private function activateLicense($licenseKey)
-//	{
-//		if(GoodByeCaptcha::isFreeVersion())
-//			return false;
-//
-//
-//		$api_params = array(
-//			'edd_action'=> 'activate_license',
-//			'license' 	=> trim($licenseKey),
-//			'item_name' => urlencode('GoodBye Captcha Pro'),
-//			'url'       => home_url()
-//		);
-//
-//		$response = wp_remote_get(add_query_arg($api_params, GoodByeCaptcha::PLUGIN_SITE_URL ),
-//								   array( 'timeout' => 15, 'sslverify' => false ));
-//
-//
-//		if (is_wp_error($response) || (null === ($licenseData = json_decode(wp_remote_retrieve_body($response)))))
-//			return false;
-//
-//		return isset($licenseData->license) && $licenseData->license === 'valid';
-//	}
-
-
-
-//Fiecare modul are setting - care este mchwpsetting. clasa asa are public function getDefaultOptions()
-//deci cand ai nevoie de default options iei instanta de modul(public/admin) ii iei setting si are default options
-//	public function getArrDefaultOptions()
-//	{
-//		return self::$arrDefaultOptions;
-//	}
 	
 	public static function getInstance(array $arrPluginInfo)
 	{

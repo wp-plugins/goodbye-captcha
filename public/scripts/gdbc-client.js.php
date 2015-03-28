@@ -25,16 +25,7 @@ nocache_headers();
 @header('Content-Type: application/javascript');
 @header('Vary: Accept-Encoding');
 
-$clientIpAddress = MchHttpRequest::getClientIp(array());
-$ajaxNonce       = GdbcTokenController::getInstance()->getAjaxNonce();
-
-$referer    = wp_get_referer();
-$actualHost = parse_url(home_url(), PHP_URL_HOST);
-
-if(empty($clientIpAddress) || empty($referer) || empty($actualHost) || false === stripos($referer, $actualHost) || GdbcAttemptsManager::isClientIpBlocked($clientIpAddress))
-{
-	exit;
-}
+GdbcTokenController::getInstance()->clientCanRetrieveToken() || exit;
 
 ?>
 
@@ -56,7 +47,7 @@ if(empty($clientIpAddress) || empty($referer) || empty($actualHost) || false ===
         var requestTokenValue = function(elm) {
             var ajaxData = {};
 
-            ajaxData[Gdbc.formFieldName] = '<?php echo $ajaxNonce; ?>';
+            ajaxData[Gdbc.formFieldName] = '<?php echo GdbcTokenController::getInstance()->getAjaxNonce(); ?>';
             ajaxData['action']      = 'retrieveToken';
             ajaxData['browserInfo'] =  JSON.stringify(Gdbc.browserInfo);
             $.ajax({

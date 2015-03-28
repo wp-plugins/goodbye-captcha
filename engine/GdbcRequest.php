@@ -22,19 +22,23 @@ final class GdbcRequest
 {
 	public static function isValid(array $arrParameters = null)
 	{
+		static $isTokenValid = null;
+		if(null !== $isTokenValid)
+			return $isTokenValid;
+
 		if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST)
-			return true;
+			return $isTokenValid = true;
 
 		$isTokenValid = GdbcTokenController::getInstance()->isReceivedTokenValid();
 
 		if(true === $isTokenValid)
-			return true;
+			return $isTokenValid = true;
 
 		if( 0 == GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_LOGS_DAYS))
-			return false;
+			return $isTokenValid = false;
 
 		if($isTokenValid === GdbcReasonDataSource::CLIENT_IP_BLOCKED)
-			return false;
+			return $isTokenValid = false;
 
 		$clientIpAddress = MchHttpRequest::getClientIp(array());
 
@@ -46,7 +50,7 @@ final class GdbcRequest
 				GdbcAttemptsManager::manageIp($clientIpAddress, 1);
 			}
 
-			return false;
+			return $isTokenValid = false;
 		}
 
 
@@ -63,6 +67,6 @@ final class GdbcRequest
 
 		empty($attemptEntity->Id) ? GdbcAttemptsManager::createAttempt($attemptEntity) : GdbcAttemptsManager::saveAttempt($attemptEntity);
 
-		return false;
+		return $isTokenValid = false;
 	}
 }

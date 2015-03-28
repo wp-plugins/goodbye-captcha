@@ -20,6 +20,10 @@
 
 final class GdbcPluginUtils
 {
+	public static function isUltimateMemberActivated()
+	{
+		return class_exists('UM_API', false);
+	}
 
 	public static function isUjiCountDownActivated()
 	{
@@ -87,7 +91,19 @@ final class GdbcPluginUtils
 	{
 		return self::isJetPackModuleActivated('comments');
 	}
-	
+
+	public static function isValidReferer()
+	{
+		static $validReferer = null;
+		if(null !== $validReferer)
+			return $validReferer;
+
+		$referer    = wp_get_referer();
+		$actualHost = parse_url(home_url(), PHP_URL_HOST);
+
+		return $validReferer = (!empty($referer) && !empty($actualHost) && false !== stripos($referer, $actualHost));
+	}
+
 	private static function isJetPackModuleActivated($moduleName)
 	{
 		static $arrActivatedModules = array();

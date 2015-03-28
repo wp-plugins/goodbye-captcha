@@ -170,19 +170,26 @@ final class MchCrypt
 			{
 				$strEncryptedToken .= substr('====', $mod4);
 			}
-			
-			$strEncryptedToken = base64_decode($strEncryptedToken);
-			
+
 			$hmacSize = 16;
-			$crypter  = new MchCrypt_Core_Crypter($cipherId, $encryptionModeId);
-			
-			
+			$strEncryptedToken = base64_decode($strEncryptedToken);
+
+			if(false === $strEncryptedToken || !isset($strEncryptedToken[$hmacSize -1]))
+				return null;
+
 			$hashedToken   = substr($strEncryptedToken, 0, $hmacSize);
 			$encryptedData = substr($strEncryptedToken, $hmacSize);
-			
+
+			if(empty($encryptedData) || empty($hashedToken))
+				return null;
+
+			$crypter  = new MchCrypt_Core_Crypter($cipherId, $encryptionModeId);
+
 			$derivedKey      = self::deriveKey($secretKey, substr($encryptedData, 0, $crypter->getCipherSaltSize()), 2 * $crypter->getCipherKeySize());
 			$cipherSecretKey = substr($derivedKey, 0, $crypter->getCipherKeySize());
-			
+
+			if(empty($cipherSecretKey))
+				return null;
 			
 			$crypter->setSecretKey($cipherSecretKey);
 			

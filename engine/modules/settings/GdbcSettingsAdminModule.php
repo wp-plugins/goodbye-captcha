@@ -26,17 +26,14 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 	CONST OPTION_TOKEN_SECRET_KEY          = 'TokenSecretKey';
 	CONST OPTION_TOKEN_CREATED_TIMESTAMP   = 'TokenCreatedTimestamp';
 	CONST OPTION_HIDDEN_INPUT_NAME         = 'HiddenInputName';
-
 	CONST OPTION_MIN_SUBMISSION_TIME       = 'MinSubmissionTime';
 	CONST OPTION_MAX_SUBMISSION_TIME       = 'MaxSubmissionTime';
 	CONST OPTION_MAX_ALLOWED_ATTEMPTS      = 'MaxAllowedAttempts';
+	CONST OPTION_LICENSE_ACTIVATED         = 'IsLicenseActivated';
+	CONST OPTION_LICENSE_KEY               = 'LicenseKey';
 	CONST OPTION_MAX_LOGS_DAYS             = 'MaxLogsDays';
 	CONST OPTION_AUTO_BLOCK_IP             = 'AutoBlockIp';
-
 	CONST OPTION_TRUSTED_IPS               = 'TrustedIps';
-
-	CONST OPTION_LICENSE_KEY               = 'LicenseKey';
-	CONST OPTION_LICENSE_ACTIVATED         = 'IsLicenseActivated';
 
 	private $arrDefaultSettingOptions = array(
 
@@ -48,21 +45,21 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 		),
 
 		self::OPTION_MIN_SUBMISSION_TIME  => array(
-			'Value'       => 5,
+			'Value'       => 3,
 			'LabelText'   => 'Minimum Form Submission Time',
 			'Description' => 'Number of seconds before the submission is considered valid',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
 		),
 
 		self::OPTION_MAX_SUBMISSION_TIME  => array(
-			'Value'       => 600,
+			'Value'       => 300,
 			'LabelText'   => 'Maximum Form Submission Time',
 			'Description' => 'Number of seconds after the submission is not considered valid',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
 		),
 
 		self::OPTION_MAX_ALLOWED_ATTEMPTS  => array(
-			'Value'       => 10,
+			'Value'       => 5,
 			'LabelText'   => 'Maximum Attempts per Minute',
 			'Description' => 'Maximum number of allowed attempts per minute',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
@@ -95,18 +92,6 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			'LabelText'  => null,
 			'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
 		),
-
-//		self::OPTION_LICENSE_KEY  => array(
-//			'Value'      => NULL,
-//			'LabelText' => 'License Key',
-//			'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT
-//		),
-//
-//		self::OPTION_LICENSE_ACTIVATED  => array(
-//			'Value'      => NULL,
-//			'LabelText' => 'License not activated',
-//			'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
-//		),
 
 		self::OPTION_TOKEN_SECRET_KEY  => array(
 			'Value'      => NULL,
@@ -160,17 +145,6 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			$settingField->HTMLInputType = $fieldInfo['InputType'];
 			$settingField->Description   = !empty($fieldInfo['Description']) ? $fieldInfo['Description'] : null;
 
-			if($fieldName === self::OPTION_LICENSE_ACTIVATED)
-			{
-				if(GoodByeCaptcha::isFreeVersion())
-					continue;
-
-				$this->getModuleSetting()->getSettingOption($fieldName) ? $settingField->HTMLLabelText =  __('Your license is activated', $this->PLUGIN_SLUG): null;
-			}
-
-			if($fieldName === self::OPTION_LICENSE_KEY && GoodByeCaptcha::isFreeVersion())
-				continue;
-
 			$settingSection->addSettingField($settingField);
 		}
 		
@@ -183,18 +157,6 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 		$settingSectionHtml  = '<h4 style = "position:relative;">' . __("General Settings", $this->PLUGIN_SLUG) . "</h4>";
 		echo $settingSectionHtml;
 	}
-
-//	public function getSettingOption($settingOptionName)
-//	{
-//		$optionValue = parent::getSettingOption($settingOptionName);
-//
-//		if($settingOptionName === self::OPTION_TRUSTED_IPS)
-//		{
-//			return isset($optionValue[0]) && is_array($optionValue) ? $optionValue[0] : null;
-//		}
-//
-//		return $optionValue;
-//	}
 
 	public function validateModuleSetting($arrSettingOptions)
 	{
@@ -251,9 +213,6 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 
 		}
 
-//		print_r($arrSettingOptions);exit;
-
-
 		return $arrSettingOptions;
 	}
 
@@ -281,7 +240,7 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			else
 			{
 				$arrAttributes['value'] = '';
-				$settingField->Description =  __('<strong style = "color:#d54e21">Whitelist your current IP Address: <b style = "color:#1618d5">' . MchHttpRequest::getClientIp() . '</b></strong>', $this->PLUGIN_SLUG);
+				$settingField->Description =  __('<strong>Whitelist your current IP Address: (Is this your IP Address? <b style = "color:#d54e21">' . MchHttpRequest::getClientIp() . '</b>  - check by clicking here: <a target="_blank" href = "http://www.whatismyip.com/">WhatIsMyIP</a>)</strong>', $this->PLUGIN_SLUG);
 			}
 		}
 
@@ -291,15 +250,6 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			if(!is_array($this->arrDefaultSettingOptions[$settingField->Name]['Value']))
 				$arrAttributes['value'] = $this->arrDefaultSettingOptions[$settingField->Name]['Value'];
 		}
-
-
-//		if($settingField->Name === self::OPTION_LICENSE_ACTIVATED)
-//		{
-//			unset($arrAttributes['type']);
-//		}
-//
-//		if(!isset($arrAttributes['type']))
-//			return;
 
 		switch ($settingField->HTMLInputType)
 		{
@@ -357,8 +307,6 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 		if(!empty($arrOldSettings[self::OPTION_HIDDEN_INPUT_NAME]))
 			$arrNewSettings[self::OPTION_HIDDEN_INPUT_NAME] = $arrOldSettings[self::OPTION_HIDDEN_INPUT_NAME];
 		
-		if(empty($arrOldSettings[self::OPTION_LICENSE_ACTIVATED]) && !empty($arrNewSettings[self::OPTION_LICENSE_KEY]))
-			$arrNewSettings[self::OPTION_LICENSE_ACTIVATED] = $this->activateLicense($arrNewSettings[self::OPTION_LICENSE_KEY]);
 
 		$arrSettings = parent::filterOptionsBeforeSave($arrNewSettings, $arrOldSettings);
 		
@@ -376,30 +324,6 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 		return $arrSettings;
 	}
 
-	
-	private function activateLicense($licenseKey)
-	{
-		if(GoodByeCaptcha::isFreeVersion())
-			return false;
-		
-		
-		$api_params = array( 
-			'edd_action'=> 'activate_license', 
-			'license' 	=> trim($licenseKey), 
-			'item_name' => urlencode('GoodByeCaptchaPro'),
-			'url'       => home_url()
-		);
-
-		$response = wp_remote_get(add_query_arg($api_params, GoodByeCaptcha::PLUGIN_SITE_URL ), 
-								   array( 'timeout' => 15, 'sslverify' => false ));
-
-		
-		if (is_wp_error($response) || (null === ($licenseData = json_decode(wp_remote_retrieve_body($response)))))
-			return false;
-
-		return isset($licenseData->license) && $licenseData->license === 'valid';
-	}
-	
 	
 	public static function getInstance(array $arrPluginInfo)
 	{

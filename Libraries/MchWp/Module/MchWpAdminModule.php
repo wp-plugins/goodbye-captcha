@@ -31,7 +31,6 @@ abstract class MchWpAdminModule extends MchWpModule
 	public abstract function renderModuleSettingField(array $arrSettingField);
 
 	
-	
 	/**
 	 * 
 	 * @return \MchWpSetting
@@ -75,7 +74,7 @@ abstract class MchWpAdminModule extends MchWpModule
 	{
 		return $this->getModuleSetting()->getSettingOption($settingOptionName);
 	}
-
+/*
 	public function filterOptionsBeforeSave($arrNewSettings, $arrOldSettings)
 	{
 		if($this->getModuleSetting()->hasErrors())
@@ -90,9 +89,27 @@ abstract class MchWpAdminModule extends MchWpModule
 
 		return $arrSettings;
 	}
+*/
 
-	
-	
+	public function filterOptionsBeforeSave($arrNewSettings, $arrOldSettings)
+	{
+
+		if($this->getModuleSetting()->hasErrors())
+			return $arrOldSettings;
+
+		$arrNewSettings = !empty($arrNewSettings) ? (array)$arrNewSettings : $this->getModuleSetting()->getDefaultOptions();
+		$arrOldSettings = !empty($arrOldSettings) ? (array)$arrOldSettings : $this->getModuleSetting()->getAllSavedOptions();
+
+
+		$arrNewSettings = array_merge($this->getModuleSetting()->getDefaultOptions(), $arrNewSettings);
+
+		empty($arrOldSettings) ? $arrOldSettings = $this->getModuleSetting()->getDefaultOptions() : null;
+
+		$arrSettings = array_merge($arrOldSettings, $arrNewSettings);
+
+		return $arrSettings;
+	}
+
 	/**
 	 * 
 	 * @param MchWpSetting $setting

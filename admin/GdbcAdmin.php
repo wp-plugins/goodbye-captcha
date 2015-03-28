@@ -95,14 +95,14 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 
 	public function showEmptyTrustedIpNotice()
 	{
-		$screen = get_current_screen();
-		if($screen->id !== $this->AdminSettingsPageHook)
-			return;
+//		$screen = get_current_screen();
+//		if($screen->id !== $this->AdminSettingsPageHook)
+//			return;
 
-		if( $this->getAdminSettingsCurrentTab() === GdbcModulesController::MODULE_SETTINGS)
-			return;
+//		if( $this->getAdminSettingsCurrentTab() === GdbcModulesController::MODULE_SETTINGS)
+//			return;
 
-		echo '<div class="update-nag"><span>' . _('Please go to <a href = "?page=goodbye-captcha&tab=Settings">Settings</a> to whitelist your current IP Address!' ) . '</span></div>';
+		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('Whitelist your current IP Address in <a href = "'.admin_url('options-general.php?page=goodbye-captcha&tab=Settings').'">GoodBye Captcha Settings</a>' ) . '</span></div>';
 	}
 
 
@@ -145,10 +145,11 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 	
 	private static function singleSiteActivate(array $arrPluginInfo)
 	{
+
 		GdbcPluginUpdater::updateToCurrentVersion();
 
-		$settingsModuleInstance = GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS);
-		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, MchWpBase::getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION));
+//		$settingsModuleInstance = GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS);
+//		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, MchWpBase::getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION));
 		GdbcPluginUtils::isUjiCountDownActivated() ? GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SUBSCRIPTIONS)->setSettingOption(GdbcSubscriptionsAdminModule::UJI_COUNTDOWN_ACTIVATED, true) : null;
 
 		GdbcTaskScheduler::scheduleGdbcTasks();

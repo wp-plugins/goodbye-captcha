@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.1.1
-Stable tag: 1.1.11
+Stable tag: 1.1.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ An extremely powerful anti-spam plugin that blocks Spam-bots without annoying ca
 == Description ==
 **Goodbye Captcha anti-spam and security plugin is based on algorithms that identify spam bots without any annoying and hard to read captcha images.**
 
-Goodbye Captcha completely eliminates spam-bot signups, spam comments, even brute force attacks, the second you install it on your Wordpress website.  It’s completely invisible to the end-user - no need to ever fill out a Captcha or other “human-detection” field ever again - and it just works. Period.
+Goodbye Captcha completely eliminates spam-bot signups, spam comments, even brute force attacks, the second you install it on your Wordpress website.  It is completely invisible to the end-user - no need to ever fill out a Captcha or other “human-detection” field ever again - and it just works. Period.
 
 Unlike other anti-spam plugins, which detect spam comments and signups after the fact and move them to your spam folder, which you then have to delete - using up not only your website’s resources, but your time as well, Goodbye Captcha prevents the bots from leaving spam in the first place. The result is that your site is not only spam free, it’s faster and more secure.
 
@@ -23,13 +23,13 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 
 = It also currently works with the following plugins: =
 
-* MailChimp for WordPress (https://wordpress.org/plugins/mailchimp-for-wp)
+* **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
   GoodBye Captcha offers protection for all forms the user will create with MailChimp
 
-* Ultimate Member (https://wordpress.org/plugins/ultimate-member)
+* **Ultimate Member** (https://wordpress.org/plugins/ultimate-member)                  
   GoodBye Captcha offers protection for Login, Registration and Reset Password forms
 
-* WP User Control (https://wordpress.org/plugins/wp-user-control)
+* **WP User Control** (https://wordpress.org/plugins/wp-user-control)                   
   GoodBye Captcha offers protection for Login, Registration and Lost Password forms
 
 = Summary of Goodbye Captcha features =
@@ -43,7 +43,7 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * Automatically purge logs older than a certain number of days
 * Manually whitelist trusted IP Address
 * Manually block/unblock IP Addresses (IPV4 and IPV6)
-* Properly detects client IP Address when using CloudFlare, Incapsula or Cloudfront
+* Properly detects client IP Address when using CloudFlare, Incapsula, Cloudfront and RackSpace
 * Provides statistics, reports, maps and charts with all blocked spam attempts
 * No requests to external APIs
 * Compatible with WordPress Multisite
@@ -115,10 +115,18 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.11 =
-Added ability to whitelist your current IP address and fixed the incompatibility with Sucuri Firewall. Now, GoodBye Captcha properly handles client IP Address when using CloudFlare, Incapsula or Cloudfront.
-
+= 1.1.12 =
+Integration with Ultimate Member plugin and fixed the issue when settings are reset to default values
 == Changelog ==
+
+= 1.1.12: March 28, 2015 =
+
+**Additions**
+- Integration with Ultimate Member plugin
+- Properly detects client IP Address when using RackSpace
+
+**Fixed**
+- Issue when settings are reset to default values
 
 = 1.1.11: March 15, 2015 =
 
@@ -167,7 +175,6 @@ Added ability to whitelist your current IP address and fixed the incompatibility
 *   Fixed several minor bugs
 *   New Feature - Integration with MailChimp for WordPress plugin
 
-
 = 1.1.1: November 29, 2014 =
 *   Fixed Bug - Token generated twice for IE11 browser
 *   Improved the IP blocking functionality
@@ -196,9 +203,6 @@ Added ability to whitelist your current IP address and fixed the incompatibility
 *   Increased PBKDF2 number of iterations for key derivation 
 *   Added timing attack prevention
  
-= 1.0.6: October 20, 2014 =
-*   code review
-
 = 1.0.5: October 16, 2014 =
 *   implemented PBKDF2 key derivation for generated token
 

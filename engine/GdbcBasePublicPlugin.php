@@ -54,10 +54,9 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 
 		$clientUrl = home_url('/') . '?gdbc-client=' . $this->getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION);
 
-
 		wp_localize_script( $this->PLUGIN_SLUG . '-public-script', 'Gdbc', array(
 			'ajaxUrl'         => MchWpUtil::getAjaxUrl(),
-			'clientUrl'       => esc_url($clientUrl), //'/?gdbc-client=' . $this->getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION),
+			'clientUrl'       => esc_url($clientUrl),
 			'formFieldName'   => $this->HiddenInputName,
 			'shortCode'       => $this->PLUGIN_SHORT_CODE,
 			'slug'	          => $this->PLUGIN_SLUG,
