@@ -28,7 +28,10 @@ final class GdbcTokenController
 	private $minSubmissionTime = null;
 	private $maxSubmissionTime = null;
 
-	private $arrTrustedIpAddresses = null;
+	private $arrTrustedIpAddresses  = null;
+	private $isPluginInTestMode     = null;
+
+	private $arrTokenDebugData      = array();
 
 	private function __construct()
 	{
@@ -42,15 +45,18 @@ final class GdbcTokenController
 		empty($this->maxSubmissionTime) ? $this->maxSubmissionTime = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingDefaultOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_SUBMISSION_TIME) : null;
 
 		$this->arrTrustedIpAddresses = (array)GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TRUSTED_IPS);
+		$this->isPluginInTestMode    = (bool)GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TEST_MODE_ACTIVATED);
+
 	}
 	
 	public function isReceivedTokenValid()
 	{
 
-		if(!empty($this->arrTrustedIpAddresses) && in_array(MchHttpRequest::getClientIp(array()), $this->arrTrustedIpAddresses, true))
+		if(!$this->isPluginInTestMode && !empty($this->arrTrustedIpAddresses) && in_array(MchHttpRequest::getClientIp(array()), $this->arrTrustedIpAddresses, true))
 			return true;
 
 		$receivedToken = isset($_POST[$this->HiddenInputName]) ? $_POST[$this->HiddenInputName] : (null !== $this->getHiddenFieldCookie() ? $this->getHiddenFieldCookie() : null);
+
 		if(null === $receivedToken)
 			return GdbcReasonDataSource::TOKEN_MISSING;
 
@@ -63,7 +69,13 @@ final class GdbcTokenController
 		$this->deleteHiddenFieldCookie();
 
 		$arrDecryptedToken = json_decode(MchCrypt::decryptToken($this->TokenSecretKey, $receivedToken), true);
-		
+
+		if($this->isPluginInTestMode)
+		{
+			$this->arrTokenDebugData['received-info'] = $arrDecryptedToken;
+			$this->arrTokenDebugData['token-data']    = $this->getTokenData();
+		}
+
 		if( !isset($arrDecryptedToken[0]) || false === ($tokenIndex = strpos($arrDecryptedToken[0], self::TOKEN_SEPARATOR)) )
 		{
 			return GdbcReasonDataSource::TOKEN_INVALID;
@@ -88,7 +100,7 @@ final class GdbcTokenController
 		array_shift($arrDecryptedToken);
 
 		$arrTokenData = $this->getTokenData();
-				
+
 		$timeSinceGenerated = ((int)array_pop($arrTokenData)) - ((int)array_pop($arrDecryptedToken));
 
 		if($timeSinceGenerated > $this->maxSubmissionTime)
@@ -115,6 +127,7 @@ final class GdbcTokenController
 			unset($ultimatemember->form->post_form['submitted'][$browserInfoInput], $ultimatemember->form->post_form['submitted'][$this->HiddenInputName]);
 		}
 
+
 		return true;
 		
 	}
@@ -129,7 +142,7 @@ final class GdbcTokenController
 		if( ! $this->isAjaxRequestForTokenValid() )
 			return json_encode (array());
 
-		if(!isset($_POST['browserInfo']) || null === ($arrBrowserInfo = json_decode(stripcslashes($_POST['browserInfo']), true)))
+		if( ! isset($_POST['browserInfo']) || null === ($arrBrowserInfo = json_decode(stripcslashes($_POST['browserInfo']), true)))
 			return json_encode (array());
 
 		foreach ($arrBrowserInfo as $prop => $propValue)
@@ -187,6 +200,11 @@ final class GdbcTokenController
 		}
 		
 		return $arrData;
+	}
+
+	public function getTokenDebugData()
+	{
+		return $this->arrTokenDebugData;
 	}
 
 	public function clientCanRetrieveToken()

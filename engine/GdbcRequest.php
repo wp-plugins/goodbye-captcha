@@ -31,6 +31,12 @@ final class GdbcRequest
 
 		$isTokenValid = GdbcTokenController::getInstance()->isReceivedTokenValid();
 
+		$isTestModeActivated = (bool)GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TEST_MODE_ACTIVATED);
+		if($isTestModeActivated)
+		{
+			GdbcNotificationsController::sendTestModeEmailNotification($isTokenValid, $arrParameters);
+		}
+
 		if(true === $isTokenValid)
 			return $isTokenValid = true;
 
@@ -42,9 +48,8 @@ final class GdbcRequest
 
 		$clientIpAddress = MchHttpRequest::getClientIp(array());
 
-		if(GdbcAttemptsManager::getLatestAttemptsPerMinute($clientIpAddress, 1) >=  GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_ALLOWED_ATTEMPTS))
+		if(!$isTestModeActivated && GdbcAttemptsManager::getLatestAttemptsPerMinute($clientIpAddress, 1) >=  GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_MAX_ALLOWED_ATTEMPTS))
 		{
-
 			if( null !== GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_AUTO_BLOCK_IP))
 			{
 				GdbcAttemptsManager::manageIp($clientIpAddress, 1);
@@ -52,7 +57,6 @@ final class GdbcRequest
 
 			return $isTokenValid = false;
 		}
-
 
 		(null === ($attemptEntity = GdbcAttemptsManager ::getSoftDeletedAttempt())) ? $attemptEntity = new GdbcAttemptEntity() : null;
 
@@ -67,6 +71,10 @@ final class GdbcRequest
 
 		empty($attemptEntity->Id) ? GdbcAttemptsManager::createAttempt($attemptEntity) : GdbcAttemptsManager::saveAttempt($attemptEntity);
 
+		if($isTestModeActivated && isset($arrParameters['section']) && $arrParameters['section'] == GdbcWordpressAdminModule::LOGIN_FORM)
+			return $isTokenValid = true; // make sure admin is able to login
+
 		return $isTokenValid = false;
 	}
+
 }

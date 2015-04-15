@@ -71,7 +71,7 @@ final class GdbcUltimateMemberAdminModule extends GdbcBaseAdminModule
 	
 	public function getModuleSettingTabCaption()
 	{
-		return GdbcPluginUtils::isUltimateMemberActivated() ?  __('Ultimate Member', $this->PLUGIN_SLUG) : null;
+		return  __('Ultimate Member', $this->PLUGIN_SLUG);
 	}
 
 

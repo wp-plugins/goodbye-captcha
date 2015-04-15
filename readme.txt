@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.1.1
-Stable tag: 1.1.12
+Stable tag: 1.1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,18 +26,22 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
   GoodBye Captcha offers protection for all forms the user will create with MailChimp
 
-* **Ultimate Member** (https://wordpress.org/plugins/ultimate-member)
+* **Ultimate Member** (https://wordpress.org/plugins/ultimate-member)                  
   GoodBye Captcha offers protection for Login, Registration and Reset Password forms
 
-* **WP User Control** (https://wordpress.org/plugins/wp-user-control)
+* **WP User Control** (https://wordpress.org/plugins/wp-user-control)                   
   GoodBye Captcha offers protection for Login, Registration and Lost Password forms
+
+* **Login With Ajax** (https://wordpress.org/plugins/login-with-ajax)
+  GoodBye Captcha offers protection for Login, Registration and Lost Password forms
+
 
 = Summary of Goodbye Captcha features =
 * Login form integration
 * Register form integration
 * Comments form integration
 * Forgot password form integration
-* Spam attempts logging with the ability to enable/disable it
+* Logging with the ability to enable/disable it
 * Limit the number of allowed attempts
 * Automatically Block IP Address if number of allowed attempts is reached
 * Automatically purge logs older than a certain number of days
@@ -46,11 +50,11 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * Properly detects client IP Address when using CloudFlare, Incapsula, Cloudfront and RackSpace
 * Provides statistics, reports, maps and charts with all blocked spam attempts
 * No requests to external APIs
+* Can be switched to "Test Mode" - for testing
 * Compatible with WordPress Multisite
 * Compatible with cache plugins (WP Super Cache, W3 Total Cache and others)
 * Invisible for end users (works in the background)
 * Does not affect page loading times
-
 
 
 = Technical support =
@@ -106,7 +110,7 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 
 == Screenshots ==
-1. GoodBye Captcha settings are available through Settings menu.
+1. GoodBye Captcha - available through Top Level menu.
 2. GoodBye Captcha - All common settings.
 3. GoodBye Captcha - WordPress Forms. Activate the plugin for the standard WordPress forms.
 4. Total Attempts per Day Chart, Monthly Spam Attempts Percentage Comparison, Latest Blocked Attempts Table.
@@ -115,9 +119,19 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.12 =
-Integration with Ultimate Member plugin and fixed the issue when settings are reset to default values
+= 1.1.14 =
+Added ability to switch the plugin to "Test Mode". Email notifications while in "Test Mode". Integration with Login With Ajax plugin.
 == Changelog ==
+
+= 1.1.14: April 15, 2015 =
+
+**Additions**
+- Integration with Login With Ajax plugin
+- Ability to switch the plugin to "Test Mode"
+- Moved GoodBye Captcha to Top Level menu
+
+**Fixed**
+- Issue with custom login
 
 = 1.1.12: March 28, 2015 =
 
@@ -196,13 +210,13 @@ Integration with Ultimate Member plugin and fixed the issue when settings are re
 *   Added timestamp for generated token
 
 = 1.0.8: November 10, 2014 =
-*   Improved token generator speed
+*   Improved token generator speed 
 *   Added pkcs7 padding
 
 = 1.0.7: October 28, 2014 =
-*   Increased PBKDF2 number of iterations for key derivation
+*   Increased PBKDF2 number of iterations for key derivation 
 *   Added timing attack prevention
-
+ 
 = 1.0.5: October 16, 2014 =
 *   implemented PBKDF2 key derivation for generated token
 
@@ -212,7 +226,7 @@ Integration with Ultimate Member plugin and fixed the issue when settings are re
 = 1.0.3: September 28, 2014 =
 *   JavaScript browser detection improvements
 *   Updated readme.txt notes and FAQs
-*	Improve multisite module integration
+*	Improve multisite module integration 
 *   Secret key size less than 56 bytes in windows - bug fixed.
 
 = 1.0.2: September 22, 2014 =

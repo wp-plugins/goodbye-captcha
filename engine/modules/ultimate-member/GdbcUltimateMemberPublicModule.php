@@ -28,7 +28,7 @@ final class GdbcUltimateMemberPublicModule extends GdbcBasePublicModule
 
 		if($this->isUltimateMemberActivated = GdbcPluginUtils::isUltimateMemberActivated())
 		{
-			add_action('um_submit_form_errors_hook', array($this, 'validateFormEncryptedToken'));
+
 		}
 	}
 
@@ -38,6 +38,8 @@ final class GdbcUltimateMemberPublicModule extends GdbcBasePublicModule
 		if(!$this->isUltimateMemberActivated)
 			return;
 
+		add_action('um_submit_form_errors_hook', array($this, 'validateFormEncryptedToken'));
+
 		add_action('um_after_login_fields', array($this, 'renderHiddenFieldIntoForm'), 10);
 	}
 
@@ -45,6 +47,8 @@ final class GdbcUltimateMemberPublicModule extends GdbcBasePublicModule
 	{
 		if(!$this->isUltimateMemberActivated)
 			return;
+
+		add_action('um_submit_form_errors_hook', array($this, 'validateFormEncryptedToken'));
 
 		add_action('um_after_register_fields', array($this, 'renderHiddenFieldIntoForm'), 10);
 	}
@@ -65,6 +69,7 @@ final class GdbcUltimateMemberPublicModule extends GdbcBasePublicModule
 
 	public function validateFormEncryptedToken($arrRequestInfo)
 	{
+
 		$umSection = !empty($arrRequestInfo['_um_password_reset']) ?  GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_LOST_PASSWORD_FORM : null;
 		if(null === $umSection && !empty($arrRequestInfo['mode']))
 		{
@@ -76,6 +81,26 @@ final class GdbcUltimateMemberPublicModule extends GdbcBasePublicModule
 		{
 			wp_redirect(home_url());
 			exit;
+		}
+
+		if($umSection === GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_LOGIN_FORM)
+		{
+			$wordpressModuleInstance = GoodByeCaptcha::getModulesControllerInstance()->getPublicModuleInstance(GdbcModulesController::MODULE_WORDPRESS);
+			remove_filter('wp_authenticate_user',  array($wordpressModuleInstance, 'validateAuthenticationFormEncryptedToken'), 20, 2);
+
+			if (null === GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_ULTIMATE_MEMBER, GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_LOGIN_FORM)) {
+				return;
+			}
+		}
+		elseif($umSection === GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_REGISTER_FORM)
+		{
+			if (null === GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_ULTIMATE_MEMBER, GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_REGISTER_FORM))
+				return;
+		}
+		elseif($umSection === GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_LOST_PASSWORD_FORM)
+		{
+			if (null === GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_ULTIMATE_MEMBER, GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_LOST_PASSWORD_FORM))
+				return;
 		}
 
 		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_ULTIMATE_MEMBER, 'section' => $umSection)))

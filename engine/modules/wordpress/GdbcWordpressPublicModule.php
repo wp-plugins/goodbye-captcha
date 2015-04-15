@@ -43,9 +43,23 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 	public function activateLoginActions()
 	{
-		add_action('login_form', array($this, 'renderHiddenFieldIntoForm'));
+		add_action('login_form', array($this, 'renderHiddenFieldIntoLoginForm'));
+		add_filter('login_form_bottom', array($this, 'getHiddenFieldForLoginForm'));
+
 		add_filter('authenticate',  array($this, 'validateAuthenticationFormEncryptedToken'), 73, 3);
 		add_filter('wp_authenticate_user',  array($this, 'validateAuthenticationFormEncryptedToken'), 20, 2);
+	}
+
+	public function renderHiddenFieldIntoLoginForm()
+	{
+		$this->renderHiddenFieldIntoForm();
+		remove_filter('login_form_bottom', array($this,'renderHiddenFieldIntoForm'));
+	}
+
+	public function getHiddenFieldForLoginForm()
+	{
+		remove_action('login_form', array($this, 'renderHiddenFieldIntoLoginForm'));
+		return GdbcTokenController::getInstance()->getTokenInputField();
 	}
 
 	public function activateRegisterActions()
@@ -107,6 +121,8 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
 			return $errors;
 
+		!is_wp_error($errors) ? $errors = new WP_Error() : null;
+
 		$errors->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
 
 		return $errors;
@@ -114,7 +130,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 	public function validateAuthenticationFormEncryptedToken($user, $username = null, $password = null)
 	{
-		if ( is_wp_error($user) )
+		if ( is_wp_error($user))
 			return $user;
 
 		return GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::LOGIN_FORM)) ? $user : new WP_Error($this->PLUGIN_SLUG,  __('<strong>ERROR</strong>: Invalid username or incorrect password!', $this->PLUGIN_SLUG));

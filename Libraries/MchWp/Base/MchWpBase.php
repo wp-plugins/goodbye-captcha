@@ -111,7 +111,35 @@ abstract class MchWpBase implements MchWpIBase
 		
 		return (null !== $isMultisite) ? $isMultisite :  $isMultisite = function_exists( 'is_multisite' ) && is_multisite();
 	}
-	
+
+	public static function getAdminEmailAddress()
+	{
+		return get_bloginfo('admin_email');
+	}
+
+	public static function getAdminDisplayName()
+	{
+		$adminUser = get_user_by('email', get_bloginfo('admin_email'));
+		if(false === $adminUser)
+			return null;
+
+		return !empty($adminUser->display_name) ? $adminUser->display_name : null;
+	}
+
+
+	public static function getAdminFullName()
+	{
+		$adminUser = get_user_by('email', get_bloginfo('admin_email'));
+		if(false === $adminUser)
+			return null;
+
+		$adminFullName  = empty($adminUser->first_name) ? '' : $adminUser->first_name;
+		$adminFullName .= empty($adminUser->last_name)  ? '' : ' ' . $adminUser->last_name;
+
+		return trim($adminFullName);
+
+	}
+
 	public static function hasPermalinkActivated()
 	{
 		static $isActivated = null;

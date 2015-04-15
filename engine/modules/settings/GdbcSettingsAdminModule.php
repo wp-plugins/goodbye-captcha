@@ -34,8 +34,10 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 	CONST OPTION_MAX_LOGS_DAYS             = 'MaxLogsDays';
 	CONST OPTION_AUTO_BLOCK_IP             = 'AutoBlockIp';
 	CONST OPTION_TRUSTED_IPS               = 'TrustedIps';
+	CONST OPTION_TEST_MODE_ACTIVATED       = 'IsTestModeActivated';
 
 	private $arrDefaultSettingOptions = array(
+
 
 		self::OPTION_TRUSTED_IPS  => array(
 			'Value'       => array(),
@@ -75,11 +77,17 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 
 		self::OPTION_MAX_LOGS_DAYS  => array(
 			'Value'       => 60,
-			'LabelText'   => 'Automatically purge logs older than',
+			'LabelText'   => 'Automatically Purge Logs Older Than',
 			'Description' => 'Logs older than selected number of days will be automatically purged',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_SELECT
 		),
 
+		self::OPTION_TEST_MODE_ACTIVATED => array(
+			'Value'       => NULL,
+			'LabelText'   => 'Switch to Test Mode',
+			'Description' => 'While in Test Mode you will receive email notifications at ... for each protected form',
+			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
+		),
 
 		self::OPTION_PLUGIN_VERSION_ID  => array(
 			'Value'      => NULL,
@@ -244,6 +252,10 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 			}
 		}
 
+		if($settingField->Name === self::OPTION_TEST_MODE_ACTIVATED)
+		{
+			$settingField->Description =  str_replace('...', '<b>' . get_bloginfo('admin_email') . '</b>', $settingField->Description); //__('<strong>Whitelist your current IP Address: (Is this your IP Address? <b style = "color:#d54e21">' . MchHttpRequest::getClientIp() . '</b>  - check by clicking here: <a target="_blank" href = "http://www.whatismyip.com/">WhatIsMyIP</a>)</strong>', $this->PLUGIN_SLUG);
+		}
 
 		if(!isset($arrAttributes['value']) && isset($this->arrDefaultSettingOptions[$settingField->Name]))
 		{

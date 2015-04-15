@@ -11,7 +11,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.12
+ * Version: 1.1.14
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 
-	CONST PLUGIN_VERSION    = '1.1.12';
+	CONST PLUGIN_VERSION    = '1.1.14';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -63,6 +63,9 @@ class GoodByeCaptcha
 		'GdbcCheckAttemptsTask'   => '/engine/tasks/GdbcCheckAttemptsTask.php',
 		'GdbcLogsCleanerTask'     => '/engine/tasks/GdbcLogsCleanerTask.php',
 		'GdbcTaskScheduler'       => '/engine/GdbcTaskScheduler.php',
+
+		'GdbcEmailNotification'       => '/engine/notifications/email/GdbcEmailNotification.php',
+		'GdbcNotificationsController' => '/engine/GdbcNotificationsController.php',
 	);
 
 	private static $isNetworkActivated = false;

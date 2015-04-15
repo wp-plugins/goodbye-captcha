@@ -65,6 +65,12 @@ final class MchWp
 			'MchWpITask'              => '/TaskScheduler/MchWpITask.php',
 			'MchWpTask'               => '/TaskScheduler/MchWpTask.php',
 
+			'MchWpEmailNotification'      => '/Notifications/MchWpEmailNotification.php',
+			'MchWpBaseNotification'       => '/Notifications/MchWpBaseNotification.php',
+			'MchWpINotification'          => '/Notifications/MchWpINotification.php',
+
+
+
 		);
 		
 		return isset($arrClassMap[$className]) ? file_exists($filePath = dirname(__FILE__) . $arrClassMap[$className]) 

@@ -53,6 +53,11 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 				add_action('admin_notices', array($this, 'showEmptyTrustedIpNotice'));
 			}
 
+			$isTestModeActivated = (bool)$this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TEST_MODE_ACTIVATED);
+			if($isTestModeActivated)
+			{
+				add_action('admin_notices', array($this, 'showTestModeActivatedNotice'));
+			}
 		}
 
 		if(MchWp::isAjaxRequest() && GdbcPluginUtils::isMailChimpLiteActivated())
@@ -81,6 +86,7 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 				}
 			}
 		}
+
 	}
 	
 	public function userProValidateToken()
@@ -95,24 +101,31 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 
 	public function showEmptyTrustedIpNotice()
 	{
-//		$screen = get_current_screen();
-//		if($screen->id !== $this->AdminSettingsPageHook)
-//			return;
-
-//		if( $this->getAdminSettingsCurrentTab() === GdbcModulesController::MODULE_SETTINGS)
-//			return;
-
 		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('Whitelist your current IP Address in <a href = "'.admin_url('options-general.php?page=goodbye-captcha&tab=Settings').'">GoodBye Captcha Settings</a>' ) . '</span></div>';
 	}
 
+	public function showTestModeActivatedNotice()
+	{
+		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('You are not protected! GoodBye Captcha was switched to <b>Test Mode</b>!') . '</span></div>';
+	}
 
 	public function addAdminMenu() 
 	{
-		$this->AdminSettingsPageHook = add_options_page( __('GoodByeCaptcha Settings', $this->PLUGIN_SLUG),
-														 'GoodByeCaptcha',
-														 'manage_options', 
-														 $this->PLUGIN_SLUG, 
-														 array( $this, 'renderPluginAdminPage' ));
+		$this->AdminSettingsPageHook = add_menu_page(
+						'GoodByeCaptcha Settings',
+						'GoodByeCaptcha',
+						'manage_options',
+						$this->PLUGIN_SLUG,
+						array( $this, 'renderPluginAdminPage' ),
+						'dashicons-shield', //  for menu icon
+						'53.8394'
+		);
+
+//		$this->AdminSettingsPageHook = add_options_page( __('GoodByeCaptcha Settings', $this->PLUGIN_SLUG),
+//														 'GoodByeCaptcha',
+//														 'manage_options',
+//														 $this->PLUGIN_SLUG,
+//														 array( $this, 'renderPluginAdminPage' ));
 	}
 		
 
