@@ -57,6 +57,10 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * Does not affect page loading times
 
 
+
+= Technical support =
+If you notice any problems by using this plugin, please notify us and we will investigate and fix the issues. Ideally your request should contain: URL of the website (if your site is public), Php version, WordPress version and all the steps in order to replicate the issue (if you are able to reproduce it somehow)
+
 >>**Please [Contact Us](http://www.goodbyecaptcha.com/contact/) if you'd like to test one of the following features:**
 
 >*   **Contact Form 7** integration - Contact Form 7 captcha replacement
@@ -67,10 +71,6 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 >*   **JetPack Contact Form** integration  - JetPack contact form captcha replacement
 >*	 **BuddyPress Registration Form** integration - BuddyPress registration form captcha replacement
 >*   **BuddyPress Login Form** integration - BuddyPress login form captcha replacement
-
-
-= Technical support =
-If you notice any problems by using this plugin, please notify us and we will investigate and fix the issues. Ideally your request should contain: URL of the website (if your site is public), Php version, WordPress version and all the steps in order to replicate the issue (if you are able to reproduce it somehow)
 
 = Donate =
 If you find this plugin useful, please consider making a small [donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U). Thank you
