@@ -131,7 +131,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 	public function validateAuthenticationFormEncryptedToken($user, $username = null, $password = null)
 	{
 
-		if (empty($username) || empty($password) || is_wp_error($user))
+		if (empty($username) || is_wp_error($user))
 			return $user;
 
 		return GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::LOGIN_FORM)) ? $user : new WP_Error($this->PLUGIN_SLUG,  __('<strong>ERROR</strong>: Invalid username or incorrect password!', $this->PLUGIN_SLUG));
