@@ -52,7 +52,7 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 
 		wp_register_script( $this->PLUGIN_SLUG . '-public-script', plugins_url( '/public/scripts/gdbc-public.js', $this->PLUGIN_MAIN_FILE ), array( 'jquery' ), $this->PLUGIN_VERSION);
 
-		$clientUrl = home_url('/') . '?gdbc-client=' . $this->getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION);
+		$clientUrl = home_url('/') . '?gdbc-client=' . GoodByeCaptcha::PLUGIN_VERSION;
 
 		wp_localize_script( $this->PLUGIN_SLUG . '-public-script', 'Gdbc', array(
 			'ajaxUrl'         => MchWpUtil::getAjaxUrl(),

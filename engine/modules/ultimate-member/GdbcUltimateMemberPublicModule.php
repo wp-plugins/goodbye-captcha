@@ -25,11 +25,7 @@ final class GdbcUltimateMemberPublicModule extends GdbcBasePublicModule
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);
-
-		if($this->isUltimateMemberActivated = GdbcPluginUtils::isUltimateMemberActivated())
-		{
-
-		}
+		$this->isUltimateMemberActivated = GdbcPluginUtils::isUltimateMemberActivated();
 	}
 
 
@@ -69,6 +65,8 @@ final class GdbcUltimateMemberPublicModule extends GdbcBasePublicModule
 
 	public function validateFormEncryptedToken($arrRequestInfo)
 	{
+		if(is_user_logged_in())
+			return;
 
 		$umSection = !empty($arrRequestInfo['_um_password_reset']) ?  GdbcUltimateMemberAdminModule::ULTIMATE_MEMBER_LOST_PASSWORD_FORM : null;
 		if(null === $umSection && !empty($arrRequestInfo['mode']))
@@ -77,6 +75,7 @@ final class GdbcUltimateMemberPublicModule extends GdbcBasePublicModule
 		}
 
 		global $ultimatemember;
+
 		if(null === $umSection || !isset($ultimatemember->form) || !(class_exists('UM_Form', false)) || !($ultimatemember->form instanceof UM_Form))
 		{
 			wp_redirect(home_url());

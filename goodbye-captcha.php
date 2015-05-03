@@ -11,7 +11,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.14
+ * Version: 1.1.15
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 
-	CONST PLUGIN_VERSION    = '1.1.14';
+	CONST PLUGIN_VERSION    = '1.1.15';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -72,7 +72,7 @@ class GoodByeCaptcha
 
 	protected function __construct()
 	{
-		spl_autoload_register('self::classAutoLoad');
+		spl_autoload_register('GoodByeCaptcha::classAutoLoad');
 
 		$pluginInstance = (MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
 		self::$isNetworkActivated = $pluginInstance->isNetworkActivated();
@@ -114,7 +114,7 @@ class GoodByeCaptcha
 
 	public static function activate($isForNetwork)
 	{
-		spl_autoload_register('self::classAutoLoad');
+		spl_autoload_register('GoodByeCaptcha::classAutoLoad');
 
 		if ( ! MchWp::isUserInDashboad() )
 			return null;
@@ -125,7 +125,7 @@ class GoodByeCaptcha
 
 	public static function deactivate($isForNetwork)
 	{
-		spl_autoload_register('self::classAutoLoad');
+		spl_autoload_register('GoodByeCaptcha::classAutoLoad');
 
 		if ( ! MchWp::isUserInDashboad() )
 			return null;

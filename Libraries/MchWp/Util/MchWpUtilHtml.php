@@ -46,6 +46,7 @@ final class MchWpUtilHtml
 		$code  = '<select';
 		foreach ($arrAttributes as $key => $value)
 		{
+			$value = esc_attr($value);
 			$code .= " {$key}=\"{$value}\"";
 		}
 
@@ -68,6 +69,7 @@ final class MchWpUtilHtml
 
 		foreach ($arrAttributes as $key => $value)
 		{
+			$value = esc_attr($value);
 			$code .= " {$key}=\"{$value}\"";
 		}
 		
@@ -87,6 +89,7 @@ final class MchWpUtilHtml
 		
 		foreach ($arrAttributes as $key => $value)
 		{
+			$value = esc_attr($value);
 			$code .= " {$key}=\"{$value}\"";
 		}
 		

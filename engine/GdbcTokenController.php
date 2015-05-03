@@ -49,7 +49,7 @@ final class GdbcTokenController
 
 	}
 	
-	public function isReceivedTokenValid()
+	public function isReceivedTokenValid(array $arrParameters = null)
 	{
 
 		if(!$this->isPluginInTestMode && !empty($this->arrTrustedIpAddresses) && in_array(MchHttpRequest::getClientIp(array()), $this->arrTrustedIpAddresses, true))
@@ -110,7 +110,8 @@ final class GdbcTokenController
 
 		if($timeSinceGenerated < $this->minSubmissionTime)
 		{
-			return GdbcReasonDataSource::TOKEN_SUBMITTED_EARLY;
+			if(!isset($arrParameters['module']) || !isset($arrParameters['section']) || $arrParameters['module'] !== GdbcModulesController::MODULE_WORDPRESS || $arrParameters['section'] !== GdbcWordpressAdminModule::LOGIN_FORM || $arrParameters['module'] !== GdbcModulesController::MODULE_POPULAR_PLUGINS)
+				return GdbcReasonDataSource::TOKEN_SUBMITTED_EARLY;
 		}
 
 		if(count(array_diff($arrDecryptedToken, $arrTokenData)) !== 0)
@@ -126,7 +127,6 @@ final class GdbcTokenController
 			unset($ultimatemember->form->post_form[$browserInfoInput], $ultimatemember->form->post_form[$this->HiddenInputName]);
 			unset($ultimatemember->form->post_form['submitted'][$browserInfoInput], $ultimatemember->form->post_form['submitted'][$this->HiddenInputName]);
 		}
-
 
 		return true;
 		
@@ -188,7 +188,7 @@ final class GdbcTokenController
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('charset'), '');
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('language'), '');
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('version'), '');
-		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(php_uname());
+		$arrData[] = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_CREATED_TIMESTAMP);
 		$arrData[] = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
 		
 		foreach ($arrData as $key => $val)

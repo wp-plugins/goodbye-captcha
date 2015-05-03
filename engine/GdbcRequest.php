@@ -29,7 +29,7 @@ final class GdbcRequest
 		if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST)
 			return $isTokenValid = true;
 
-		$isTokenValid = GdbcTokenController::getInstance()->isReceivedTokenValid();
+		$isTokenValid = GdbcTokenController::getInstance()->isReceivedTokenValid($arrParameters);
 
 		$isTestModeActivated = (bool)GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TEST_MODE_ACTIVATED);
 		if($isTestModeActivated)

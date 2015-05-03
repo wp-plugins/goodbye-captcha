@@ -3,8 +3,8 @@ Contributors: MihChe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
-Tested up to: 4.1.1
-Stable tag: 1.1.14
+Tested up to: 4.2.1
+Stable tag: 1.1.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,9 +52,21 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * No requests to external APIs
 * Can be switched to "Test Mode" - for testing
 * Compatible with WordPress Multisite
-* Compatible with cache plugins (WP Super Cache, W3 Total Cache and others)
+* Compatible with cache plugins (WP Super Cache, W3 Total Cache, ZenCache and others)
 * Invisible for end users (works in the background)
 * Does not affect page loading times
+
+
+>>**Please [Contact Us](http://www.goodbyecaptcha.com/contact/) if you'd like to test one of the following features:**
+
+>*   **Contact Form 7** integration - Contact Form 7 captcha replacement
+>*   **Gravity Forms** integration - Gravity Forms captcha replacement
+>*   **Ninja Forms** integration - Ninja Forms captcha replacement
+>*   **Formidable Forms** integration - Formidable Forms captcha replacement
+>*   **Fast Secure Contact Form** integration - Fast Secure Contact Form captcha replacement
+>*   **JetPack Contact Form** integration  - JetPack contact form captcha replacement
+>*	 **BuddyPress Registration Form** integration - BuddyPress registration form captcha replacement
+>*   **BuddyPress Login Form** integration - BuddyPress login form captcha replacement
 
 
 = Technical support =
@@ -120,8 +132,16 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 == Upgrade Notice ==
 
 = 1.1.14 =
-Added ability to switch the plugin to "Test Mode". Email notifications while in "Test Mode". Integration with Login With Ajax plugin.
+Fixing the Ultimate Member issue when user can't edit profile and the login issue if ZenCache is activated.
 == Changelog ==
+
+
+= 1.1.15: May 04, 2015 =
+
+**Fixed**
+- Issue with Ultimate Member - user can't edit profile
+- Login issue when ZenCache is activated
+
 
 = 1.1.14: April 15, 2015 =
 

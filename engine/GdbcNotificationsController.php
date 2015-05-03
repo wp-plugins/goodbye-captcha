@@ -38,6 +38,9 @@ final class GdbcNotificationsController
 
 		$gdbcEmailNotification->EmailBodyContent = ob_get_clean();
 
+//		$gdbcEmailNotification->EmailBodyContent .= "\n";
+//		$gdbcEmailNotification->EmailBodyContent .= print_r(GdbcTokenController::getInstance()->getTokenDebugData(), true);
+
 		$gdbcEmailNotification->send();
 	}
 }
