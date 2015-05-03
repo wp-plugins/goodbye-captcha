@@ -54,7 +54,7 @@ GdbcTokenController::getInstance()->clientCanRetrieveToken() || exit;
                 type : "post",
                 cache: false,
                 dataType : "json",
-                url : Gdbc.ajaxUrl,
+                url : Gdbc.ajaxUrl + "?d=" +(new Date()).getTime(),
                 data : ajaxData,
                 success: function(response){
                     $.each(response, function(prop, val){
