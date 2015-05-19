@@ -188,7 +188,7 @@ class MchHttpRequest
 
 		if(!empty($_SERVER['HTTP_X_AMZ_CF_ID'])
 			|| (!empty($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] === 'Amazon CloudFront')
-			|| (!empty($_SERVER['HTTP_VIA']) &&  false !== strpos($_SERVER['HTTP_USER_VIA'], 'CloudFront'))
+			|| (!empty($_SERVER['HTTP_VIA']) &&  false !== strpos($_SERVER['HTTP_VIA'], 'CloudFront'))
 		)
 		{
 			#http://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html
