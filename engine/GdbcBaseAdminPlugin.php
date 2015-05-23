@@ -57,6 +57,9 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 		if ($selectedTab === GdbcModulesController::MODULE_REPORTS)
 		{
 
+			remove_action( 'admin_print_styles', 'print_emoji_styles' );
+			remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+
 			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-flot', plugins_url('/admin/scripts/jquery-flot.js', $this->PLUGIN_MAIN_FILE), array('jquery'), $this->PLUGIN_VERSION);
 			wp_enqueue_script($this->PLUGIN_SLUG . '-jquery-flot-tooltip', plugins_url('/admin/scripts/jquery-flot-tooltip.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 			wp_enqueue_script($this->PLUGIN_SLUG . '-raphael', plugins_url('/admin/scripts/raphael.js', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);

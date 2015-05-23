@@ -20,6 +20,11 @@
 
 final class GdbcPluginUtils
 {
+	public static function isWooCommerceActivated()
+	{
+		return class_exists('WooCommerce', false);
+	}
+
 	public static function isUltimateMemberActivated()
 	{
 		return class_exists('UM_API', false);

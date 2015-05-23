@@ -21,12 +21,13 @@
 final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 {
 
-	CONST CONTACT_FORM_7   = 'IsCFActivated';
-	CONST GRAVITY_FORMS    = 'IsGFActivated';
-	CONST NINJA_FORMS      = 'IsNFActivated';
-	CONST FORMIDABLE_FORMS = 'IsFFActivated';
-	CONST FAST_SECURE_FORM = 'IsFSActivated';
-	
+	CONST CONTACT_FORM_7       = 'IsCFActivated';
+	CONST GRAVITY_FORMS        = 'IsGFActivated';
+	CONST NINJA_FORMS          = 'IsNFActivated';
+	CONST FORMIDABLE_FORMS     = 'IsFFActivated';
+	CONST FAST_SECURE_FORM     = 'IsFSActivated';
+	CONST JETPACK_CONTACT_FORM = 'IsJCFctivated';
+
 	private $arrDefaultSettingOptions = array(
 
 			self::CONTACT_FORM_7    => array(
@@ -63,6 +64,14 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 				'LabelText' => 'Fast Secure Forms',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 			),
+
+			self::JETPACK_CONTACT_FORM  => array(
+				'Id'         => 6,
+				'Value'      => NULL,
+				'LabelText' => 'JetPack Contact Form',
+				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
+			),
+
 	);
 
 	/**
@@ -86,19 +95,50 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 	
 	public function getModuleSettingTabCaption()
 	{
-		return ( count(GoodByeCaptcha::getModulesControllerInstance()->getRegisteredModules()) === count(GoodByeCaptcha::getModulesControllerInstance()->getPublicModuleNames())) ? null : __('Popular Forms', $this->PLUGIN_SLUG);
+		return  __('Popular Forms', $this->PLUGIN_SLUG);
 	}
 
 
 	protected function getModuleSettingSections()
 	{
-		$settingSection = new MchWpSettingSection($this->moduleSetting->SettingKey . '-section', "Popular forms");
+		$settingSection = new MchWpSettingSection($this->moduleSetting->SettingKey . '-section', "Popular Forms");
 		
 		foreach ($this->arrDefaultSettingOptions as $fieldName => $fieldInfo)
 		{
 			if(empty($fieldInfo['LabelText']) || empty($fieldInfo['InputType']))
 				continue;
-			
+
+			$shouldRenderSetting = false;
+			switch($fieldName)
+			{
+				case self::CONTACT_FORM_7 :
+					$shouldRenderSetting = GdbcModulesController::getInstance($this->ArrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_CONTACT_FORM_7);
+					break;
+				case self::FAST_SECURE_FORM :
+					$shouldRenderSetting = GdbcModulesController::getInstance($this->ArrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_FAST_SECURE_FORM);
+					break;
+
+				case self::GRAVITY_FORMS :
+					$shouldRenderSetting = GdbcModulesController::getInstance($this->ArrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_GRAVITY_FORMS);
+					break;
+
+				case self::NINJA_FORMS :
+					$shouldRenderSetting = GdbcModulesController::getInstance($this->ArrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_NINJA_FORMS);
+					break;
+
+				case self::FORMIDABLE_FORMS :
+					$shouldRenderSetting = GdbcModulesController::getInstance($this->ArrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_FORMIDABLE_FORMS);
+					break;
+
+				case self::JETPACK_CONTACT_FORM :
+					$shouldRenderSetting = GdbcModulesController::getInstance($this->ArrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_JETPACK_CONTACT_FORM);
+					break;
+
+			}
+
+			if(!$shouldRenderSetting)
+				continue;
+
 			$settingField = new MchWpSettingField($fieldName, $fieldInfo['Value']);
 			
 			$settingField->HTMLLabelText = $fieldInfo['LabelText'];
@@ -112,7 +152,7 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 	
 	public function renderModuleSettingSection(array $arrSectionInfo)
 	{
-		echo '<h4 id = "' . $arrSectionInfo['id'] . '">Enable GoodBye Captcha with the following popular forms</h4>';
+		echo '<h4 id = "' . $arrSectionInfo['id'] . '">' . __('Enable GoodBye Captcha with the following popular forms', $this->PLUGIN_SLUG) . '</h4>';
 	}
 
 

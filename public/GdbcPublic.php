@@ -69,28 +69,7 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			unset($wordpressModuleInstance, $loginScriptsEnqueued);
 		}
 		
-		/**
-		 * GoodBye Captcha JetPack integration - comments and ontact form
-		 */ 
-		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_JETPACK))
-		{
 
-			$jetPackModuleInstance = $this->ModulesController->getModuleInstance(GdbcModulesController::MODULE_JETPACK, MchWpModule::MODULE_TYPE_PUBLIC);
-
-//			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::COMMENTS_FORM))
-//			{
-//				$jetPackModuleInstance->activateCommentsFormActions();
-//			}
-			
-			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_JETPACK, GdbcJetPackAdminModule::CONTACT_FORM))
-			{
-				$jetPackModuleInstance->activateContactFormActions();
-			}
-			
-			unset($jetPackModuleInstance);
-		}
-
-		
 		/**
 		 * GoodBye BuddyPress integration
 		 */ 
@@ -134,10 +113,21 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		 *	Contact Form 7, 
 		 *	Ninja Forms, 
 		 *	Formidable Forms,  
-		 *	Fast Secure Contact Form
+		 *	Fast Secure Contact Form,
+		 * JetPack Contact Form
 		 */
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_POPULAR_FORMS))
 		{
+			#JetPack Contact form
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::JETPACK_CONTACT_FORM))
+			{
+				if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_JETPACK_CONTACT_FORM))
+				{
+					$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_JETPACK_CONTACT_FORM)->activateJetPackContactFormActions();
+				}
+			}
+
+
 			#Formidable Forms - Free and Pro
 			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::FORMIDABLE_FORMS))
 			{
@@ -213,7 +203,20 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 				$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_POPULAR_PLUGINS)->activateUserProRegisterActions();
 			}
 		}
+
+		#WooCommerce
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_WOOCOMMERCE) && GdbcPluginUtils::isWooCommerceActivated())
+		{
+			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_WOOCOMMERCE)->activateLoginActions();
+			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_WOOCOMMERCE)->activateLostPasswordActions();
+
+			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_WOOCOMMERCE)->activateRegisterActions();
+			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_WOOCOMMERCE)->activateProductReviewActions();
+		}
+
+
 	}
+
 
 	public function initPlugin()
 	{

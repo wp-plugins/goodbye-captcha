@@ -128,7 +128,7 @@ class MchHttpRequest
 	private static function getIpAddressFromIncapsula()
 	{
 
-		if(empty($_SERVER['HTTP_INCAP_CLIENT_IP']) || -1 === ($ipVersion = MchHttpUtil::getIpAddressVersion($_SERVER['HTTP_INCAP_CLIENT_IP'])))
+		if(empty($_SERVER['HTTP_INCAP_CLIENT_IP']) || (-1 === ($ipVersion = MchHttpUtil::getIpAddressVersion($_SERVER['HTTP_INCAP_CLIENT_IP']))))
 			return null;
 
 		//https://incapsula.zendesk.com/hc/en-us/articles/200627570-Restricting-direct-access-to-your-website-Incapsula-s-IP-addresses-
@@ -146,40 +146,45 @@ class MchHttpRequest
 		return MchHttpUtil::isIpInRanges($_SERVER['REMOTE_ADDR'], $arrIncapsulaRanges, $ipVersion) ? $_SERVER['HTTP_INCAP_CLIENT_IP'] : null;
 	}
 
-
 	private static function getIpAddressFromCloudFlare()
 	{
+		static $ipAddress = 0;
+
+		if(0 !== $ipAddress)
+			return $ipAddress;
+
 		if(empty($_SERVER['HTTP_CF_CONNECTING_IP']) || -1 === ($ipVersion = MchHttpUtil::getIpAddressVersion($_SERVER['HTTP_CF_CONNECTING_IP'])))
-			return null;
+			return $ipAddress = null;
 
 		//https://www.cloudflare.com/ips
 
 		$arrCloudFlareRanges = ( 4 === $ipVersion )
 			?
 			array(
-				'199.27.128.0/21',
-				'173.245.48.0/20',
 				'103.21.244.0/22',
 				'103.22.200.0/22',
 				'103.31.4.0/22',
-				'141.101.64.0/18',
+				'104.16.0.0/12',
 				'108.162.192.0/18',
-				'190.93.240.0/20',
+				'141.101.64.0/18',
+				'162.158.0.0/15',
+				'172.64.0.0/13',
+				'173.245.48.0/20',
 				'188.114.96.0/20',
+				'190.93.240.0/20',
 				'197.234.240.0/22',
 				'198.41.128.0/17',
-				'162.158.0.0/15',
-				'104.16.0.0/12',
+				'199.27.128.0/21',
 			)
 			: array(
 				'2400:cb00::/32',
+				'2405:8100::/32',
+				'2405:b500::/32',
 				'2606:4700::/32',
 				'2803:f800::/32',
-				'2405:b500::/32',
-				'2405:8100::/32',
 			);
 
-		return MchHttpUtil::isIpInRanges($_SERVER['REMOTE_ADDR'], $arrCloudFlareRanges, $ipVersion) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : null;
+		return $ipAddress = (MchHttpUtil::isIpInRanges($_SERVER['REMOTE_ADDR'], $arrCloudFlareRanges, $ipVersion) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : null);
 	}
 
 
@@ -188,7 +193,7 @@ class MchHttpRequest
 
 		if(!empty($_SERVER['HTTP_X_AMZ_CF_ID'])
 			|| (!empty($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT'] === 'Amazon CloudFront')
-			|| (!empty($_SERVER['HTTP_VIA']) &&  false !== strpos($_SERVER['HTTP_VIA'], 'CloudFront'))
+			|| (!empty($_SERVER['HTTP_VIA']) &&  false !== stripos($_SERVER['HTTP_VIA'], 'CloudFront'))
 		)
 		{
 			#http://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html
@@ -213,7 +218,7 @@ class MchHttpRequest
 				'54.182.0.0/16',
 			);
 
-			if(null === $proxyIpAddress = self::getClientIpAddressFromProxyHeader('HTTP_X_FORWARDED_FOR'))
+			if(null === ($proxyIpAddress = self::getClientIpAddressFromProxyHeader('HTTP_X_FORWARDED_FOR')))
 				return null;
 
 			return MchHttpUtil::isIpInRanges($_SERVER['REMOTE_ADDR'], $arrAmazonCloudFront, 4) ? $proxyIpAddress : null;

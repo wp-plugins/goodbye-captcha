@@ -48,10 +48,9 @@ final class GdbcTokenController
 		$this->isPluginInTestMode    = (bool)GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TEST_MODE_ACTIVATED);
 
 	}
-	
+
 	public function isReceivedTokenValid(array $arrParameters = null)
 	{
-
 		if(!$this->isPluginInTestMode && !empty($this->arrTrustedIpAddresses) && in_array(MchHttpRequest::getClientIp(array()), $this->arrTrustedIpAddresses, true))
 			return true;
 
@@ -82,7 +81,7 @@ final class GdbcTokenController
 		}
 
 		$browserInfoInput = substr($arrDecryptedToken[0], 0, $tokenIndex);
-		
+
 		$receivedBrowserInfoInput = isset($_POST[$browserInfoInput]) ? $_POST[$browserInfoInput] : (isset($_COOKIE[GoodByeCaptcha::PLUGIN_SHORT_CODE . "-$browserInfoInput"]) ? $_COOKIE[GoodByeCaptcha::PLUGIN_SHORT_CODE . "-$browserInfoInput"] : null);
 
 		if( null === $receivedBrowserInfoInput )
@@ -96,7 +95,7 @@ final class GdbcTokenController
 		{
 			return GdbcReasonDataSource::BROWSER_INFO_INVALID;
 		}
-		
+
 		array_shift($arrDecryptedToken);
 
 		$arrTokenData = $this->getTokenData();
@@ -129,13 +128,11 @@ final class GdbcTokenController
 		}
 
 		return true;
-		
+
 	}
 
 	public function retrieveEncryptedToken()
 	{
-		ob_get_level() > 0 ? ob_end_clean() : null;
-
 		if( ! $this->clientCanRetrieveToken() )
 			return json_encode (array());
 
@@ -171,14 +168,14 @@ final class GdbcTokenController
 			'token'       => MchCrypt::encryptToken($this->TokenSecretKey, json_encode($arrTokenData)),
 			$browserField => implode(self::TOKEN_SEPARATOR, array_keys($arrKeysToSave))
 		);
-		
+
 		echo json_encode($arrResponse);
 
 		exit;
 	}
-	
-	
-	
+
+
+
 	private function getTokenData()
 	{
 		$arrData   = array();
@@ -190,7 +187,7 @@ final class GdbcTokenController
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('version'), '');
 		$arrData[] = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_CREATED_TIMESTAMP);
 		$arrData[] = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
-		
+
 		foreach ($arrData as $key => $val)
 		{
 			if(!empty($val))
@@ -198,7 +195,7 @@ final class GdbcTokenController
 
 			unset($arrData[$key]);
 		}
-		
+
 		return $arrData;
 	}
 
@@ -237,7 +234,7 @@ final class GdbcTokenController
 		return true;
 	}
 
-	
+
 	public function setHiddenFieldNonceCookie()
 	{
 		return GdbcPluginUtils::setCookie(GoodByeCaptcha::PLUGIN_SLUG . '-' . $this->HiddenInputName, $this->getAjaxNonce(), 86400);
@@ -256,7 +253,7 @@ final class GdbcTokenController
 	{
 		return GdbcPluginUtils::getCookie($this->HiddenInputName);
 	}
-	
+
 
 
 	/**
@@ -268,39 +265,39 @@ final class GdbcTokenController
 	private function getComplexNonceAction($isForAjax = true)
 	{
 		static $nonceAction = null;
-		
+
 		if(null !== $nonceAction)
 			return $nonceAction . ($isForAjax ? 'ajax' : 'field');
 
 		$arrParts   = array();
-		
+
 		$arrParts[] = GoodByeCaptcha::PLUGIN_SLUG;
 		$arrParts[] = GoodByeCaptcha::PLUGIN_SHORT_CODE;
 		$arrParts[] = GoodByeCaptcha::PLUGIN_VERSION;
 		$arrParts[] = MchWpBase::WP_VERSION_ID + PHP_VERSION_ID;
 		$arrParts[] = get_current_blog_id();
-		
+
 		$nonceAction = implode('', $arrParts);
 		return  $nonceAction . ($isForAjax ? 'ajax' : 'field');
-	}	
+	}
 
 	public function isAjaxNonceValid($queryArgument)
 	{
 		return (bool)(check_ajax_referer($this->getComplexNonceAction(true), $queryArgument, false ));
-	}	
+	}
 
-	
+
 	public function getTokenInputField()
 	{
 		return '<input type="hidden" autocomplete="off" autocorrect="off" name="' . esc_attr( $this->HiddenInputName ) . '" value="" />';
 	}
-	
-	
+
+
 	public function getAjaxNonce()
 	{
 		return wp_create_nonce($this->getComplexNonceAction(true));
 	}
-	
+
 	private function getNonce()
 	{
 		return wp_create_nonce($this->getComplexNonceAction(false));
@@ -313,7 +310,7 @@ final class GdbcTokenController
 	}
 
 	/**
-	 * 
+	 *
 	 * @staticvar null $instance
 	 * @return \GdbcTokenController
 	 */

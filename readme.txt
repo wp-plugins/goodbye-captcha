@@ -3,8 +3,8 @@ Contributors: MihChe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
-Tested up to: 4.2.1
-Stable tag: 1.1.15
+Tested up to: 4.2.2
+Stable tag: 1.1.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,9 +13,9 @@ An extremely powerful anti-spam plugin that blocks Spam-bots without annoying ca
 == Description ==
 **Goodbye Captcha anti-spam and security plugin is based on algorithms that identify spam bots without any annoying and hard to read captcha images.**
 
-Goodbye Captcha completely eliminates spam-bot signups, spam comments, even brute force attacks, the second you install it on your Wordpress website.  It is completely invisible to the end-user - no need to ever fill out a Captcha or other “human-detection” field ever again - and it just works. Period.
+Goodbye Captcha completely eliminates spam-bot signups, spam comments, even brute force attacks, the second you install it on your Wordpress website.  It is completely invisible to the end-user - no need to ever fill out a Captcha or other "human-detection" field ever again - and it just works!
 
-Unlike other anti-spam plugins, which detect spam comments and signups after the fact and move them to your spam folder, which you then have to delete - using up not only your website’s resources, but your time as well, Goodbye Captcha prevents the bots from leaving spam in the first place. The result is that your site is not only spam free, it’s faster and more secure.
+Unlike other anti-spam plugins, which detect spam comments and signups after the fact and move them to your spam folder, which you then have to delete - using up not only your websiteâ€™s resources, but your time as well, Goodbye Captcha prevents the bots from leaving spam in the first place. The result is that your site is not only spam free, itâ€™s faster and more secure.
 
 In addition, Goodbye Captcha is completely self-contained and does not need to connect to any outside service.  Your logins remain yours, 100%.
 
@@ -23,18 +23,20 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 
 = It also currently works with the following plugins: =
 
-* **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
-  GoodBye Captcha offers protection for all forms the user will create with MailChimp
+- **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
+	GoodBye Captcha offers protection for all forms the user will create with MailChimp
 
-* **Ultimate Member** (https://wordpress.org/plugins/ultimate-member)                  
-  GoodBye Captcha offers protection for Login, Registration and Reset Password forms
+- **Ultimate Member** (https://wordpress.org/plugins/ultimate-member)
+	GoodBye Captcha offers protection for Login, Registration and Reset Password forms
 
-* **WP User Control** (https://wordpress.org/plugins/wp-user-control)                   
-  GoodBye Captcha offers protection for Login, Registration and Lost Password forms
+- **WP User Control** (https://wordpress.org/plugins/wp-user-control)
+	GoodBye Captcha offers protection for Login, Registration and Lost Password forms
 
-* **Login With Ajax** (https://wordpress.org/plugins/login-with-ajax)
-  GoodBye Captcha offers protection for Login, Registration and Lost Password forms
+- **Login With Ajax** (https://wordpress.org/plugins/login-with-ajax)
+    GoodBye Captcha offers protection for Login, Registration and Lost Password forms
 
+- **JetPack by WordPress** (https://wordpress.org/plugins/jetpack/)
+	GoodBye Captcha offers protection for JetPack Contact Form
 
 = Summary of Goodbye Captcha features =
 * Login form integration
@@ -47,7 +49,7 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * Automatically purge logs older than a certain number of days
 * Manually whitelist trusted IP Address
 * Manually block/unblock IP Addresses (IPV4 and IPV6)
-* Properly detects client IP Address when using CloudFlare, Incapsula, Cloudfront and RackSpace
+* Properly detects client IP Address when using CloudFlare, Incapsula, Cloudfront, RackSpace
 * Provides statistics, reports, maps and charts with all blocked spam attempts
 * No requests to external APIs
 * Can be switched to "Test Mode" - for testing
@@ -120,9 +122,15 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.14 =
-Fixing the Ultimate Member issue when user can't edit profile and the login issue if ZenCache is activated.
-== Changelog ==
+
+= 1.1.16: May 23, 2015 =
+
+**Fixed**
+- Chrome caching Ajax requests
+- Incompatibility with CloudFlare - Rocket Loader
+
+**Additions**
+- Integration with JetPack Contact Form
 
 
 = 1.1.15: May 04, 2015 =

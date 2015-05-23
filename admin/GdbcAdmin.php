@@ -45,11 +45,17 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		add_action('wp_ajax_'        . 'retrieveLatestAttemptsTable', array(GdbcReportsAdminModule::getInstance($arrPluginInfo), 'retrieveLatestAttemptsTable'));
 
 
+		if(MchWp::isAjaxRequest())
+		{
+			add_filter('nocache_headers', array($this, 'rewriteAjaxNoCacheHeaders'));
+		}
+
 		if(!MchWp::isAjaxRequest())
 		{
 			$arrTrustedIps = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TRUSTED_IPS);
 			if(empty($arrTrustedIps))
 			{
+				if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::LOGIN_FORM))
 				add_action('admin_notices', array($this, 'showEmptyTrustedIpNotice'));
 			}
 
@@ -88,7 +94,17 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		}
 
 	}
-	
+
+	public function rewriteAjaxNoCacheHeaders($arrHeaders)
+	{
+		empty($arrHeaders) ? $arrHeaders = array() : null;
+
+		$arrHeaders['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0';
+
+		return $arrHeaders;
+	}
+
+
 	public function userProValidateToken()
 	{
 		return !GdbcRequest::isValid(array("module" => GdbcModulesController::MODULE_POPULAR_PLUGINS));

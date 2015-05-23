@@ -33,7 +33,6 @@ if( ! function_exists( 'mchCryptAutoLoader' ) )
 
 	function mchCryptAutoLoader($className)
 	{
-
 		static $arrClassMap = array(
 			'MchCrypt_Core_Generator' => '/Core/Generator.php',
 			'MchCrypt_Core_Crypter'   => '/Core/Crypter.php',
@@ -41,11 +40,9 @@ if( ! function_exists( 'mchCryptAutoLoader' ) )
 		);
 
 		return isset($arrClassMap[$className]) ? include dirname(__FILE__) . $arrClassMap[$className] : null;
-
 	}
 
 	spl_autoload_register('mchCryptAutoLoader');
-
 }
 
 final class MchCrypt
@@ -137,15 +134,12 @@ final class MchCrypt
 			$crypter->setSecretKey($cipherSecretKey);
 			
 			$encryptedData = $crypter->encrypt(self::tryToCompressString($strTextToEncrypt));
-			
-			
+
 			$tokenKeyHmac = substr($derivedKey, $crypter->getCipherKeySize());
 			
 			$hashedToken  = hash_hmac('md5', $encryptedData, $tokenKeyHmac, true);
-			
-			
+
 			$encryptedToken = $hashedToken . $encryptedData;
-			
 			
 			return str_replace( array('+', '/', '='), array('-', '_', ''), base64_encode($encryptedToken));
 			
@@ -196,10 +190,9 @@ final class MchCrypt
 			$tokenKeyHmac = substr($derivedKey, $crypter->getCipherKeySize());
 			
 			$expectedHashedToken = hash_hmac('md5', $encryptedData, $tokenKeyHmac, true);
-			
-			
+
 			return self::compareDerivedKeys($expectedHashedToken, $hashedToken) ? self::decompressString($crypter->decrypt($encryptedData)) : null;
-			
+
 		}
 		catch(Exception $ex)
 		{

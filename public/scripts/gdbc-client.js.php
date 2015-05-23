@@ -19,64 +19,56 @@
 
 defined( 'ABSPATH' ) || exit;
 
-send_origin_headers();
-send_nosniff_header();
 nocache_headers();
-@header('Content-Type: application/javascript');
-@header('Vary: Accept-Encoding');
-
-GdbcTokenController::getInstance()->clientCanRetrieveToken() || exit;
 
 ?>
 
 <!--<script type="application/javascript">-->
 (function($) {
-    $.GdbcClient = function(el, options) {
-        var gdbcClient = this, defaults = {};
-        gdbcClient.settings = {};
-        var init = function() {
-            gdbcClient.settings = $.extend({}, defaults, options);
-        };
+	$.GdbcClient = function(el, options) {
+		var gdbcClient = this, defaults = {};
+		gdbcClient.settings = {};
+		var init = function() {
+			gdbcClient.settings = $.extend({}, defaults, options);
+		};
 
-        gdbcClient.requestTokens = function() {
-            $('form input[name=' + Gdbc.formFieldName + ']').each(function(){
-					requestTokenValue($(this));
-            });
-        };
+		gdbcClient.requestTokens = function() {
+			$('form input[name=' + Gdbc.formFieldName + ']').each(function(){
+				requestTokenValue($(this));
+			});
+		};
 
-        var requestTokenValue = function(elm) {
-            var ajaxData = {};
+		var requestTokenValue = function(elm) {
+			var ajaxData = {};
 
-            ajaxData[Gdbc.formFieldName] = '<?php echo GdbcTokenController::getInstance()->getAjaxNonce(); ?>';
-            ajaxData['action']      = 'retrieveToken';
-            ajaxData['browserInfo'] =  JSON.stringify(Gdbc.browserInfo);
-            $.ajax({
-                type : "post",
-                cache: false,
-                dataType : "json",
-                url : Gdbc.ajaxUrl + "?d=" +(new Date()).getTime(),
-                data : ajaxData,
-                success: function(response){
-                    $.each(response, function(prop, val){
-                        if(prop === 'token'){
-                            elm.val(val);return;
-                        }
+			ajaxData[Gdbc.formFieldName] = '<?php echo GdbcTokenController::getInstance()->getAjaxNonce(); ?>';
+			ajaxData['action']      = 'retrieveToken';
+			ajaxData['requestTime'] = (new Date()).getTime();
+			ajaxData['browserInfo'] = JSON.stringify(Gdbc.browserInfo);
+			$.ajax({
+				type : "post",
+				cache: false,
+				dataType : "json",
+				url : Gdbc.ajaxUrl + '?t=' + ajaxData['requestTime'],
+				data : ajaxData,
+				success: function(response){
+					$.each(response, function(prop, val){
+						if(prop === 'token'){
+							elm.val(val);return;
+						}
 
-                        var value = '', arrValues = val.split('|');
-                        for(var i=0; i<arrValues.length; ++i) {
-                            if (Gdbc.browserInfo.hasOwnProperty(arrValues[i]))
-                                value += Gdbc.browserInfo[arrValues[i]];
-                        }
-                        $('<input>').attr({type:'hidden',name:prop,value:value}).appendTo(elm.closest('form'));
-                    });
-                }
-            });
-
-        };
-
-        init();
-    }
-
+						var value = '', arrValues = val.split('|');
+						for(var i=0; i<arrValues.length; ++i) {
+							if (Gdbc.browserInfo.hasOwnProperty(arrValues[i]))
+								value += Gdbc.browserInfo[arrValues[i]];
+						}
+						$('<input>').attr({type:'hidden',name:prop,value:value}).appendTo(elm.closest('form'));
+					});
+				}
+			});
+		};
+		init();
+	}
 })(jQuery);
 
 jQuery(document).ready(function($){(new $.GdbcClient()).requestTokens();});

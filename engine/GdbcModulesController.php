@@ -22,7 +22,6 @@ final class GdbcModulesController extends MchWpModulesController
 {
 	CONST MODULE_SETTINGS         = 'Settings';
 	CONST MODULE_WORDPRESS        = 'Wordpress';
-	CONST MODULE_JETPACK          = 'JetPack';
 	CONST MODULE_BUDDY_PRESS      = 'BuddyPress';
 	CONST MODULE_POPULAR_FORMS    = 'PopularForms';
 	CONST MODULE_POPULAR_PLUGINS  = 'PopularPlugins';
@@ -32,6 +31,9 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_GRAVITY_FORMS    = 'GravityForms';
 	CONST MODULE_FAST_SECURE_FORM = 'FastSecureForm';
 	CONST MODULE_FORMIDABLE_FORMS = 'FormidableForms';
+	CONST MODULE_JETPACK_CONTACT_FORM  = 'JetPackContactForm';
+
+	CONST MODULE_WOOCOMMERCE      = 'WooCommerce';
 
 	CONST MODULE_SUBSCRIPTIONS    = 'Subscriptions';
 	CONST MODULE_MAIL_CHIMP_LITE  = 'MailChimpForWordPress';
@@ -52,18 +54,6 @@ final class GdbcModulesController extends MchWpModulesController
 			)
 		),
 
-		self::MODULE_POPULAR_FORMS => array(
-			'info'    => array(
-				'ModuleId' => -2,
-				'IsPublic' => true,
-			),
-			'classes' => array(
-				'GdbcPopularFormsAdminModule'  => '/modules/popular-forms/GdbcPopularFormsAdminModule.php',
-				'GdbcPopularFormsPublicModule' => '/modules/popular-forms/GdbcPopularFormsPublicModule.php',
-			)
-		),
-
-
 		self::MODULE_WORDPRESS => array(
 			'info'    => array(
 				'ModuleId' => 1,
@@ -75,14 +65,25 @@ final class GdbcModulesController extends MchWpModulesController
 			)
 		),
 
-		self::MODULE_JETPACK => array(
+		self::MODULE_POPULAR_FORMS => array(
 			'info'    => array(
-				'ModuleId' => 2,
-				'IsPublic' => false,
+				'ModuleId' => -2,
+				'IsPublic' => true,
 			),
 			'classes' => array(
-				'GdbcJetPackAdminModule'  => '/modules/jetpack/GdbcJetPackAdminModule.php',
-				'GdbcJetPackPublicModule' => '/modules/jetpack/GdbcJetPackPublicModule.php',
+				'GdbcPopularFormsAdminModule'  => '/modules/popular-forms/GdbcPopularFormsAdminModule.php',
+				'GdbcPopularFormsPublicModule' => '/modules/popular-forms/GdbcPopularFormsPublicModule.php',
+			)
+		),
+
+		self::MODULE_JETPACK_CONTACT_FORM => array(
+			'info'    => array(
+				'ModuleId' => 2,
+				'IsPublic' => true,
+			),
+			'classes' => array(
+				'GdbcJetPackContactFormAdminModule'  => '/modules/jetpack-contact-form/GdbcJetPackContactFormAdminModule.php',
+				'GdbcJetPackContactFormPublicModule' => '/modules/jetpack-contact-form/GdbcJetPackContactFormPublicModule.php',
 			)
 		),
 
@@ -204,6 +205,17 @@ final class GdbcModulesController extends MchWpModulesController
 			'classes' => array(
 				'GdbcUltimateMemberAdminModule'  => '/modules/ultimate-member/GdbcUltimateMemberAdminModule.php',
 				'GdbcUltimateMemberPublicModule' => '/modules/ultimate-member/GdbcUltimateMemberPublicModule.php',
+			)
+		),
+
+		self::MODULE_WOOCOMMERCE => array(
+			'info'    => array(
+				'ModuleId' => 13,
+				'IsPublic' => false,
+			),
+			'classes' => array(
+				'GdbcWooCommerceAdminModule'  => '/modules/woocommerce/GdbcWooCommerceAdminModule.php',
+				'GdbcWooCommercePublicModule' => '/modules/woocommerce/GdbcWooCommercePublicModule.php',
 			)
 		),
 

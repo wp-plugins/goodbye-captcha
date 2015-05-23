@@ -61,6 +61,20 @@ class GdbcPluginUpdater
 		#Save the new version of the plugin
 		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, $currentPluginVersionId);
 
+		// clearing the cache
+		if(function_exists('w3tc_flush_all')) { // w3tc
+			w3tc_flush_all();
+		}
+		elseif(function_exists('wp_cache_clear_cache')){ // wp super cache
+			wp_cache_clear_cache();
+		}
+		elseif(isset($GLOBALS['wp_fastest_cache']) && method_exists($GLOBALS['wp_fastest_cache'], 'deleteCache')){ // wp fastest cache
+			$GLOBALS['wp_fastest_cache']->deleteCache();
+		}
+		elseif(class_exists('zencache') && method_exists('zencache','clear')){ // zencache
+			zencache::clear();
+		}
+
 	}
 
 

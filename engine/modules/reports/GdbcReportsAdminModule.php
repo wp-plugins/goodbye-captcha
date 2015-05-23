@@ -314,7 +314,6 @@ final class GdbcReportsAdminModule extends GdbcBaseAdminModule
 		{
 			$moduleName = $this->moduleController->getModuleNameById($attemptsList[$i]->ModuleId);
 
-
 			if(null === $moduleName)
 				continue;
 

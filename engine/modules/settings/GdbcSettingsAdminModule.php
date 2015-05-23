@@ -54,7 +54,7 @@ final class GdbcSettingsAdminModule extends GdbcBaseAdminModule
 		),
 
 		self::OPTION_MAX_SUBMISSION_TIME  => array(
-			'Value'       => 300,
+			'Value'       => 3600,
 			'LabelText'   => 'Maximum Form Submission Time',
 			'Description' => 'Number of seconds after the submission is not considered valid',
 			'InputType'   => MchWpUtilHtml::FORM_ELEMENT_INPUT_TEXT

@@ -11,7 +11,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.15
+ * Version: 1.1.16
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 
-	CONST PLUGIN_VERSION    = '1.1.15';
+	CONST PLUGIN_VERSION    = '1.1.16';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -47,12 +47,12 @@ class GoodByeCaptcha
 		'GdbcTokenController'     => '/engine/GdbcTokenController.php',
 		'GdbcPluginUpdater'       => '/engine/GdbcPluginUpdater.php',
 		'GdbcPluginUtils'         => '/engine/GdbcPluginUtils.php',
-		'GdbcRequest'			  => '/engine/GdbcRequest.php',
+		'GdbcRequest'             => '/engine/GdbcRequest.php',
 		'GdbcPublic'              => '/public/GdbcPublic.php',
 		'GdbcAdmin'               => '/admin/GdbcAdmin.php',
-		'MchCrypt'				  => '/Libraries/MchCrypt/MchCrypt.php',
-		'MchWp'				      => '/Libraries/MchWp/MchWp.php',
-		'MchHttpUtil'			  => '/Libraries/MchHttp/MchHttpUtil.php',
+		'MchCrypt'                => '/Libraries/MchCrypt/MchCrypt.php',
+		'MchWp'                   => '/Libraries/MchWp/MchWp.php',
+		'MchHttpUtil'             => '/Libraries/MchHttp/MchHttpUtil.php',
 		'MchHttpRequest'          => '/Libraries/MchHttp/MchHttpRequest.php',
 		'GdbcAttemptEntity'       => '/engine/dbaccess/entities/GdbcAttemptEntity.php',
 		'GdbcAttemptsManager'     => '/engine/dbaccess/GdbcAttemptsManager.php',

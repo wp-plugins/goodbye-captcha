@@ -20,12 +20,11 @@
 
 abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 {
-	private $TokenSecretKey  = null;
+	protected $TokenSecretKey  = null;
 	private $HiddenInputName = null;
 
 	CONST TOKEN_SEPARATOR = '|';
 	CONST TOKEN_LIVETIME  = 900;
-
 
 	protected function __construct(array $arrPluginInfo)
 	{
@@ -36,6 +35,7 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 
 		add_filter('query_vars', array($this, 'filterQueryVariables'));
 		add_action('template_redirect', array($this, 'templateRedirect'));
+
 	}
 
 	/**

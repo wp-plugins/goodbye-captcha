@@ -24,6 +24,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);
+
 	}
 
 	public function activateCommentsActions()
@@ -64,8 +65,8 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 	public function activateRegisterActions()
 	{
-		add_action('register_form',             array($this, 'renderHiddenFieldIntoForm'), 1);
-		add_action('signup_extra_fields',       array($this, 'renderHiddenFieldIntoForm'), 1);
+		add_action('register_form',             array($this, 'renderHiddenFieldIntoForm'));
+		add_action('signup_extra_fields',       array($this, 'renderHiddenFieldIntoForm'));
 
 		add_action('registration_errors',       array($this, 'validateRegisterFormEncryptedToken'), 10, 3 );
 		add_filter('wpmu_validate_user_signup', array($this, 'validateMURegisterFormEncryptedToken'));
@@ -100,7 +101,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 			return;
 		}
 
-		wp_redirect(wp_get_referer());
+		wp_redirect(wp_login_url());
 
 		exit;
 
@@ -140,16 +141,30 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 	public function validateCommentsFormEncryptedToken($arrComment)
 	{
-		if(is_admin())
-		{
+
+		if( is_admin() || (!empty($arrComment['comment_type']) && $arrComment['comment_type'] !== 'comment') )
 			return $arrComment;
+
+		$arrComment['comment_post_ID'] = (!empty($arrComment['comment_post_ID']) && is_numeric($arrComment['comment_post_ID'])) ? (int)$arrComment['comment_post_ID'] : 0;
+
+		if(0 === $arrComment['comment_post_ID'])
+		{
+			wp_safe_redirect(home_url('/'));exit;
 		}
 
-		if(!empty($arrComment['comment_type']) && $arrComment['comment_type'] !== 'comment')
-			return $arrComment;
+		if(!array_key_exists(get_post_type($arrComment['comment_post_ID']), get_post_types( array('public' => true, '_builtin' => true)) ))
+		{
+			return $arrComment; // not a regular wordpress comment
+		}
 
 		if( GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::COMMENTS_FORM)) )
 			return $arrComment;
+
+		$postPermaLink = get_permalink($arrComment['comment_post_ID']);
+
+		empty($postPermaLink) ? wp_safe_redirect(home_url('/')) : wp_safe_redirect($postPermaLink);
+
+		exit;
 
 //		if(null !== GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::STORE_SPAM_ATTEMPTS))
 //		{
@@ -159,7 +174,6 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 //			return $arrComment;
 //		}
 
-		wp_die(__( '<strong>ERROR</strong>: Your comment could not be saved. Please try again later.'));
 	}
 
 	public function hideFormWebSiteField($arrDefaultFields)
