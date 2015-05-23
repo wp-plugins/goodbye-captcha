@@ -15,7 +15,7 @@ An extremely powerful anti-spam plugin that blocks Spam-bots without annoying ca
 
 Goodbye Captcha completely eliminates spam-bot signups, spam comments, even brute force attacks, the second you install it on your Wordpress website.  It is completely invisible to the end-user - no need to ever fill out a Captcha or other "human-detection" field ever again - and it just works!
 
-Unlike other anti-spam plugins, which detect spam comments and signups after the fact and move them to your spam folder, which you then have to delete - using up not only your websiteâ€™s resources, but your time as well, Goodbye Captcha prevents the bots from leaving spam in the first place. The result is that your site is not only spam free, itâ€™s faster and more secure.
+Unlike other anti-spam plugins, which detect spam comments and signups after the fact and move them to your spam folder, which you then have to delete - using up not only your website's resources, but your time as well, Goodbye Captcha prevents the bots from leaving spam in the first place. The result is that your site is not only spam free, it's faster and more secure.
 
 In addition, Goodbye Captcha is completely self-contained and does not need to connect to any outside service.  Your logins remain yours, 100%.
 
