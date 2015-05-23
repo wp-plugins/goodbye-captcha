@@ -22,9 +22,9 @@ In addition, Goodbye Captcha is completely self-contained and does not need to c
 Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login and password reset pages. At the click of a button, you can decide which forms to protect.
 
 **It also currently works with the following plugins:**
-
+= =
 * **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
-	GoodBye Captcha offers protection for all forms the user will create with MailChimp
+	GoodBye Captcha offers protection for all forms the user will create with MailChim
 
 * **Ultimate Member** (https://wordpress.org/plugins/ultimate-member)             
 	GoodBye Captcha offers protection for Login, Registration and Reset Password forms
