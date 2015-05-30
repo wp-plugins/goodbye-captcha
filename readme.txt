@@ -1,5 +1,5 @@
 === GoodBye Captcha ===
-Contributors: MihChe
+Contributors: mihche
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
