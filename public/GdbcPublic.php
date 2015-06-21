@@ -107,6 +107,13 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 
 		}
 
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_USER_PROFILE_MADE_EASY))
+		{
+			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_USER_PROFILE_MADE_EASY)->activateLoginActions();
+			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_USER_PROFILE_MADE_EASY)->activateRegisterActions();
+		}
+
+
 		/**
 		 * GoodBye Captcha - Popular Forms integration
 		 *	Gravity Forms, 

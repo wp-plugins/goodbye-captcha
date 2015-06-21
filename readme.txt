@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.2.2
-Stable tag: 1.1.16
+Stable tag: 1.1.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,10 +39,10 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 	GoodBye Captcha offers protection for JetPack Contact Form
 
 = Summary of Goodbye Captcha features =
-* Login form integration
-* Register form integration
-* Comments form integration
-* Forgot password form integration
+* Standard WordPress Login form integration
+* Standard WordPress Register form integration
+* Standard WordPress Comments form integration
+* Standard WordPress Forgot Password form integration
 * Logging with the ability to enable/disable it
 * Limit the number of allowed attempts
 * Automatically Block IP Address if number of allowed attempts is reached
@@ -122,16 +122,16 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
+= 1.1.17: June 21, 2015 =
+Improved speed and properly detect Sucuri CloudProxy IP
 
-= 1.1.16: May 23, 2015 =
+== Changelog ==
+
+= 1.1.17: June 21, 2015 =
 
 **Fixed**
-- Chrome caching Ajax requests
-- Incompatibility with CloudFlare - Rocket Loader
-
-**Additions**
-- Integration with JetPack Contact Form
-
+- Properly detects client IP Address when using Sucuri CloudProxy
+- Speed improvements
 
 = 1.1.15: May 04, 2015 =
 

@@ -37,29 +37,45 @@ class GdbcPluginUpdater
 		if($currentPluginVersionId === $savedPluginVersionId)
 			return;
 
-		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.0'))
-		{
-			self::updateToVersion_1_1_0();
-		}
-
-		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.8'))
-		{
-			self::updateToVersion_1_1_8();
-		}
-
-		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.9'))
-		{
-			self::updateToVersion_1_1_9();
-		}
-
-		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.10'))
-		{
-			self::updateToVersion_1_1_10();
-		}
+//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.0'))
+//		{
+//			self::updateToVersion_1_1_0();
+//		}
+//
+//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.8'))
+//		{
+//			self::updateToVersion_1_1_8();
+//		}
+//
+//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.9'))
+//		{
+//			self::updateToVersion_1_1_9();
+//		}
+//
+//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.10'))
+//		{
+//			self::updateToVersion_1_1_10();
+//		}
 
 
 		#Save the new version of the plugin
 		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, $currentPluginVersionId);
+
+		if(null === $settingsModuleInstance->getModuleSetting()->getSettingOption(GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY))
+			$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY, MchCrypt::getRandomString(MchCrypt::getCipherKeySize()));
+
+		if(null === $settingsModuleInstance->getModuleSetting()->getSettingOption(GdbcSettingsAdminModule::OPTION_TOKEN_CREATED_TIMESTAMP))
+			$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_TOKEN_CREATED_TIMESTAMP, time() + ( get_option( 'gmt_offset' ) * 3600 ));
+
+
+		if(null === $settingsModuleInstance->getModuleSetting()->getSettingOption(GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME)) {
+			$optionHiddenName = MchWpUtil::replaceNonAlphaCharacters(MchCrypt::getRandomString(25), '-');
+			while(!isset($optionHiddenName[9]))
+				$optionHiddenName = MchWpUtil::replaceNonAlphaCharacters(MchCrypt::getRandomString(25), '-');
+
+			$settingsModuleInstance->setSettingOption( GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME, $optionHiddenName);
+		}
+
 
 		// clearing the cache
 		if(function_exists('w3tc_flush_all')) { // w3tc

@@ -135,7 +135,7 @@ final class MchHttpUtil
 
 	public static function isPublicIpAddress($ipAddress)
 	{
-		if(0 === strpos($ipAddress, '127.0.0'))
+		if(0 === strpos($ipAddress, '127.0.0.'))
 			return false;
 
 		return false !== filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);

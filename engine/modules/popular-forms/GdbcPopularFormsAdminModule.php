@@ -26,7 +26,7 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 	CONST NINJA_FORMS          = 'IsNFActivated';
 	CONST FORMIDABLE_FORMS     = 'IsFFActivated';
 	CONST FAST_SECURE_FORM     = 'IsFSActivated';
-	CONST JETPACK_CONTACT_FORM = 'IsJCFctivated';
+	CONST JETPACK_CONTACT_FORM = 'IsJCFctivated'; // - misspelled !!!!
 
 	private $arrDefaultSettingOptions = array(
 

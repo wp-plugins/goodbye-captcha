@@ -181,6 +181,10 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 //		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, MchWpBase::getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION));
 		GdbcPluginUtils::isUjiCountDownActivated() ? GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SUBSCRIPTIONS)->setSettingOption(GdbcSubscriptionsAdminModule::UJI_COUNTDOWN_ACTIVATED, true) : null;
 
+
+
+
+
 		GdbcTaskScheduler::scheduleGdbcTasks();
 	}
 	

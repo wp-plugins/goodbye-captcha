@@ -11,7 +11,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.16
+ * Version: 1.1.17
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 
-	CONST PLUGIN_VERSION    = '1.1.16';
+	CONST PLUGIN_VERSION    = '1.1.17';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -66,13 +66,13 @@ class GoodByeCaptcha
 
 		'GdbcEmailNotification'       => '/engine/notifications/email/GdbcEmailNotification.php',
 		'GdbcNotificationsController' => '/engine/GdbcNotificationsController.php',
+		'GdbcAjaxController'          => '/engine/GdbcAjaxController.php',
 	);
 
 	private static $isNetworkActivated = false;
 
 	protected function __construct()
 	{
-		spl_autoload_register('GoodByeCaptcha::classAutoLoad');
 
 		$pluginInstance = (MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
 		self::$isNetworkActivated = $pluginInstance->isNetworkActivated();
@@ -114,8 +114,6 @@ class GoodByeCaptcha
 
 	public static function activate($isForNetwork)
 	{
-		spl_autoload_register('GoodByeCaptcha::classAutoLoad');
-
 		if ( ! MchWp::isUserInDashboad() )
 			return null;
 
@@ -125,7 +123,7 @@ class GoodByeCaptcha
 
 	public static function deactivate($isForNetwork)
 	{
-		spl_autoload_register('GoodByeCaptcha::classAutoLoad');
+
 
 		if ( ! MchWp::isUserInDashboad() )
 			return null;
@@ -143,6 +141,23 @@ class GoodByeCaptcha
  */
 if(ABSPATH !== '')
 {
+	spl_autoload_register(array('GoodByeCaptcha', 'classAutoLoad'));
+
+	if(MchWp::isAjaxRequest())
+	{
+		GdbcAjaxController::processRequest();
+	}
+
+	if(!empty($_GET['gdbc-client']))
+	{
+		if(file_exists(dirname(__FILE__) . '/public/scripts/gdbc-client.js.php')) {
+			require_once(ABSPATH .'wp-includes/pluggable.php');
+			require dirname( __FILE__ ) . '/public/scripts/gdbc-client.js.php';
+			exit;
+		}
+	}
+
+
 	register_activation_hook(__FILE__, array('GoodByeCaptcha', 'activate'));
 
 	register_deactivation_hook(__FILE__, array('GoodByeCaptcha', 'deactivate'));

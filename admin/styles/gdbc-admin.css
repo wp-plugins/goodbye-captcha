@@ -1,6 +1,6 @@
 body
 {
-    background: #f1f1f1 right bottom url("http://www.fancythemes.com/images/gdbc-box-bg.png") !important;
+    background: #f1f1f1 !important;
 }
 
 #adminmenuwrap{
@@ -619,4 +619,9 @@ a.btn-rate-gdbc:hover i.glyphicon
 .btn-labeled {
     padding-bottom: 0;
     padding-top: 0;
+}
+
+.gdbcreportsadminmodule-settings ul.pagination a:hover
+{
+    cursor: pointer;
 }

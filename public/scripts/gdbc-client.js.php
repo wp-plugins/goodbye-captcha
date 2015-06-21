@@ -62,7 +62,7 @@ nocache_headers();
 							if (Gdbc.browserInfo.hasOwnProperty(arrValues[i]))
 								value += Gdbc.browserInfo[arrValues[i]];
 						}
-						$('<input>').attr({type:'hidden',name:prop,value:value}).appendTo(elm.closest('form'));
+						$('<input>').prop({type:'hidden',name:prop,value:value}).appendTo(elm.closest('form'));
 					});
 				}
 			});

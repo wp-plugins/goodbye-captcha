@@ -133,8 +133,11 @@ final class GdbcTokenController
 
 	public function retrieveEncryptedToken()
 	{
+
 		if( ! $this->clientCanRetrieveToken() )
 			return json_encode (array());
+
+
 
 		if( ! $this->isAjaxRequestForTokenValid() )
 			return json_encode (array());

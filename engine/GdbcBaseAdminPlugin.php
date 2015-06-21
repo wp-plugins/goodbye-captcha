@@ -25,6 +25,7 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 	protected function __construct(array $arrPluginInfo)
 	{
 		parent::__construct($arrPluginInfo);
+
 	}
 	
 	/**
@@ -97,5 +98,38 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 	public function adminInitPlugin()
 	{
 		parent::adminInitPlugin();
+
+		if( ! self::isAjaxRequest() )
+		{
+			add_action('shutdown', array($this, 'changePluginsLoadOrder'), PHP_INT_MAX);
+		}
+	}
+
+	public function changePluginsLoadOrder()
+	{
+
+		if(null === $this->PLUGIN_MAIN_FILE)
+			return;
+
+		if ( ! current_user_can( 'manage_options' ) )
+		{
+			return;
+		}
+
+		$pluginBaseName = plugin_basename($this->PLUGIN_MAIN_FILE);
+		$arrBlogActivePlugins = (array) get_option( 'active_plugins', array() );
+
+		$firstActivatedPlugin = reset($arrBlogActivePlugins);
+		if(false === $firstActivatedPlugin || $firstActivatedPlugin === $pluginBaseName)
+			return;
+
+		$gdbcPluginKey = array_search( $pluginBaseName, $arrBlogActivePlugins );
+		if(false === $gdbcPluginKey)
+			return;
+
+		array_splice( $arrBlogActivePlugins, $gdbcPluginKey, 1 );
+		array_unshift( $arrBlogActivePlugins, $pluginBaseName );
+
+		update_option( 'active_plugins', $arrBlogActivePlugins );
 	}
 }

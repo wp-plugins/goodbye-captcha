@@ -64,10 +64,10 @@ abstract class MchWpAdminModule extends MchWpModule
 
 	public function setSettingOption($settingOptionName, $settingOptionValue)
 	{
-		foreach($this->filterOptionsBeforeSave(array($settingOptionName => $settingOptionValue), $this->getModuleSetting()->getAllSavedOptions()) as $optionName => $optionValue)
-		{
-			$this->getModuleSetting()->setSettingOption($optionName, $optionValue);
-		}
+//		foreach($this->filterOptionsBeforeSave(array($settingOptionName => $settingOptionValue), $this->getModuleSetting()->getAllSavedOptions()) as $optionName => $optionValue)
+//		{
+			$this->getModuleSetting()->setSettingOption($settingOptionName, $settingOptionValue);
+//		}
 	}
 
 	public function getSettingOption($settingOptionName)

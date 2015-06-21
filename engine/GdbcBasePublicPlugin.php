@@ -33,8 +33,9 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 		$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
 		$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME);
 
-		add_filter('query_vars', array($this, 'filterQueryVariables'));
-		add_action('template_redirect', array($this, 'templateRedirect'));
+		//add_filter('query_vars', array($this, 'filterQueryVariables'));
+		//add_action('template_redirect', array($this, 'templateRedirect'));
+
 
 	}
 

@@ -40,6 +40,8 @@ final class GdbcModulesController extends MchWpModulesController
 
 	CONST MODULE_UJI_COUNTDOWN    = 'UjiCountDown';
 	CONST MODULE_ULTIMATE_MEMBER  = 'UltimateMember';
+	CONST MODULE_USER_PROFILE_MADE_EASY = 'UPME';
+
 
 	private static $arrModules = array(
 
@@ -218,6 +220,18 @@ final class GdbcModulesController extends MchWpModulesController
 				'GdbcWooCommercePublicModule' => '/modules/woocommerce/GdbcWooCommercePublicModule.php',
 			)
 		),
+
+		self::MODULE_USER_PROFILE_MADE_EASY => array(
+			'info'    => array(
+				'ModuleId' => 14,
+				'IsPublic' => false,
+			),
+			'classes' => array(
+				'GdbcUPMEAdminModule'  => '/modules/user-profiles-made-easy/GdbcUPMEAdminModule.php',
+				'GdbcUPMEPublicModule' => '/modules/user-profiles-made-easy/GdbcUPMEPublicModule.php',
+			)
+		),
+
 
 		self::MODULE_REPORTS => array(
 			'info'    => array(

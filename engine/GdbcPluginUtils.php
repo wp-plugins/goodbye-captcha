@@ -20,6 +20,12 @@
 
 final class GdbcPluginUtils
 {
+
+	public static function isUserProfileMadeEasyActivated()
+	{
+		return defined('upme_path');
+	}
+
 	public static function isWooCommerceActivated()
 	{
 		return class_exists('WooCommerce', false);
