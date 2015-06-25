@@ -21,6 +21,9 @@ defined( 'ABSPATH' ) || exit;
 
 nocache_headers();
 
+header('Content-Type: application/javascript; charset=UTF-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+
 ?>
 
 <!--<script type="application/javascript">-->

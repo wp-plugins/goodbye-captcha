@@ -49,7 +49,7 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * Automatically purge logs older than a certain number of days
 * Manually whitelist trusted IP Address
 * Manually block/unblock IP Addresses (IPV4 and IPV6)
-* Properly detects client IP Address when using CloudFlare, Incapsula, Cloudfront, RackSpace
+* Properly detects client IP Address when using CloudFlare, Incapsula, Cloudfront, RackSpace, Sucuri CloudProxy
 * Provides statistics, reports, maps and charts with all blocked spam attempts
 * No requests to external APIs
 * Can be switched to "Test Mode" - for testing

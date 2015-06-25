@@ -28,17 +28,17 @@ final class GdbcPluginUtils
 
 	public static function isWooCommerceActivated()
 	{
-		return class_exists('WooCommerce', false);
+		return class_exists('WooCommerce');
 	}
 
 	public static function isUltimateMemberActivated()
 	{
-		return class_exists('UM_API', false);
+		return class_exists('UM_API');
 	}
 
 	public static function isUjiCountDownActivated()
 	{
-		return class_exists('Uji_Countdown', false);
+		return class_exists('Uji_Countdown');
 	}
 
 	public static function isMailChimpLiteActivated()
@@ -48,32 +48,32 @@ final class GdbcPluginUtils
 
 	public static function isNinjaFormsActivated()
 	{
-		return class_exists('Ninja_Forms', false);
+		return class_exists('Ninja_Forms');
 	}
 	
 	public static function isGravityFormsActivated()
 	{
-		return class_exists('GFForms', false);
+		return class_exists('GFForms');
 	}
 	
 	public static function isContactForm7Activated()
 	{
-		return class_exists('WPCF7_ContactForm', false);
+		return class_exists('WPCF7_ContactForm');
 	}
 
 	public static function isFastSecureFormActivated()
 	{
-		return class_exists('FSCF_Util', false);
+		return class_exists('FSCF_Util');
 	}
 
 	public static function isFormidableFormsActivated()
 	{
-		return class_exists('FrmSettings', false);
+		return class_exists('FrmSettings');
 	}
 
 	public static function isUserProPluginActivated()
 	{
-		return class_exists('userpro_api', false);
+		return class_exists('userpro_api');
 	}
 
 	public static function setCookie($cookieKey, $cookieValue, $cookieTime, $path = null, $httpOnly = true)
@@ -128,7 +128,7 @@ final class GdbcPluginUtils
 	private static function getJetPackActiveModules()
 	{
 		static $isActivated = null;
-		(null === $isActivated) ? $isActivated = class_exists( 'Jetpack', false) : null;
+		(null === $isActivated) ? $isActivated = class_exists( 'Jetpack' ) : null;
 		
 		if( !$isActivated)
 			return null;
