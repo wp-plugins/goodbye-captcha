@@ -37,25 +37,25 @@ class GdbcPluginUpdater
 		if($currentPluginVersionId === $savedPluginVersionId)
 			return;
 
-//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.0'))
-//		{
-//			self::updateToVersion_1_1_0();
-//		}
-//
-//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.8'))
-//		{
-//			self::updateToVersion_1_1_8();
-//		}
-//
-//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.9'))
-//		{
-//			self::updateToVersion_1_1_9();
-//		}
-//
-//		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.10'))
-//		{
-//			self::updateToVersion_1_1_10();
-//		}
+		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.0'))
+		{
+			self::updateToVersion_1_1_0();
+		}
+
+		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.8'))
+		{
+			self::updateToVersion_1_1_8();
+		}
+
+		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.9'))
+		{
+			self::updateToVersion_1_1_9();
+		}
+
+		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.10'))
+		{
+			self::updateToVersion_1_1_10();
+		}
 
 
 		#Save the new version of the plugin
