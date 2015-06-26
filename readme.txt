@@ -122,10 +122,15 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.17: June 21, 2015 =
-Improved speed and properly detect Sucuri CloudProxy IP
+= 1.1.18: June 21, 2015 =
+Fixed Chrome headers issue 
 
 == Changelog ==
+
+= 1.1.18: June 26, 2015 =
+
+**Fixed**
+- Chrome headers issue reported by in4fun
 
 = 1.1.17: June 21, 2015 =
 
