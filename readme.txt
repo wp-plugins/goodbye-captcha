@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.2
 Tested up to: 4.2.2
-Stable tag: 1.1.17
+Stable tag: 1.1.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,15 +122,15 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Upgrade Notice ==
 
-= 1.1.18: June 21, 2015 =
-Fixed Chrome headers issue 
+
 
 == Changelog ==
 
 = 1.1.18: June 26, 2015 =
 
 **Fixed**
-- Chrome headers issue reported by in4fun
+- Chrome headers issue reported by  [in4fun](https://wordpress.org/support/topic/comment-disappeared)
+
 
 = 1.1.17: June 21, 2015 =
 
