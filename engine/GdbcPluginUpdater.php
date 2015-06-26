@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -33,8 +33,12 @@ class GdbcPluginUpdater
 		$savedPluginVersionId   = (int)$settingsModuleInstance->getModuleSetting()->getSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID);
 		$currentPluginVersionId = MchWp::getVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION);
 
+		if(!self::tableCreated())
+		{
+			self::updateToVersion_1_1_0();
+		}
 
-		if($currentPluginVersionId === $savedPluginVersionId)
+		if(($currentPluginVersionId === $savedPluginVersionId) && self::tableCreated())
 			return;
 
 		if($savedPluginVersionId < MchWp::getVersionIdFromString('1.1.0'))
@@ -93,6 +97,18 @@ class GdbcPluginUpdater
 
 	}
 
+
+	private static function tableCreated()
+	{
+		$gdbcAttemptEntity = new GdbcAttemptEntity();
+
+		global $wpdb;
+
+		if($wpdb->get_var($wpdb->prepare("show tables like %s", $gdbcAttemptEntity->getTableName())) === $gdbcAttemptEntity->getTableName())
+			return true;
+
+		return false;
+	}
 
 	private static function updateToVersion_1_1_10()
 	{
@@ -160,7 +176,7 @@ class GdbcPluginUpdater
 						)";
 
 		MchWpDbManager::createTable($gdbcAttemptEntity->getTableName(), $createTableQry);
-    }
+	}
 
 
 	private static function generateRandomPublicIP()
@@ -180,4 +196,4 @@ class GdbcPluginUpdater
 
 	private function __construct()
 	{}
-} 
+}

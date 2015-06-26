@@ -77,7 +77,7 @@ class GoodByeCaptcha
 		$pluginInstance = (MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
 		self::$isNetworkActivated = $pluginInstance->isNetworkActivated();
 
-		GdbcPluginUpdater::updateToCurrentVersion();
+
 		GdbcTaskScheduler::scheduleGdbcTasks();
 
 	}

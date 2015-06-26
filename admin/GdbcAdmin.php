@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2014 Mihai Chelaru
  *
  * This program is free software; you can redistribute it and/or
@@ -52,11 +52,13 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 
 		if(!MchWp::isAjaxRequest())
 		{
+			GdbcPluginUpdater::updateToCurrentVersion();
+
 			$arrTrustedIps = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TRUSTED_IPS);
 			if(empty($arrTrustedIps))
 			{
 				if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_WORDPRESS, GdbcWordpressAdminModule::LOGIN_FORM))
-				add_action('admin_notices', array($this, 'showEmptyTrustedIpNotice'));
+					add_action('admin_notices', array($this, 'showEmptyTrustedIpNotice'));
 			}
 
 			$isTestModeActivated = (bool)$this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TEST_MODE_ACTIVATED);
@@ -125,16 +127,16 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('You are not protected! GoodBye Captcha was switched to <b>Test Mode</b>!') . '</span></div>';
 	}
 
-	public function addAdminMenu() 
+	public function addAdminMenu()
 	{
 		$this->AdminSettingsPageHook = add_menu_page(
-						'GoodByeCaptcha Settings',
-						'GoodByeCaptcha',
-						'manage_options',
-						$this->PLUGIN_SLUG,
-						array( $this, 'renderPluginAdminPage' ),
-						'dashicons-shield', //  for menu icon
-						'53.8394'
+			'GoodByeCaptcha Settings',
+			'GoodByeCaptcha',
+			'manage_options',
+			$this->PLUGIN_SLUG,
+			array( $this, 'renderPluginAdminPage' ),
+			'dashicons-shield', //  for menu icon
+			'53.8394'
 		);
 
 //		$this->AdminSettingsPageHook = add_options_page( __('GoodByeCaptcha Settings', $this->PLUGIN_SLUG),
@@ -143,9 +145,9 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 //														 $this->PLUGIN_SLUG,
 //														 array( $this, 'renderPluginAdminPage' ));
 	}
-		
 
-	
+
+
 	/**
 	 * Fired when the plugin is activated.
 	 *
@@ -155,7 +157,7 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 	 *                                       WPMU is disabled or plugin is
 	 *                                       activated on an individual blog.
 	 */
-	public static function activatePlugin(array $arrPluginInfo, $isForNetwork) 
+	public static function activatePlugin(array $arrPluginInfo, $isForNetwork)
 	{
 
 		if( !self::isMultiSite() || !$isForNetwork )
@@ -168,10 +170,10 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 			self::singleSiteActivate($arrPluginInfo);
 
 			restore_current_blog();
-		}		
+		}
 	}
-	
-	
+
+
 	private static function singleSiteActivate(array $arrPluginInfo)
 	{
 
@@ -187,21 +189,21 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 
 		GdbcTaskScheduler::scheduleGdbcTasks();
 	}
-	
-	public static function deactivatePlugin(array $arrPluginInfo, $isForNetwork) 
+
+	public static function deactivatePlugin(array $arrPluginInfo, $isForNetwork)
 	{
 		if( !self::isMultiSite() || !$isForNetwork )
 			return self::singleSiteDeactivate($arrPluginInfo);
-	
+
 		foreach ( self::getAllBlogIds() as $blogId )
 		{
 			switch_to_blog( $blogId );
-			
+
 			self::singleSiteDeactivate($arrPluginInfo);
 
 			restore_current_blog();
-		}		
-	
+		}
+
 	}
 
 	private static function singleSiteDeactivate($arrPluginInfo)
@@ -211,17 +213,17 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 
 	public function activateForNewSite($blogId)
 	{
-		if ( 1 !== did_action('wpmu_new_blog') ) 
+		if ( 1 !== did_action('wpmu_new_blog') )
 			return;
 
 		switch_to_blog($blogId);
-		
+
 		self::singleSiteActivate(GoodByeCaptcha::getPluginInfo());
-		
+
 		restore_current_blog();
-		
-	}	
-	
+
+	}
+
 	public function initPlugin()
 	{
 		parent::initPlugin();
