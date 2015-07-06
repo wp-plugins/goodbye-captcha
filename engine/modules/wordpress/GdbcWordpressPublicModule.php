@@ -68,7 +68,7 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 		add_action('register_form',             array($this, 'renderHiddenFieldIntoForm'));
 		add_action('signup_extra_fields',       array($this, 'renderHiddenFieldIntoForm'));
 
-		add_action('registration_errors',       array($this, 'validateRegisterFormEncryptedToken'), 10, 3 );
+		add_filter('registration_errors',       array($this, 'validateRegisterFormEncryptedToken'), 10, 3 );
 		add_filter('wpmu_validate_user_signup', array($this, 'validateMURegisterFormEncryptedToken'));
 
 	}
