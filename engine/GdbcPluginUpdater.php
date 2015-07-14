@@ -91,7 +91,7 @@ class GdbcPluginUpdater
 		elseif(isset($GLOBALS['wp_fastest_cache']) && method_exists($GLOBALS['wp_fastest_cache'], 'deleteCache')){ // wp fastest cache
 			$GLOBALS['wp_fastest_cache']->deleteCache();
 		}
-		elseif(class_exists('zencache') && method_exists('zencache','clear')){ // zencache
+		elseif(class_exists('zencache') && method_exists('zencache', 'clear')){ // zencache
 			zencache::clear();
 		}
 

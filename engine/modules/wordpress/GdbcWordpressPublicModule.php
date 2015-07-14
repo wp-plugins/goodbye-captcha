@@ -73,6 +73,30 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 	}
 
+	public function validateMURegisterFormEncryptedToken($results)
+	{
+		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
+			return $results;
+
+		$results['errors']->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
+
+		return $results;
+	}
+
+	public function validateRegisterFormEncryptedToken($errors, $userLogin, $userEmail)
+	{
+		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
+			return $errors;
+
+		!is_wp_error($errors) ? $errors = new WP_Error() : null;
+
+		$errors->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
+
+		return $errors;
+	}
+
+
+
 	public function activateLostPasswordActions()
 	{
 		add_action('lostpassword_form', array($this, 'renderHiddenFieldIntoForm'), 10);
@@ -107,27 +131,6 @@ final class GdbcWordpressPublicModule extends GdbcBasePublicModule
 
 	}
 
-	public function validateMURegisterFormEncryptedToken($results)
-	{
-		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
-			return $results;
-
-		$results['errors']->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
-
-		return $results;
-	}
-
-	public function validateRegisterFormEncryptedToken($errors, $userLogin, $userEmail)
-	{
-		if(GdbcRequest::isValid(array('module' => GdbcModulesController::MODULE_WORDPRESS, 'section' => GdbcWordpressAdminModule::REGISTRATION_FORM)))
-			return $errors;
-
-		!is_wp_error($errors) ? $errors = new WP_Error() : null;
-
-		$errors->add('gdbc-invalid-token', __('ERROR', $this->PLUGIN_SLUG));
-
-		return $errors;
-	}
 
 	public function validateAuthenticationFormEncryptedToken($user, $username = null, $password = null)
 	{

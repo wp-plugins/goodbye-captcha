@@ -19,14 +19,21 @@
 
 defined( 'ABSPATH' ) || exit;
 
+function gdbcRewriteNoCacheHeaders($arrHeaders)
+{
+	$arrHeaders['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0';
+	$arrHeaders['Content-Type']  = 'application/javascript; charset=utf-8';
+
+	return $arrHeaders;
+}
+
+add_filter('nocache_headers', 'gdbcRewriteNoCacheHeaders', 1);
+
 nocache_headers();
 
-header('Content-Type: application/javascript; charset=UTF-8');
-header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 ?>
 
-<!--<script type="application/javascript">-->
 (function($) {
 	$.GdbcClient = function(el, options) {
 		var gdbcClient = this, defaults = {};
@@ -75,4 +82,3 @@ header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 })(jQuery);
 
 jQuery(document).ready(function($){(new $.GdbcClient()).requestTokens();});
-<!--</script>-->

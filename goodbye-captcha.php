@@ -73,7 +73,6 @@ class GoodByeCaptcha
 
 	protected function __construct()
 	{
-
 		$pluginInstance = (MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
 		self::$isNetworkActivated = $pluginInstance->isNetworkActivated();
 
@@ -152,6 +151,7 @@ if(ABSPATH !== '')
 	{
 		if(file_exists(dirname(__FILE__) . '/public/scripts/gdbc-client.js.php')) {
 			require_once(ABSPATH .'wp-includes/pluggable.php');
+			function_exists('wp_cookie_constants') ? wp_cookie_constants() : null;
 			require dirname( __FILE__ ) . '/public/scripts/gdbc-client.js.php';
 			exit;
 		}
