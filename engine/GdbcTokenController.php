@@ -137,8 +137,6 @@ final class GdbcTokenController
 		if( ! $this->clientCanRetrieveToken() )
 			return json_encode (array());
 
-
-
 		if( ! $this->isAjaxRequestForTokenValid() )
 			return json_encode (array());
 
@@ -183,11 +181,9 @@ final class GdbcTokenController
 	{
 		$arrData   = array();
 		$arrData[] = get_current_blog_id();
-		$arrData[] = MchWpBase::WP_VERSION_ID + PHP_VERSION_ID;
-		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('name'), '');
+		$arrData[] = PHP_VERSION_ID;
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('charset'), '');
 		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('language'), '');
-		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('version'), '');
 		$arrData[] = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_CREATED_TIMESTAMP);
 		$arrData[] = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
 
@@ -277,7 +273,6 @@ final class GdbcTokenController
 		$arrParts[] = GoodByeCaptcha::PLUGIN_SLUG;
 		$arrParts[] = GoodByeCaptcha::PLUGIN_SHORT_CODE;
 		$arrParts[] = GoodByeCaptcha::PLUGIN_VERSION;
-		$arrParts[] = MchWpBase::WP_VERSION_ID + PHP_VERSION_ID;
 		$arrParts[] = get_current_blog_id();
 
 		$nonceAction = implode('', $arrParts);

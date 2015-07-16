@@ -5,13 +5,13 @@
  * @author    Mihai Chelaru
  * @license   GPL-2.0+
  * @link      http://www.goodbyecaptcha.com
- * @copyright 2014 GoodBye Captcha
+ * @copyright 2015 GoodBye Captcha
  *
  * @wordpress-plugin
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.18
+ * Version: 1.1.19
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 
-	CONST PLUGIN_VERSION    = '1.1.18';
+	CONST PLUGIN_VERSION    = '1.1.19';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -75,7 +75,6 @@ class GoodByeCaptcha
 	{
 		$pluginInstance = (MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
 		self::$isNetworkActivated = $pluginInstance->isNetworkActivated();
-
 
 		GdbcTaskScheduler::scheduleGdbcTasks();
 
@@ -134,10 +133,6 @@ class GoodByeCaptcha
 
 }
 
-/*
- * Registered hooks that are fired when the plugin is activated or deactivated.
- * When the plugin is deleted, the uninstall.php file is loaded.
- */
 if(ABSPATH !== '')
 {
 	spl_autoload_register(array('GoodByeCaptcha', 'classAutoLoad'));

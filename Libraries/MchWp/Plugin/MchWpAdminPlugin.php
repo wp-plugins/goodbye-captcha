@@ -89,12 +89,17 @@ abstract class MchWpAdminPlugin extends MchWpPlugin
 		$code .= '</form>';
 		
 		$code .= '</div>';
-		
+
+		$code .= $this->getPageFooterNotice();
+
 		echo $code;
 	}
 	
 	
-	
+	protected function getPageFooterNotice()
+	{
+		return '';
+	}
 	
 	private function getAdminSettingsTabsCode()
 	{

@@ -113,7 +113,9 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 				continue;
 			
 			$settingField = new MchWpSettingField($fieldName, $fieldInfo['Value']);
-			
+
+			$fieldInfo['Id'] <= 4 ? $fieldInfo['LabelText'] = 'Standard ' . $fieldInfo['LabelText'] . ' Form' : '';
+
 			$settingField->HTMLLabelText = $fieldInfo['LabelText'];
 			$settingField->HTMLInputType = $fieldInfo['InputType'];
 			$settingField->Description   = !empty($fieldInfo['Description']) ? $fieldInfo['Description'] : null;

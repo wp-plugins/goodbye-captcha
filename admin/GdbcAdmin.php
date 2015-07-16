@@ -119,12 +119,20 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 
 	public function showEmptyTrustedIpNotice()
 	{
-		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('Whitelist your current IP Address in <a href = "'.admin_url('options-general.php?page=goodbye-captcha&tab=Settings').'">GoodBye Captcha Settings</a>' ) . '</span></div>';
+		$screenId = get_current_screen();
+		if( empty($screenId->id) || $this->AdminSettingsPageHook !== $screenId->id )
+			return;
+
+		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('<b>Don\'t Lock Yourself Out!</b> Whitelist your IP Address in <a href = "'.admin_url('admin.php?page=goodbye-captcha').'">GoodBye Captcha Settings</a>' ) . '</span></div>';
 	}
 
 	public function showTestModeActivatedNotice()
 	{
-		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('You are not protected! GoodBye Captcha was switched to <b>Test Mode</b>!') . '</span></div>';
+		$screenId = get_current_screen();
+		if( empty($screenId->id) || $this->AdminSettingsPageHook !== $screenId->id )
+			return;
+
+		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('GoodBye Captcha was switched to <b>Test Mode</b>!') . '</span></div>';
 	}
 
 	public function addAdminMenu()

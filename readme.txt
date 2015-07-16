@@ -2,9 +2,9 @@
 Contributors: mihche
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
-Requires at least: 3.2
+Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 1.1.18
+Stable tag: 1.1.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,10 @@ After installation, a GoodBye Captcha menu item will appear in the Settings sect
 
 == Frequently Asked Questions ==
 
+= How do I know is working? =
+Just switch the plugin to Test Mode and start testing it yourself. The Administrator will receive email notifications.
+If something is not working as expected, a warning message will be shown.
+
 = Is GoodBye Captcha safe? =
 Yes. The algorithm behind the plugin was fully tested and there is no way a spider or robot can spam your sites.
 
@@ -98,9 +102,6 @@ All standard WordPress forms(Login, Register, Comment and Forgot Password) can b
 
 = Are there any php extensions that need to be activated so this plugin could work? =
 No. The plugin runs 100% without activating any additional php extensions.
-
-= Is there any possibility to have a conflict between this plugin and all the other installed plugins? =
-No. The plugin is written using WordPress coding stiles recommendations when it comes to naming classes, files and so on. This plugin does not use php Session, so no conflict can occur when it comes to saving objects.
 
 = Does GoodBye Captcha help me to block ip of the spammers? =
 Yes. Starting with GoodBye Captcha version 1.1.0, this feature is available.
@@ -126,11 +127,12 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Changelog ==
 
-= 1.1.18: June 26, 2015 =
+= 1.1.19: July 16, 2015 =
+- Adding testing instructions.
 
+= 1.1.18: June 26, 2015 =
 **Fixed**
 - Chrome headers issue reported by  [in4fun](https://wordpress.org/support/topic/comment-disappeared)
-
 
 = 1.1.17: June 21, 2015 =
 

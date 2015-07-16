@@ -49,9 +49,11 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 	{
 		if(null === $this->AdminSettingsPageHook)
 			return;
-		
-		if( self::WP_VERSION_ID >= 30100 && ($this->AdminSettingsPageHook !== get_current_screen()->id) )
+
+		$screenId = get_current_screen();
+		if( empty($screenId->id) || $this->AdminSettingsPageHook !== $screenId->id )
 			return;
+
 
 		$selectedTab = $this->getAdminSettingsCurrentTab();
 
@@ -88,6 +90,28 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 
 		wp_enqueue_style($this->PLUGIN_SLUG . '-admin-style', plugins_url('/admin/styles/gdbc-admin.css', $this->PLUGIN_MAIN_FILE), array(), $this->PLUGIN_VERSION);
 
+	}
+
+	protected function getPageFooterNotice()
+	{
+		$screenId = get_current_screen();
+		if( empty($screenId->id) || $this->AdminSettingsPageHook !== $screenId->id )
+			return;
+
+		$selectedTab = $this->getAdminSettingsCurrentTab();
+
+		if ($selectedTab === GdbcModulesController::MODULE_REPORTS)
+			return;
+
+
+		return  '<div style="border-color:#ffba00;" class="update-nag">
+				<span>
+				It is strongly recommended to <b>Switch the plugin to Test Mode</b> and test it by yourself!
+				<br/>While in test mode, the plugin simulates it\'s real behavior and sends email notifications to administrator.
+				<br/>If something goes wrong, a warning message will be shown. Disable test mode when you get everything right!
+				<br/><b>Having a problem? Asking a question?</b> Do not hesitate to <a href="http://www.goodbyecaptcha.com/contact/">Contact us</a>!
+				</span>
+				</div>';
 	}
 
 	public function initPlugin()
