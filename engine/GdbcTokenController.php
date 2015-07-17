@@ -102,16 +102,16 @@ final class GdbcTokenController
 
 		$timeSinceGenerated = ((int)array_pop($arrTokenData)) - ((int)array_pop($arrDecryptedToken));
 
-		if($timeSinceGenerated > $this->maxSubmissionTime)
-		{
-			return GdbcReasonDataSource::TOKEN_EXPIRED;
-		}
-
-		if($timeSinceGenerated < $this->minSubmissionTime)
-		{
-			if(!isset($arrParameters['module']) || !isset($arrParameters['section']) || $arrParameters['module'] !== GdbcModulesController::MODULE_WORDPRESS || $arrParameters['section'] !== GdbcWordpressAdminModule::LOGIN_FORM || $arrParameters['module'] !== GdbcModulesController::MODULE_POPULAR_PLUGINS)
-				return GdbcReasonDataSource::TOKEN_SUBMITTED_EARLY;
-		}
+//		if($timeSinceGenerated > $this->maxSubmissionTime)
+//		{
+//			return GdbcReasonDataSource::TOKEN_EXPIRED;
+//		}
+//
+//		if($timeSinceGenerated < $this->minSubmissionTime)
+//		{
+//			if(!isset($arrParameters['module']) || !isset($arrParameters['section']) || $arrParameters['module'] !== GdbcModulesController::MODULE_WORDPRESS || $arrParameters['section'] !== GdbcWordpressAdminModule::LOGIN_FORM || $arrParameters['module'] !== GdbcModulesController::MODULE_POPULAR_PLUGINS)
+//				return GdbcReasonDataSource::TOKEN_SUBMITTED_EARLY;
+//		}
 
 		if(count(array_diff($arrDecryptedToken, $arrTokenData)) !== 0)
 		{
