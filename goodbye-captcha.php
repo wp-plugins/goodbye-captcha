@@ -11,7 +11,7 @@
  * Plugin Name: GoodBye Captcha
  * Plugin URI: http://www.goodbyecaptcha.com
  * Description: An extremely powerful anti-spam plugin that blocks spambots without annoying captcha images.
- * Version: 1.1.19
+ * Version: 1.1.20
  * Author: Mihai Chelaru
  * Author URI: http://www.goodbyecaptcha.com
  * Text Domain: goodbye-captcha
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class GoodByeCaptcha
 {
 
-	CONST PLUGIN_VERSION    = '1.1.19';
+	CONST PLUGIN_VERSION    = '1.1.20';
 	CONST PLUGIN_SHORT_CODE = 'gdbc';
 	CONST PLUGIN_SLUG       = 'goodbye-captcha';
 	CONST PLUGIN_SITE_URL   = 'http://www.goodbyecaptcha.com';
@@ -73,6 +73,7 @@ class GoodByeCaptcha
 
 	protected function __construct()
 	{
+
 		$pluginInstance = (MchWp::isUserInDashboad() || MchWp::isAjaxRequest()) ? GdbcAdmin::getInstance(self::$arrPluginInfo) : GdbcPublic::getInstance(self::$arrPluginInfo);
 		self::$isNetworkActivated = $pluginInstance->isNetworkActivated();
 
@@ -146,7 +147,7 @@ if(ABSPATH !== '')
 	{
 		if(file_exists(dirname(__FILE__) . '/public/scripts/gdbc-client.js.php')) {
 			require_once(ABSPATH .'wp-includes/pluggable.php');
-			function_exists('wp_cookie_constants') ? wp_cookie_constants() : null;
+			( !defined('LOGGED_IN_COOKIE') && function_exists('wp_cookie_constants') ) ? wp_cookie_constants() : null;
 			require dirname( __FILE__ ) . '/public/scripts/gdbc-client.js.php';
 			exit;
 		}

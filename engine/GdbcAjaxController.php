@@ -38,7 +38,7 @@ final class GdbcAjaxController
 		if(!(!empty($_POST['action']) && !empty($_POST['browserInfo']) && (self::ACTION_RETRIEVE_TOKEN === $_POST['action'])))
 			return false;
 
-		function_exists('wp_cookie_constants') ? wp_cookie_constants() : null;
+		( !defined('LOGGED_IN_COOKIE') && function_exists('wp_cookie_constants') ) ? wp_cookie_constants() : null;
 
 		require_once( ABSPATH . WPINC . '/pluggable.php' );
 		require_once( ABSPATH . 'wp-admin/includes/ajax-actions.php' );

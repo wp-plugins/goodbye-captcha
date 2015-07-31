@@ -3,8 +3,8 @@ Contributors: mihche
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.5
-Tested up to: 4.2.2
-Stable tag: 1.1.19
+Tested up to: 4.2.3
+Stable tag: 1.1.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,8 +35,12 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * **Login With Ajax** (https://wordpress.org/plugins/login-with-ajax)               
     GoodBye Captcha offers protection for Login, Registration and Lost Password forms
 
+* **PlanSo Forms** (https://wordpress.org/plugins/planso-forms/)
+	GoodBye Captcha offers protection for all forms
+
 * **JetPack by WordPress** (https://wordpress.org/plugins/jetpack)                   
 	GoodBye Captcha offers protection for JetPack Contact Form
+
 
 = Summary of Goodbye Captcha features =
 * Standard WordPress Login form integration
@@ -49,16 +53,16 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * Automatically purge logs older than a certain number of days
 * Manually whitelist trusted IP Address
 * Manually block/unblock IP Addresses (IPV4 and IPV6)
-* Properly detects client IP Address when using CloudFlare, Incapsula, Cloudfront, RackSpace, Sucuri CloudProxy
+* Properly detects client IP Address when using CloudFlare, Incapsula, Cloudfront, RackSpace, Sucuri CloudProxy, AWS ELB
 * Provides statistics, reports, maps and charts with all blocked spam attempts
 * No requests to external APIs
 * Can be switched to "Test Mode" - for testing
 * Compatible with WordPress Multisite
-* Compatible with cache plugins (WP Super Cache, W3 Total Cache, ZenCache and others)
+* Compatible with cache plugins (WP Super Cache, W3 Total Cache, ZenCache, WP Fastest Cache and others)
 * Invisible for end users (works in the background)
 * Does not affect page loading times
 
-
+[youtube https://www.youtube.com/watch?v=928uMG3k758]
 
 = Technical support =
 If you notice any problems by using this plugin, please notify us and we will investigate and fix the issues. Ideally your request should contain: URL of the website (if your site is public), Php version, WordPress version and all the steps in order to replicate the issue (if you are able to reproduce it somehow)
@@ -127,12 +131,19 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 
 == Changelog ==
 
+= 1.1.20: July 31, 2015 =
+**Additions**
+- Integration with PlanSo Forms plugin
+- Support for AWS Elastic Load Balancing
+**Fixed**
+- Client side SSL issue reported by [Ninestein](https://wordpress.org/support/topic/goodbye-captcha-and-ssl-on-aws)
+
 = 1.1.19: July 16, 2015 =
 - Adding testing instructions.
 
 = 1.1.18: June 26, 2015 =
 **Fixed**
-- Chrome headers issue reported by  [in4fun](https://wordpress.org/support/topic/comment-disappeared)
+- Chrome headers issue reported by [in4fun](https://wordpress.org/support/topic/comment-disappeared)
 
 = 1.1.17: June 21, 2015 =
 

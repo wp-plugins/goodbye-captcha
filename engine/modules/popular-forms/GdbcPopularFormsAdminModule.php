@@ -27,6 +27,7 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 	CONST FORMIDABLE_FORMS     = 'IsFFActivated';
 	CONST FAST_SECURE_FORM     = 'IsFSActivated';
 	CONST JETPACK_CONTACT_FORM = 'IsJCFctivated'; // - misspelled !!!!
+	CONST PLANSO_FORMS         = 'IsPFActivated';
 
 	private $arrDefaultSettingOptions = array(
 
@@ -69,6 +70,13 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 				'Id'         => 6,
 				'Value'      => NULL,
 				'LabelText' => 'JetPack Contact Form',
+				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
+			),
+
+			self::PLANSO_FORMS  => array(
+				'Id'         => 7,
+				'Value'      => NULL,
+				'LabelText' => 'PlanSo Forms',
 				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
 			),
 
@@ -132,6 +140,10 @@ final class GdbcPopularFormsAdminModule extends GdbcBaseAdminModule
 
 				case self::JETPACK_CONTACT_FORM :
 					$shouldRenderSetting = GdbcModulesController::getInstance($this->ArrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_JETPACK_CONTACT_FORM);
+					break;
+
+				case self::PLANSO_FORMS :
+					$shouldRenderSetting = GdbcModulesController::getInstance($this->ArrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_PLAN_SO_FORMS);
 					break;
 
 			}

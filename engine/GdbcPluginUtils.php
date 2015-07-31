@@ -20,6 +20,10 @@
 
 final class GdbcPluginUtils
 {
+	public static function isPlanSoFormsActivated()
+	{
+		return function_exists('psfb_register');
+	}
 
 	public static function isUserProfileMadeEasyActivated()
 	{

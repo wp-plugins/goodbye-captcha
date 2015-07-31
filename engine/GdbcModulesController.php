@@ -31,6 +31,8 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_GRAVITY_FORMS    = 'GravityForms';
 	CONST MODULE_FAST_SECURE_FORM = 'FastSecureForm';
 	CONST MODULE_FORMIDABLE_FORMS = 'FormidableForms';
+	CONST MODULE_PLAN_SO_FORMS    = 'PlanSoForms';
+
 	CONST MODULE_JETPACK_CONTACT_FORM  = 'JetPackContactForm';
 
 	CONST MODULE_WOOCOMMERCE      = 'WooCommerce';
@@ -232,6 +234,16 @@ final class GdbcModulesController extends MchWpModulesController
 			)
 		),
 
+		self::MODULE_PLAN_SO_FORMS => array(
+			'info'    => array(
+				'ModuleId' => 15,
+				'IsPublic' => true,
+			),
+			'classes' => array(
+				'GdbcPlanSoFormsAdminModule'  => '/modules/plan-so-forms/GdbcPlanSoFormsAdminModule.php',
+				'GdbcPlanSoFormsPublicModule' => '/modules/plan-so-forms/GdbcPlanSoFormsPublicModule.php',
+			)
+		),
 
 		self::MODULE_REPORTS => array(
 			'info'    => array(

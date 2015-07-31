@@ -182,8 +182,9 @@ final class GdbcTokenController
 		$arrData   = array();
 		$arrData[] = get_current_blog_id();
 		$arrData[] = PHP_VERSION_ID;
-		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('charset'), '');
-		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('language'), '');
+//		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('charset'), '');
+//		$arrData[] = MchWpUtil::replaceNonAlphaNumericCharacters(get_bloginfo('language'), '');
+		$arrData[] = MchHttpRequest::getClientIp(array());
 		$arrData[] = GoodByeCaptcha::getModulesControllerInstance()->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_CREATED_TIMESTAMP);
 		$arrData[] = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
 

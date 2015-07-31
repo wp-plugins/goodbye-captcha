@@ -108,7 +108,7 @@ abstract class GdbcBaseAdminPlugin extends MchWpAdminPlugin
 				<span>
 				It is strongly recommended to <b>Switch the plugin to Test Mode</b> and test it by yourself!
 				<br/>While in test mode, the plugin simulates it\'s real behavior and sends email notifications to administrator.
-				<br/>If something goes wrong, a warning message will be shown. Disable test mode when you get everything right!
+				<br/>If something goes wrong, a warning message will be shown.
 				<br/><b>Having a problem? Asking a question?</b> Do not hesitate to <a href="http://www.goodbyecaptcha.com/contact/">Contact us</a>!
 				</span>
 				</div>';

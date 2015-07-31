@@ -132,7 +132,7 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		if( empty($screenId->id) || $this->AdminSettingsPageHook !== $screenId->id )
 			return;
 
-		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('GoodBye Captcha was switched to <b>Test Mode</b>!') . '</span></div>';
+		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('<b>You are not protected!</b> GoodBye Captcha was switched to Test Mode. Test your protected forms and don\'t forget to turn it off !') . '</span></div>';
 	}
 
 	public function addAdminMenu()

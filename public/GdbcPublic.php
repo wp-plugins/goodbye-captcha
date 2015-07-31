@@ -122,6 +122,7 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 		 *	Formidable Forms,  
 		 *	Fast Secure Contact Form,
 		 * JetPack Contact Form
+		 * PlanSo Forms
 		 */
 		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_POPULAR_FORMS))
 		{
@@ -179,7 +180,16 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 					$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_NINJA_FORMS)->activateNinjaFormsActions();
 				}
 			}
-			
+
+			#PlanSo Forms
+			if(null !== $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_POPULAR_FORMS, GdbcPopularFormsAdminModule::PLANSO_FORMS))
+			{
+				if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_PLAN_SO_FORMS))
+				{
+					$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_PLAN_SO_FORMS)->activatePlanSoFormsActions();
+				}
+			}
+
 		}
 
 		//Newsletter Subscriptions Plugins

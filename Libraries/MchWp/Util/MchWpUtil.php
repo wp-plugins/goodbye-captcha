@@ -39,7 +39,7 @@ final class MchWpUtil
 		if(null !== $isSsl)
 			return $isSsl;
 
-		if (isset($_SERVER['HTTP_CF_VISITOR']) && strpos($_SERVER['HTTP_CF_VISITOR'], 'https'))
+		if (isset($_SERVER['HTTP_CF_VISITOR']) && false !== strpos($_SERVER['HTTP_CF_VISITOR'], 'https'))
 			return $isSsl = true;
 
 		if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0)
@@ -56,7 +56,7 @@ final class MchWpUtil
 			return $pageUrl;
 
 		if(is_front_page())
-			return $pageUrl = home_url();
+			return $pageUrl = home_url('/', self::isSslRequest());
 
 		$pageUrl = self::isSslRequest() ? 'https://' : 'http://';
 

@@ -99,7 +99,7 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 	
 	public function getModuleSettingTabCaption()
 	{
-		return  __('Wordpress', $this->PLUGIN_SLUG);
+		return  __('WordPress', $this->PLUGIN_SLUG);
 	}
 
 
