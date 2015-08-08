@@ -3,8 +3,8 @@ Contributors: mihche
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.5
-Tested up to: 4.2.3
-Stable tag: 1.1.20
+Tested up to: 4.2.4
+Stable tag: 1.1.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,12 @@ In addition, Goodbye Captcha is completely self-contained and does not need to c
 Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login and password reset pages. At the click of a button, you can decide which forms to protect.
 
 **It also currently works with the following plugins:**
+
+* **Postmatic** (https://wordpress.org/plugins/postmatic)
+	GoodBye Captcha offers protection for the entire email commenting system
+
+* **Epoch** (https://wordpress.org/plugins/epoch)
+	GoodBye Captcha offers protection for the entire chat and commenting system
 
 * **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
 	GoodBye Captcha offers protection for all forms the user will create with MailChimp
@@ -126,10 +132,14 @@ Studies shown that visual CAPTCHAs take around 5-10 seconds to complete and audi
 6. Total Attempts per Module/Day Charts, Modules Latest Attempts.
 
 == Upgrade Notice ==
-
+Integration with Postmatic and Epoch plugins
 
 
 == Changelog ==
+
+= 1.1.20: July 31, 2015 =
+**Additions**
+- Integration with Postmatic and Epoch plugins
 
 = 1.1.20: July 31, 2015 =
 **Additions**

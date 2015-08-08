@@ -33,10 +33,21 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 		$this->TokenSecretKey  = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_TOKEN_SECRET_KEY);
 		$this->HiddenInputName = $this->ModulesController->getModuleSettingOption(GdbcModulesController::MODULE_SETTINGS, GdbcSettingsAdminModule::OPTION_HIDDEN_INPUT_NAME);
 
-		//add_filter('query_vars', array($this, 'filterQueryVariables'));
-		//add_action('template_redirect', array($this, 'templateRedirect'));
+		if(defined('EPOCH_VER')){
+			add_filter('epoch_iframe_scripts', array($this, 'registerEpochGgbcScriptId'));
+		}
 
+	}
 
+	public function registerEpochGgbcScriptId($arrScripts)
+	{
+		if( !is_array($arrScripts))
+			$arrScripts = array();
+
+		$arrScripts[] = 'jquery-core';
+		$arrScripts[] = $this->PLUGIN_SLUG . '-public-script';
+
+		return $arrScripts;
 	}
 
 	/**
@@ -50,7 +61,6 @@ abstract class GdbcBasePublicPlugin extends MchWpPublicPlugin
 
 	public function enqueuePublicScriptsAndStyles()
 	{
-
 		wp_register_script( $this->PLUGIN_SLUG . '-public-script', plugins_url( '/public/scripts/gdbc-public.js', $this->PLUGIN_MAIN_FILE ), array( 'jquery' ), $this->PLUGIN_VERSION);
 
 		$clientUrl = home_url('/', MchWpUtil::isSslRequest() ? 'https' : 'http') . '?gdbc-client=' . GoodByeCaptcha::PLUGIN_VERSION;

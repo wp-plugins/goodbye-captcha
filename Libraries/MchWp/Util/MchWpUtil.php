@@ -45,6 +45,15 @@ final class MchWpUtil
 		if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0)
 			return $isSsl = true;
 
+//		if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)) # wp is_ssl() is looking for port 443 as well
+//			return $isSsl = true;
+
+		if(isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
+			return $isSsl = true;
+
+		if(stripos(get_option('siteurl'), 'https') === 0)
+			return $isSsl = true;
+
 		return $isSsl = is_ssl();
 	}
 

@@ -25,6 +25,7 @@ final class GdbcAjaxController
 
 	public static function processRequest()
 	{
+
 		if(self::isPublicGdbcAjaxRequest())
 		{
 			GdbcTokenController::getInstance()->retrieveEncryptedToken();

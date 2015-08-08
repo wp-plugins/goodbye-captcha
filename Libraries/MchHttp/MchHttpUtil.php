@@ -132,7 +132,6 @@ final class MchHttpUtil
 			false !== ($ipAddress = inet_ntop(pack('A'.$strLength, $binaryString))) ? $ipAddress : null : null;
 	}
 
-
 	public static function isPublicIpAddress($ipAddress)
 	{
 		if(0 === strpos($ipAddress, '127.0.0.'))

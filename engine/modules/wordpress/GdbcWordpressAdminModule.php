@@ -35,7 +35,8 @@ final class GdbcWordpressAdminModule extends GdbcBaseAdminModule
 				'Id'         => 1,
 				'Value'      => NULL,
 				'LabelText' => 'Comments',
-				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX
+				'InputType'  => MchWpUtilHtml::FORM_ELEMENT_INPUT_CHECKBOX,
+				'Description' => 'It will work seamlessly with <a href="https://wordpress.org/plugins/postmatic/">Postmatic</a> and <a href="https://wordpress.org/plugins/epoch/">Epoch</a> as well',
 			),
 		
 			self::LOGIN_FORM=> array(
