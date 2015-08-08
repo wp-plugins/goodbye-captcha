@@ -23,10 +23,10 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 
 **It also currently works with the following plugins:**
 
-* **Postmatic** (https://wordpress.org/plugins/postmatic)
+* **Postmatic** (https://wordpress.org/plugins/postmatic)            
 	GoodBye Captcha offers protection for the entire email commenting system
 
-* **Epoch** (https://wordpress.org/plugins/epoch)
+* **Epoch** (https://wordpress.org/plugins/epoch)                  
 	GoodBye Captcha offers protection for the entire chat and commenting system
 
 * **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
