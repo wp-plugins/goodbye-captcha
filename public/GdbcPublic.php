@@ -231,6 +231,11 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_WOOCOMMERCE)->activateProductReviewActions();
 		}
 
+		#SeamlessDonations
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_SEAMLESS_DONATIONS))
+		{
+			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_SEAMLESS_DONATIONS)->activateActions();
+		}
 
 	}
 

@@ -47,7 +47,7 @@ final class GdbcAjaxController
 		wp_magic_quotes();
 		send_origin_headers();
 
-		@header('Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
+		@header('Content-Type: application/json; charset=' . get_option( 'blog_charset' ));
 		@header('X-Robots-Tag: noindex' );
 
 		send_nosniff_header();

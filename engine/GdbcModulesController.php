@@ -44,6 +44,7 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_ULTIMATE_MEMBER  = 'UltimateMember';
 	CONST MODULE_USER_PROFILE_MADE_EASY = 'UPME';
 
+	CONST MODULE_SEAMLESS_DONATIONS = 'SeamlessDonations';
 
 	private static $arrModules = array(
 
@@ -242,6 +243,17 @@ final class GdbcModulesController extends MchWpModulesController
 			'classes' => array(
 				'GdbcPlanSoFormsAdminModule'  => '/modules/plan-so-forms/GdbcPlanSoFormsAdminModule.php',
 				'GdbcPlanSoFormsPublicModule' => '/modules/plan-so-forms/GdbcPlanSoFormsPublicModule.php',
+			)
+		),
+
+		self::MODULE_SEAMLESS_DONATIONS => array(
+			'info'    => array(
+				'ModuleId' => 16,
+				'IsPublic' => true,
+			),
+			'classes' => array(
+				'GdbcSeamlessDonationsAdminModule'  => '/modules/seamless-donations/GdbcSeamlessDonationsAdminModule.php',
+				'GdbcSeamlessDonationsPublicModule' => '/modules/seamless-donations/GdbcSeamlessDonationsPublicModule.php',
 			)
 		),
 

@@ -3,8 +3,8 @@ Contributors: mihche
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVC3TSGEJQP2U
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.5
-Tested up to: 4.2.4
-Stable tag: 1.1.21
+Tested up to: 4.3
+Stable tag: 1.1.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,11 +22,13 @@ In addition, Goodbye Captcha is completely self-contained and does not need to c
 Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login and password reset pages. At the click of a button, you can decide which forms to protect.
 
 **It also currently works with the following plugins:**
+* **Seamless Donations** (https://wordpress.org/plugins/seamless-donations)
+	GoodBye Captcha offers protection for the donation form
 
-* **Postmatic** (https://wordpress.org/plugins/postmatic)            
+* **Postmatic** (https://wordpress.org/plugins/postmatic)
 	GoodBye Captcha offers protection for the entire email commenting system
 
-* **Epoch** (https://wordpress.org/plugins/epoch)                  
+* **Epoch** (https://wordpress.org/plugins/epoch)
 	GoodBye Captcha offers protection for the entire chat and commenting system
 
 * **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
@@ -137,7 +139,11 @@ Integration with Postmatic and Epoch plugins
 
 == Changelog ==
 
-= 1.1.20: July 31, 2015 =
+= 1.1.22: September 04, 2015 =
+**Additions**
+- Integration with Seamless Donations plugin
+
+= 1.1.21: August 08, 2015 =
 **Additions**
 - Integration with Postmatic and Epoch plugins
 

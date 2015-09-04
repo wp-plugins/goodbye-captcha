@@ -20,6 +20,11 @@
 
 final class GdbcPluginUtils
 {
+	public static function isSeamlessDonationsActivated()
+	{
+		return function_exists('seamless_donations_init');
+	}
+
 	public static function isPlanSoFormsActivated()
 	{
 		return function_exists('psfb_register');
