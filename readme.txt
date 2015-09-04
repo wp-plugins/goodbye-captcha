@@ -23,13 +23,13 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 
 **It also currently works with the following plugins:**
 
-* **Seamless Donations** (https://wordpress.org/plugins/seamless-donations)
+* **Seamless Donations** (https://wordpress.org/plugins/seamless-donations)            
 	GoodBye Captcha offers protection for the donation form
 
-* **Postmatic** (https://wordpress.org/plugins/postmatic)
+* **Postmatic** (https://wordpress.org/plugins/postmatic)                      
 	GoodBye Captcha offers protection for the entire email commenting system
 
-* **Epoch** (https://wordpress.org/plugins/epoch)
+* **Epoch** (https://wordpress.org/plugins/epoch)                              
 	GoodBye Captcha offers protection for the entire chat and commenting system
 
 * **MailChimp for WordPress** (https://wordpress.org/plugins/mailchimp-for-wp)
