@@ -22,6 +22,7 @@ In addition, Goodbye Captcha is completely self-contained and does not need to c
 Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login and password reset pages. At the click of a button, you can decide which forms to protect.
 
 **It also currently works with the following plugins:**
+
 * **Seamless Donations** (https://wordpress.org/plugins/seamless-donations)
 	GoodBye Captcha offers protection for the donation form
 
