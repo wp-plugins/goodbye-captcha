@@ -237,6 +237,11 @@ final class GdbcPublic extends GdbcBasePublicPlugin
 			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_SEAMLESS_DONATIONS)->activateActions();
 		}
 
+		#ZM Ajax Login Register
+		if($this->ModulesController->isModuleRegistered(GdbcModulesController::MODULE_ZM_ALR))
+		{
+			$this->ModulesController->getPublicModuleInstance(GdbcModulesController::MODULE_ZM_ALR);
+		}
 	}
 
 

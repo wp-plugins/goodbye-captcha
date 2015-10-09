@@ -45,6 +45,7 @@ final class GdbcModulesController extends MchWpModulesController
 	CONST MODULE_USER_PROFILE_MADE_EASY = 'UPME';
 
 	CONST MODULE_SEAMLESS_DONATIONS = 'SeamlessDonations';
+	CONST MODULE_ZM_ALR             = 'ZMAjaxLoginRegister';
 
 	private static $arrModules = array(
 
@@ -254,6 +255,17 @@ final class GdbcModulesController extends MchWpModulesController
 			'classes' => array(
 				'GdbcSeamlessDonationsAdminModule'  => '/modules/seamless-donations/GdbcSeamlessDonationsAdminModule.php',
 				'GdbcSeamlessDonationsPublicModule' => '/modules/seamless-donations/GdbcSeamlessDonationsPublicModule.php',
+			)
+		),
+
+		self::MODULE_ZM_ALR => array(
+			'info'    => array(
+				'ModuleId' => 17,
+				'IsPublic' => true,
+			),
+			'classes' => array(
+				'GdbcZmAlrAdminModule'  => '/modules/zm-ajax-login-register/GdbcZmAlrAdminModule.php',
+				'GdbcZmAlrPublicModule' => '/modules/zm-ajax-login-register/GdbcZmAlrPublicModule.php',
 			)
 		),
 

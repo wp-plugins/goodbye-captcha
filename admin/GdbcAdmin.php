@@ -48,6 +48,12 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		if(MchWp::isAjaxRequest())
 		{
 			add_filter('nocache_headers', array($this, 'rewriteAjaxNoCacheHeaders'));
+
+			if(GdbcModulesController::getInstance($arrPluginInfo)->isModuleRegistered(GdbcModulesController::MODULE_ZM_ALR))
+			{
+				GdbcModulesController::getInstance($arrPluginInfo)->getPublicModuleInstance(GdbcModulesController::MODULE_ZM_ALR);
+			}
+
 		}
 
 		if(!MchWp::isAjaxRequest())
@@ -66,6 +72,8 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 			{
 				add_action('admin_notices', array($this, 'showTestModeActivatedNotice'));
 			}
+
+			add_action('admin_notices', array($this, 'showVersion20IncompatibilityNotice'));
 		}
 
 		if(MchWp::isAjaxRequest() && GdbcPluginUtils::isMailChimpLiteActivated())
@@ -135,6 +143,35 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 		echo '<div class="update-nag" style="border-color:#dd3d36;"><span>' . _('<b>You are not protected!</b> GoodBye Captcha was switched to Test Mode. Test your protected forms and don\'t forget to turn it off !') . '</span></div>';
 	}
 
+	public function showVersion20IncompatibilityNotice()
+	{
+		if(!empty($_GET['gdbc-dismiss-upcoming-ver-notice']) && $_GET['gdbc-dismiss-upcoming-ver-notice'] === 'dismiss' && MchWp::isAdminLoggedIn())
+		{
+			add_option('gdbc-dismiss-upcoming-ver-notice', '1', '', 'no' );
+		}
+
+		if(get_option('gdbc-dismiss-upcoming-ver-notice', null) !== null)
+			return;
+
+		foreach(GdbcModulesController::getInstance($this->ArrPluginInfo)->getRegisteredModules() as $moduleName => $moduleClasses)
+		{
+			if(GdbcModulesController::getInstance($this->ArrPluginInfo)->IsPublicModule($moduleName))
+				continue;
+
+			$dismissUrl =  esc_url( add_query_arg( 'gdbc-dismiss-upcoming-ver-notice', 'dismiss' ) );
+
+			$message  = '<div class="update-nag" style="border-color:#ffba00">';
+			$message .= "<p style = \"margin:0; line-height: 22px;\">Your <b>$moduleName</b> extension for GoodBye Captcha <b>WILL NOT</b> be compatible with the upcoming 2.0 version of the plugin!</p>";
+			$message .= '<p style = "margin:0; line-height: 22px;">Please <a href="http://www.goodbyecaptcha.com/contact/">Contact us</a> to receive a free replacement for <b>'.$moduleName.'</b> with version 2.0 of GoodBye Captcha.</p>';
+			$message .= '<p style = "margin:0; line-height: 22px;">If you like GoodBye Captcha please consider leaving a <a href="https://wordpress.org/support/view/plugin-reviews/goodbye-captcha" target="_blank" style="color: #ec971f;">&#9733;&#9733;&#9733;&#9733;&#9733;</a> review. Thank you in advance!</p>';
+			$message .= '<p style = "margin:10px 0 0; "><a href="'.$dismissUrl.'" class="button-secondary">Dismiss notice</a></p>';
+			$message .= '</div>';
+
+ 			echo $message;
+			break;
+		}
+	}
+
 	public function addAdminMenu()
 	{
 		$this->AdminSettingsPageHook = add_menu_page(
@@ -190,10 +227,6 @@ final class GdbcAdmin extends GdbcBaseAdminPlugin
 //		$settingsModuleInstance = GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SETTINGS);
 //		$settingsModuleInstance->setSettingOption(GdbcSettingsAdminModule::OPTION_PLUGIN_VERSION_ID, MchWpBase::getPluginVersionIdFromString(GoodByeCaptcha::PLUGIN_VERSION));
 		GdbcPluginUtils::isUjiCountDownActivated() ? GdbcModulesController::getInstance($arrPluginInfo)->getAdminModuleInstance(GdbcModulesController::MODULE_SUBSCRIPTIONS)->setSettingOption(GdbcSubscriptionsAdminModule::UJI_COUNTDOWN_ACTIVATED, true) : null;
-
-
-
-
 
 		GdbcTaskScheduler::scheduleGdbcTasks();
 	}

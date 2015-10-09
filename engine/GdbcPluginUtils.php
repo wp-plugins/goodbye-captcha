@@ -20,6 +20,11 @@
 
 final class GdbcPluginUtils
 {
+	public static function isZmAlrActivated()
+	{
+		return defined('ZM_ALR_NAMESPACE');
+	}
+
 	public static function isSeamlessDonationsActivated()
 	{
 		return function_exists('seamless_donations_init');

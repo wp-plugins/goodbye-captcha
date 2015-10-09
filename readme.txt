@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags:  anti-spam, antispam, captcha, spam, website field, allowed tags, no captcha, forms, comments, no-captcha, login, register, contact form, security, no spam, comment, form, spams, spambot, spambots
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.1.22
+Stable tag: 1.1.23
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,9 +23,6 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 
 **It also currently works with the following plugins:**
 
-* **Seamless Donations** (https://wordpress.org/plugins/seamless-donations)            
-	GoodBye Captcha offers protection for the donation form
-
 * **Postmatic** (https://wordpress.org/plugins/postmatic)                      
 	GoodBye Captcha offers protection for the entire email commenting system
 
@@ -38,11 +35,14 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * **Ultimate Member** (https://wordpress.org/plugins/ultimate-member)             
 	GoodBye Captcha offers protection for Login, Registration and Reset Password forms
 
-* **WP User Control** (https://wordpress.org/plugins/wp-user-control)             
-	GoodBye Captcha offers protection for Login, Registration and Lost Password forms
+* **ZM Ajax Login & Register** (https://wordpress.org/plugins/zm-ajax-login-register)
+	GoodBye Captcha offers protection for Login and Registration forms
 
-* **Login With Ajax** (https://wordpress.org/plugins/login-with-ajax)               
+* **Login With Ajax** (https://wordpress.org/plugins/login-with-ajax)
     GoodBye Captcha offers protection for Login, Registration and Lost Password forms
+
+* **WP User Control** (https://wordpress.org/plugins/wp-user-control)
+	GoodBye Captcha offers protection for Login, Registration and Lost Password forms
 
 * **PlanSo Forms** (https://wordpress.org/plugins/planso-forms/)
 	GoodBye Captcha offers protection for all forms
@@ -50,6 +50,8 @@ Goodbye Captcha eliminates spam-bots on comments, signup pages as well as login 
 * **JetPack by WordPress** (https://wordpress.org/plugins/jetpack)                   
 	GoodBye Captcha offers protection for JetPack Contact Form
 
+* **Seamless Donations** (https://wordpress.org/plugins/seamless-donations)
+	GoodBye Captcha offers protection for the donation form
 
 = Summary of Goodbye Captcha features =
 * Standard WordPress Login form integration
